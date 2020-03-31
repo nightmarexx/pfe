@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-{% if user.is_authenticated and user.is_superuser == 1 or user.is_staff %}
-    {% if user.is_superuser == 0 and user.id != user2.id %}
-    <meta http-equiv="Refresh" content="0; url=//127.0.0.1:8000/login_user" />
-    {% else %}
+{% if user.is_authenticated %}
 <html dir="ltr" lang="en">
 
+
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
@@ -15,14 +14,20 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
     <title>Xtreme admin Template - The Ultimate Multipurpose admin template</title>
+    <!-- This Page CSS -->
+       {% load static %}
+    <link href="{% static 'assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css' %}" rel="stylesheet">
     <!-- Custom CSS -->
-    {% load static %}
+    <link href="{% static 'dist/css/style.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/extra-libs/DataTables/datatables.css' %}" rel="stylesheet" type="text/css" />
+    <!-- Custom CSS -->
     <link href="{% static 'dist/css/style.min.css' %}" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
 <![endif]-->
 </head>
 
@@ -65,7 +70,7 @@
                         <span class="logo-text">
                              <!-- dark Logo text -->
                              <img src="{% static 'assets/images/logo-text.png' %}" alt="homepage" class="dark-logo" />
-                             <!-- Light Logo text -->
+                             <!-- Light Logo text -->    
                              <img src="{% static 'assets/images/logo-light-text.png' %}" class="light-logo" alt="homepage" />
                         </span>
                     </a>
@@ -90,7 +95,7 @@
                         <!-- mega menu -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown mega-dropdown"><a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="d-none d-md-block">Checker <i class="fa fa-angle-down"></i></span>
+                            <span class="d-none d-md-block">Checker<i class="fa fa-angle-down"></i></span>
                              <span class="d-block d-md-none"><i class="mdi mdi-dialpad font-24"></i></span>
                             </a>
                             <div class="dropdown-menu animated bounceInDown">
@@ -100,7 +105,7 @@
                                         <form action="/checkdomain" method="POST" class="app-search position-absolute">
                                             {% csrf_token %}
                                         		<div class="form-group">
-                                           <input type="text" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"></a>
+                                           <input type="text"  name="domain" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"></a>
                                        			</div>
                                             <button type="submit" class="btn btn-info">Check Domain</button>
                                         </form>
@@ -110,7 +115,7 @@
                                         	<form action="/checkip" method="POST" class="app-search position-absolute">
                                                 {% csrf_token %}
                                         		<div class="form-group">
-                                           <input type="text" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"></a>
+                                           <input type="text" name="ip" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"></a>
                                        			</div>
                                             <button type="submit" class="btn btn-info">Chech Ip Adresse</button>
                                             </form>
@@ -120,7 +125,7 @@
                                         	<form action="/checkhash" method="POST" class="app-search position-absolute">
                                                 {% csrf_token %}
                                         		<div class="form-group">
-                                           <input type="text" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"></a>
+                                           <input type="text" name="hash" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"></a>
                                        			</div>
                                             <button type="submit" class="btn btn-info">Check Hash</button>
                                             </form>
@@ -284,6 +289,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="/logout_user"><i class="fa fa-power-off m-r-5 m-l-5"></i> Se Déconncté</a>
                                 <div class="dropdown-divider"></div>
+
                             </div>
                         </li>
                         <!-- ============================================================== -->
@@ -306,7 +312,7 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <!-- User Profile-->
-                         <li>
+                        <li>
                             <!-- User Profile-->
                             <div class="user-profile d-flex no-block dropdown mt-3">
 
@@ -325,10 +331,9 @@
                             </div>
                             <!-- End User Profile-->
                         </li>
-
                         <!-- User Profile-->
                         <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">Personal</span></li>
-                       <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Utilisateurs</span></a>
+                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Utilisateurs</span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
                                 {% if user.is_superuser == 1 %}
                                 <li class="sidebar-item"><a href="/add_user" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Ajout d'un utilisateur </span></a></li>
@@ -344,12 +349,7 @@
             </div>
             <!-- End Sidebar scroll-->
         </aside>
-        <!-- ============================================================== -->
-        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Page wrapper  -->
-        <!-- ============================================================== -->
+
         <div class="page-wrapper">
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
@@ -357,12 +357,12 @@
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-5 align-self-center">
-                        <h4 class="page-title">Utilisateur</h4>
+                        <h4 class="page-title">{{ general.type_title }} : {{ general.indicator }}</h4>
                         <div class="d-flex align-items-center">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="#">Accueil</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Modification Compte</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Affichage des utilisateurs</li>
                                 </ol>
                             </nav>
                         </div>
@@ -373,7 +373,7 @@
                                 <div class="lastmonth"></div>
                             </div>
                             <div class="">
-                               </div>
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -383,150 +383,160 @@
             <!-- ============================================================== -->
             <!-- ============================================================== -->
             <!-- Container fluid  -->
+
+
             <!-- ============================================================== -->
             <div class="container-fluid">
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                <!-- row -->
-
-                <!-- row -->
-                <!-- .row -->
-
-                <!-- /.row -->
-                <!-- Row -->
-
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-12">
                         <div class="card">
-                            <div class="card-header bg-info">
-                                <h4 class="mb-0 text-white">Formulaire</h4>
-                            </div>
-                            <form action="/update_user/{{ user2.id }}" method="POST">
-                                {% csrf_token %}
-                                <div class="card-body">
-                                    <h4 class="card-title">Informations du compte</h4>
-                                </div>
-                                <hr>
-                                <div class="form-body">
-                                    <div class="card-body">
-                                        <div class="row pt-3">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label">Prénom</label>
-                                                    <input type="text" id="firstName" class="form-control" name="firstname" placeholder="" value="{{ user2.first_name }}">
-                                                </div>
-                                            </div>
-                                            <!--/span-->
-                                            <div class="col-md-6">
-                                                <div class="form-group has-danger">
-                                                    <label class="control-label">Nom</label>
-                                                    <input type="text" id="lastName" name="lastname" class="form-control form-control-danger" placeholder="" value="{{ user2.last_name }}">
-                                                    </div>
-                                            </div>
-                                            <!--/span-->
-                                        </div>
-                                        <!--/row-->
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group has-success">
-                                                    <label class="control-label">Adresse Email</label>
-                                                    <input type="email" id="email" name="email" class="form-control required" placeholder="" value="{{ user2.email }}">
-                                                </div>
-                                            </div>
-                                            <!--/span-->
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label">Pseudo</label>
-                                                    <input type="text" name="username" class="form-control form-control-danger required" id="pseudo" value="{{ user2.username }}">
-                                                </div>
-                                            </div>
-                                            <!--/span-->
-                                        </div>
-                                        <!--/row-->
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label">Type</label>
-                                                    <select class="form-control custom-select" data-placeholder="Choose a Category" tabindex="1" name="type">
-                                                        {% if user2.is_superuser == 1 %}
-                                                        <option value="SuperUser">SuperUser</option>
-                                                        <option value="Staff">Staff</option>
-                                                        {% else %}
-                                                        <option value="Staff">Staff</option>
-                                                        <option value="SuperUser">SuperUser</option>
-                                                        {% endif %}
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <!--/span-->
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label">Status</label>
-                                                    <select class="form-control custom-select" data-placeholder="Choose a Category" tabindex="1" name="status">
-                                                        {% if user2.is_active == 1 %}
-                                                        <option value="Active">Active</option>
-                                                        <option value="Bloqué">Bloqué</option>
-                                                        {% else %}
-                                                        <option value="Bloqué">Bloqué</option>
-                                                        <option value="Active">Active</option>
-                                                        {% endif %}
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <!--/span-->
-                                        </div>
-                                        <!--<h4 class="card-title mt-5">Address</h4>-->
+            <div class="card-body">
+            <h4 class="card-title">Basic Information</h4>
+            <h6 class="card-subtitle mb-2 text-muted">Domain : {{ general.domain }}</h6>
+                {% if count.count == 0 %}
+            <p class="card-text">Not identified as malicious</p>
+                {% endif %}
+            <a href="{{ general.alexa }}" class="card-link">Alexa</a>
+            <a href="{{ general.whois }}" class="card-link">Whois</a>
+            </div>
+            </div>
+                        {% if infos is not None %}
+                        <div class="card">
+            <div class="card-body">
+            <h4 class="card-title">Validation</h4>
+                {% for i in infos %}
+            <h6 class="card-subtitle mb-2 text-muted">{{ i.name }} :</h6>
+            <p class="card-text">{{ i.message }}</p>
+                {% endfor %}
+            </div>
+            </div>
+                        {% endif %}
+                        <div class="card">
+                            <div class="card-body">
 
-                                    </div>
-                                    <hr>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-12 ">
-                                                <div class="form-group">
-                                                    <label>Mot de passe</label>
-                                                    <input type="password" name="password" class="form-control">
-                                                    <small class="form-control-feedback"> Si vous laissez ce champs vide, votre mot de passe restera par défaut. </small>
-                                                    <br>
-                                                    <small class="form-control-feedback"> Votre mot de passe ne peut pas trop ressembler à vos autres informations personnelles. </small>
-                                                    <br>
-                                                    <small class="form-control-feedback"> Votre mot de passe ne peut pas être un mot de passe couramment utilisé. </small>
-                                                    <br>
-                                                    <small class="form-control-feedback"> Votre mot de passe doit contenir au minimum 8 caractères. </small>
-                                                    <br>
-                                                    <small class="form-control-feedback"> Votre mot de passe ne peut pas être entièrement numérique. </small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-actions">
-                                        <div class="card-body">
-                                            <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i>Sauvegarder</button>
-                                        </div>
-                                    </div>
+                                <div class="col-4 float-right">
+
+
                                 </div>
-                            </form>
+
+                                <h4 class="card-title">Associated URLs</h4>
+                                <h6 class="card-subtitle"></h6>
+
+                                 <table class="table table-striped table-bordered" id="zero_config">
+                                    <thead>
+                                        <tr>
+                                            <th>DATE CHECKED</th>
+                                            <th>DOMAIN</th>
+                                            <th>HOSTNAME</th>
+                                            <th>URL</th>
+                                            <th>SERVER RESPONSE</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    {% for i in url_list %}
+                                        <tr id="" class="gradeX">
+                                            <td>{{ i.date }}</td>
+                                            <td disabled="disabled">{{ i.domain }}</td>
+                                            <td><a href="{{ i.hostname }}">{{ i.hostname }}</a></td>
+                                            <td><a href="{{ i.url }}">{{ i.url }}</a></td>
+                                            <td>{{ i.httpcode }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-4 float-right">
+
+
+                                </div>
+
+                                <h4 class="card-title">Passive DNS</h4>
+                                <h6 class="card-subtitle"></h6>
+
+                                 <table class="table table-striped table-bordered" id="one_config">
+                                    <thead>
+                                        <tr>
+                                            <th>Hostname</th>
+                                            <th>Query Type</th>
+                                            <th>Adress</th>
+                                            <th>First Seen</th>
+                                            <th>Last Seen</th>
+
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    {% for i in passive_dns %}
+                                        <tr id="" class="gradeX">
+                                            <td><a href="{{ i.hostname }}">{{ i.hostname }}</a></td>
+                                            <td disabled="disabled">{{ i.record_type }}</td>
+                                            <td>{{ i.address }}</td>
+                                            <td>{{ i.first }}</td>
+                                            <td>{{ i.last }}</td>
+
+
+
+
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {% if http_scan is not None %}
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-4 float-right">
+
+
+                                </div>
+
+                                <h4 class="card-title">HTTP Scans</h4>
+                                <h6 class="card-subtitle"></h6>
+
+                                 <table class="table table-striped table-bordered" id="two_config">
+                                    <thead>
+                                        <tr>
+                                            <th>Record</th>
+                                            <th>Value</th>
+
+
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    {% for i in http_scan.data %}
+                                        <tr id="1" class="gradeX">
+                                            <td>{{ i.name }}</td>
+                                            <td>{{ i.value }}</td>
+
+
+
+
+
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
 
-                <!-- Row -->
-                <!-- .row -->
-
-                <!-- /.row -->
-                <!-- .row -->
-
-                <!-- /.row -->
-                <!-- .row -->
-
-                <!-- .row -->
-
-                <!-- /.row -->
-                <!-- ROw -->
-
-                <!-- End Row -->
-
-                <!-- Row -->
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
@@ -538,6 +548,8 @@
                 <!-- End Right sidebar -->
                 <!-- ============================================================== -->
             </div>
+
+
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
             <!-- ============================================================== -->
@@ -565,6 +577,21 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
+        <script>
+function delete(id) {
+  var r = confirm("Vous voulez confirmer la suppression!");
+  if (r == true) {
+    window.location = '/delete_user/'+id;
+} else {
+
+}
+}
+</script>
+    <script>
+        function edit(id) {
+window.location = '/edit_user/'+id;
+}
+    </script>
     <script src="{% static 'assets/libs/jquery/dist/jquery.min.js' %}"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="{% static 'assets/libs/popper.js/dist/umd/popper.min.js' %}"></script>
@@ -573,7 +600,6 @@
     <script src="{% static 'dist/js/app.min.js' %}"></script>
     <script src="{% static 'dist/js/app.init.dark.js' %}"></script>
     <script src="{% static 'dist/js/app-style-switcher.js' %}"></script>
-
     <!-- slimscrollbar scrollbar JavaScript -->
     <script src="{% static 'assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js' %}"></script>
     <script src="{% static 'assets/extra-libs/sparkline/sparkline.js' %}"></script>
@@ -583,10 +609,17 @@
     <script src="{% static 'dist/js/sidebarmenu.js' %}"></script>
     <!--Custom JavaScript -->
     <script src="{% static 'dist/js/custom.min.js' %}"></script>
+    <script src="{% static 'assets/extra-libs/DataTables/datatables.min.js' %}"></script>
+    <script src="{% static 'dist/js/pages/datatable/datatable-basic.init.js' %}"></script>
+    <script src="{% static 'dist/js/pages/datatable/datatable-basic.init2.js' %}"></script>
+    <script src="{% static 'dist/js/pages/datatable/datatable-basic.init3.js' %}"></script>
+
+
+
 </body>
 
+
 </html>
-    {% endif %}
 {% elif user.is_authenticated is not None %}
 <meta http-equiv="Refresh" content="0; url=//127.0.0.1:8000/login_user" />
 {% endif %}

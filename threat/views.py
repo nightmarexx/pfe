@@ -3,12 +3,13 @@ import pulsedive
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
+import requests
 from django.core.files.storage import FileSystemStorage
-from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views import View
 from honeydb import api
-
+from OTXv2 import OTXv2
+from OTXv2 import IndicatorTypes
 
 
 import cloudmersive_virus_api_client
@@ -138,13 +139,14 @@ class threat(View):
         print(honeydb.bad_hosts())
         honeydb.netinfo_lookup()
         return render(request, 'api/listattack.html')
+
     def listethreat(request):
         pud = pulsedive.Pulsedive('1b0d0dcb40d124d4d91a40cb00f281527a84139d23d685e32fd18b28bb3e7013')
         ind = pud.search.threat(risk=['unknown', 'none', 'low', 'medium', 'high', 'critical', 'retired'],category=['general', 'abuse', 'apt', 'attack', 'botnet', 'crime', 'exploitkit', 'fraud', 'group', 'malware', 'proxy', 'pup', 'reconnaissance', 'spam', 'terrorism', 'phishing', 'vulnerability'], properties=None, attribute=None, splitrisk=False)
         return render(request, 'api/listthreat.html', {'ind': ind['results']})
 
 
-    def uploadfile(request):
+    def checkfile(request):
         # Handle file upload
         if request.method == 'POST' and request.FILES['myfile']:
             myfile = request.FILES['myfile']
@@ -163,6 +165,46 @@ class threat(View):
                 'rep': api_response
             })
         return render(request, 'api/scanfile.html')
+    def checkdomain(request):
+        if request.method == "POST":
+            domain = request.POST.get('domain', False)
+        otx = OTXv2("cee9c5f59ddad6f61aead25b961fb1ca6060bee6157137f95a868d5bb0c842e7")
+        response = requests.get('https://otx.alienvault.com/api/v1/indicators/hostname/'+domain+'/http_scans')
+        http_scan = response.json()
+        if len(http_scan) == 1 :
+            http_scan=None
+        response2 = requests.get('https://otx.alienvault.com/api/v1/indicators/hostname/'+domain+'/general')
+        general = response2.json()
+        response3 = requests.get('https://otx.alienvault.com/api/v1/indicators/hostname/'+domain+'/url_list')
+        url_list = response3.json()
+        response4 = requests.get('https://otx.alienvault.com/api/v1/indicators/hostname/'+domain+'/passive_dns')
+        passive_dns = response4.json()
+        response5 = requests.get('https://otx.alienvault.com/api/v1/indicators/hostname/'+domain)
+        infos = response5.json()
+        return render(request, 'api/checkhostname.html', {'general': general, 'url_list': url_list['url_list'], 'passive_dns': passive_dns['passive_dns'], 'http_scan': http_scan, 'infos': infos['validation'], 'count': infos['pulse_info']})
+
+    def checkip(request):
+        if request.method == "POST":
+            ip = request.POST.get('ip', False)
+        otx = OTXv2("cee9c5f59ddad6f61aead25b961fb1ca6060bee6157137f95a868d5bb0c842e7")
+        re = otx.get_indicator_details_full(IndicatorTypes.IPv4, ip)
+        response = requests.get('https://otx.alienvault.com/api/v1/indicators/IPv4/' + ip + '/http_scans')
+        http_scan = response.json()
+        response2 = requests.get('https://otx.alienvault.com/api/v1/indicators/IPv4/' + ip + '/passive_dns')
+        passive_dns = response2.json()
+        response3 = requests.get('https://otx.alienvault.com/api/v1/indicators/IPv4/' + ip + '/malware')
+        malware = response3.json()
+        if len(http_scan) == 1 :
+            http_scan=None
+        return render(request, 'api/checkip.html', {'general': re['general'], 'url_list': re['url_list']['url_list'], 'passive_dns': passive_dns['passive_dns'], 'http_scan': http_scan['data'], 'malware': malware['data']})
+
+
+    def checkhash(request):
+        if request.method == "POST":
+            hash = request.POST.get('hash', False)
+        otx = OTXv2("cee9c5f59ddad6f61aead25b961fb1ca6060bee6157137f95a868d5bb0c842e7")
+        re = otx.get_indicator_details_full(IndicatorTypes.DOMAIN, hash)
+
 
 
 

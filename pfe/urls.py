@@ -33,7 +33,10 @@ urlpatterns = [
     path('display_threat',login_required(views.threat.listethreat)),
     path('display_feed',login_required(views.threat.listefeed)),
     path('display_attack',login_required(views.threat.listeattack)),
-    path('file',login_required(views.threat.uploadfile)),
+    path('checkfile',login_required(views.threat.checkfile)),
+    path('checkdomain',login_required(views.threat.checkdomain)),
+    path('checkip',login_required(views.threat.checkip)),
+    path('checkhash',login_required(views.threat.checkhash)),
 
 ]
 urlpatterns += staticfiles_urlpatterns()
