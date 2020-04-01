@@ -140,10 +140,18 @@ class threat(View):
         honeydb.netinfo_lookup()
         return render(request, 'api/listattack.html')
 
-    def listethreat(request):
+    def listemalware(request):
         pud = pulsedive.Pulsedive('1b0d0dcb40d124d4d91a40cb00f281527a84139d23d685e32fd18b28bb3e7013')
-        ind = pud.search.threat(risk=['unknown', 'none', 'low', 'medium', 'high', 'critical', 'retired'],category=['general', 'abuse', 'apt', 'attack', 'botnet', 'crime', 'exploitkit', 'fraud', 'group', 'malware', 'proxy', 'pup', 'reconnaissance', 'spam', 'terrorism', 'phishing', 'vulnerability'], properties=None, attribute=None, splitrisk=False)
-        return render(request, 'api/listthreat.html', {'ind': ind['results']})
+        ind = pud.search.threat(risk=['unknown', 'none', 'low', 'medium', 'high', 'critical', 'retired'],category=['malware'], properties=None, attribute=None, splitrisk=False)
+        return render(request, 'api/listmalware.html', {'ind': ind['results']})
+    def listedomain(request):
+        pud = pulsedive.Pulsedive('1b0d0dcb40d124d4d91a40cb00f281527a84139d23d685e32fd18b28bb3e7013')
+        ind = pud.search.indicator(risk=['unknown', 'none', 'low', 'medium', 'high', 'critical', 'retired'],indicator_type=['url', 'domain'], lastseen=None, latest=None, limit=None, export=False, properties=None, attribute=None, feed=None, threat=None)
+        return render(request, 'api/listdomain.html', {'ind': ind['results']})
+    def listeip(request):
+        pud = pulsedive.Pulsedive('1b0d0dcb40d124d4d91a40cb00f281527a84139d23d685e32fd18b28bb3e7013')
+        ind = pud.search.indicator(risk=['unknown', 'none', 'low', 'medium', 'high', 'critical', 'retired'],indicator_type=['ip', 'ipv6'], lastseen=None, latest=None, limit=None, export=False, properties=None, attribute=None, feed=None, threat=None)
+        return render(request, 'api/listip.html', {'ind': ind['results']})
 
 
     def checkfile(request):
