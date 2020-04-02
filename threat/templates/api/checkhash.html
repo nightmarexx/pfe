@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+{% if user.is_authenticated %}
+<html dir="ltr" lang="en">
+
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
+    <title>Xtreme admin Template - The Ultimate Multipurpose admin template</title>
+    <!-- This Page CSS -->
+       {% load static %}
+    <link href="{% static 'assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css' %}" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{% static 'dist/css/style.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/extra-libs/DataTables/datatables.css' %}" rel="stylesheet" type="text/css" />
+    <!-- Custom CSS -->
+    <link href="{% static 'dist/css/style.min.css' %}" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
+<![endif]-->
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <div class="navbar-header">
+                    <!-- This is for the sidebar toggle which is visible on mobile only -->
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+                    <!-- ============================================================== -->
+                    <!-- Logo -->
+                    <!-- ============================================================== -->
+                    <a class="navbar-brand" href="index.html">
+                        <!-- Logo icon -->
+                        <b class="logo-icon">
+                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                            <!-- Dark Logo icon -->
+                            <img src="{% static 'assets/images/logo-icon.png' %}" alt="homepage" class="dark-logo" />
+                            <!-- Light Logo icon -->
+                            <img src="{% static 'assets/images/logo-light-icon.png' %}" alt="homepage" class="light-logo" />
+                        </b>
+                        <!--End Logo icon -->
+                        <!-- Logo text -->
+                        <span class="logo-text">
+                             <!-- dark Logo text -->
+                             <img src="{% static 'assets/images/logo-text.png' %}" alt="homepage" class="dark-logo" />
+                             <!-- Light Logo text -->    
+                             <img src="{% static 'assets/images/logo-light-text.png' %}" class="light-logo" alt="homepage" />
+                        </span>
+                    </a>
+                    <!-- ============================================================== -->
+                    <!-- End Logo -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- Toggle which is visible on mobile only -->
+                    <!-- ============================================================== -->
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i class="ti-more"></i></a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse collapse" id="navbarSupportedContent">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-left mr-auto">
+                        <li class="nav-item d-none d-md-block"><a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)" data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a></li>
+                        <!-- ============================================================== -->
+                        <!-- mega menu -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown mega-dropdown"><a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="d-none d-md-block">Checker<i class="fa fa-angle-down"></i></span>
+                             <span class="d-block d-md-none"><i class="mdi mdi-dialpad font-24"></i></span>
+                            </a>
+                            <div class="dropdown-menu animated bounceInDown">
+                                <div class="mega-dropdown-menu row" style="height: 200px;">
+                                    <div class="col-lg-3  m-b-40 m-t-20">
+                                        <h4 class="m-b-20">Check Domain</h4>
+                                        <form action="/checkdomain" method="POST" class="app-search position-absolute">
+                                            {% csrf_token %}
+                                        		<div class="form-group">
+                                           <input type="text"  name="domain" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"></a>
+                                       			</div>
+                                            <button type="submit" class="btn btn-info">Check Domain</button>
+                                        </form>
+                                    </div>
+                                    <div class="col-lg-3  m-b-40 m-t-20">
+                                        <h4 class="m-b-20">Chech Ip Adresse</h4>
+                                        	<form action="/checkip" method="POST" class="app-search position-absolute">
+                                                {% csrf_token %}
+                                        		<div class="form-group">
+                                           <input type="text" name="ip" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"></a>
+                                       			</div>
+                                            <button type="submit" class="btn btn-info">Chech Ip Adresse</button>
+                                            </form>
+                                    </div>
+                                    <div class="col-lg-3  m-b-40 m-t-20">
+                                        <h4 class="m-b-20">Check Hash</h4>
+                                        	<form action="/checkhash" method="POST" class="app-search position-absolute">
+                                                {% csrf_token %}
+                                        		<div class="form-group">
+                                           <input type="text" name="hash" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"></a>
+                                       			</div>
+                                            <button type="submit" class="btn btn-info">Check Hash</button>
+                                            </form>
+                                    </div>
+                                    <div class="col-lg-3  m-b-40 m-t-20">
+                                        <h4 class="m-b-20">Check File</h4>
+                                        	<form action="/checkfile" method="POST" enctype="multipart/form-data" class="app-search position-absolute">
+                                                {% csrf_token %}
+                                        		<div class="form-group">
+                                                    <input type="file" name="myfile" class="form-control">
+                                       			</div>
+                                            <button type="submit" class="btn btn-info">Check File</button>
+                                            </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+
+                    </ul>
+                    <!-- ============================================================== -->
+                    <!-- Right side toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-right">
+                        <!-- ============================================================== -->
+                        <!-- create new -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="flag-icon flag-icon-us"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right  animated bounceInDown" aria-labelledby="navbarDropdown2">
+                                <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-us"></i> English</a>
+                                <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-fr"></i> French</a>
+                                <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-es"></i> Spanish</a>
+                                <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-de"></i> German</a>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- Comment -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-bell font-24"></i>
+                                
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown">
+                                <span class="with-arrow"><span class="bg-primary"></span></span>
+                                <ul class="list-style-none">
+                                    <li>
+                                        <div class="drop-title bg-primary text-white">
+                                            <h4 class="m-b-0 m-t-5">4 New</h4>
+                                            <span class="font-light">Notifications</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="message-center notifications">
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)" class="message-item">
+                                                <span class="btn btn-danger btn-circle"><i class="fa fa-link"></i></span>
+                                                <div class="mail-contnet">
+                                                    <h5 class="message-title">Luanch Admin</h5> <span class="mail-desc">Just see the my new admin!</span> <span class="time">9:30 AM</span> </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)" class="message-item">
+                                                <span class="btn btn-success btn-circle"><i class="ti-calendar"></i></span>
+                                                <div class="mail-contnet">
+                                                    <h5 class="message-title">Event today</h5> <span class="mail-desc">Just a reminder that you have event</span> <span class="time">9:10 AM</span> </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)" class="message-item">
+                                                <span class="btn btn-info btn-circle"><i class="ti-settings"></i></span>
+                                                <div class="mail-contnet">
+                                                    <h5 class="message-title">Settings</h5> <span class="mail-desc">You can customize this template as you want</span> <span class="time">9:08 AM</span> </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)" class="message-item">
+                                                <span class="btn btn-primary btn-circle"><i class="ti-user"></i></span>
+                                                <div class="mail-contnet">
+                                                    <h5 class="message-title">Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link text-center m-b-5 text-dark" href="javascript:void(0);"> <strong>Check all notifications</strong> <i class="fa fa-angle-right"></i> </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- End Comment -->
+                        <!-- ============================================================== -->
+                        <!-- ============================================================== -->
+                        <!-- Messages -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-comment-processing"></i>
+                                
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" aria-labelledby="2">
+                                <span class="with-arrow"><span class="bg-danger"></span></span>
+                                <ul class="list-style-none">
+                                    <li>
+                                        <div class="drop-title text-white bg-danger">
+                                            <h4 class="m-b-0 m-t-5">5 New</h4>
+                                            <span class="font-light">Messages</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="message-center message-body">
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)" class="message-item">
+                                                <span class="user-img"> <img src="../../assets/images/users/1.jpg" alt="user" class="rounded-circle"> <span class="profile-status online pull-right"></span> </span>
+                                                <div class="mail-contnet">
+                                                    <h5 class="message-title">Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:30 AM</span> </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)" class="message-item">
+                                                <span class="user-img"> <img src="../../assets/images/users/2.jpg" alt="user" class="rounded-circle"> <span class="profile-status busy pull-right"></span> </span>
+                                                <div class="mail-contnet">
+                                                    <h5 class="message-title">Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span> <span class="time">9:10 AM</span> </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)" class="message-item">
+                                                <span class="user-img"> <img src="../../assets/images/users/3.jpg" alt="user" class="rounded-circle"> <span class="profile-status away pull-right"></span> </span>
+                                                <div class="mail-contnet">
+                                                    <h5 class="message-title">Arijit Sinh</h5> <span class="mail-desc">I am a singer!</span> <span class="time">9:08 AM</span> </div>
+                                            </a>
+                                            <!-- Message -->
+                                            <a href="javascript:void(0)" class="message-item">
+                                                <span class="user-img"> <img src="../../assets/images/users/4.jpg" alt="user" class="rounded-circle"> <span class="profile-status offline pull-right"></span> </span>
+                                                <div class="mail-contnet">
+                                                    <h5 class="message-title">Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link text-center link text-dark" href="javascript:void(0);"> <b>See all e-Mails</b> <i class="fa fa-angle-right"></i> </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- End Messages -->
+                        <!-- ============================================================== -->
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static 'assets/images/users/1.jpg' %}" alt="user" class="rounded-circle" width="31"></a>
+                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+                                <span class="with-arrow"><span class="bg-primary"></span></span>
+                                <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
+
+                                    <div class="m-l-10">
+                                        <h4 class="m-b-0">{{ user.username }}</h4>
+                                        <p class=" m-b-0">{{ user.email }}</p>
+                                    </div>
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/edit_user/{{ user.id }}"><i class="ti-settings m-r-5 m-l-5"></i>Modifier Compte</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/logout_user"><i class="fa fa-power-off m-r-5 m-l-5"></i> Se Déconncté</a>
+                                <div class="dropdown-divider"></div>
+
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <!-- User Profile-->
+                        <li>
+                            <!-- User Profile-->
+                            <div class="user-profile d-flex no-block dropdown mt-3">
+
+                                <div class="user-content hide-menu ml-2">
+                                    <a href="javascript:void(0)" class="" id="Userdd" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <h5 class="mb-0 user-name font-medium">{{ user.username }}<i class="fa fa-angle-down"></i></h5>
+                                        <span class="op-5 user-email">{{ user.email }}</span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="Userdd">
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="/edit_user/{{ user.id }}"><i class="ti-settings mr-1 ml-1"></i>Modifier Compte</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="/logout_user"><i class="fa fa-power-off mr-1 ml-1"></i>Se Déconnecté</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End User Profile-->
+                        </li>
+                        <!-- User Profile-->
+                        <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">Personal</span></li>
+                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Utilisateurs</span></a>
+                            <ul aria-expanded="false" class="collapse  first-level">
+                                {% if user.is_superuser == 1 %}
+                                <li class="sidebar-item"><a href="/add_user" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Ajout d'un utilisateur </span></a></li>
+                                <li class="sidebar-item"><a href="/display_user" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Affichage des utilisateurs </span></a></li>
+                                {% else %}
+                                <li class="sidebar-item"><a href="/display_user" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Affichage des utilisateurs </span></a></li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                        <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">Feed Threat</span></li>
+                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Feed</span></a>
+                            <ul aria-expanded="false" class="collapse  first-level">
+
+                                <li class="sidebar-item"><a href="/listmalware" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu">Liste des malwares</span></a></li>
+                                <li class="sidebar-item"><a href="/listdomain" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu">Liste des domaines</span></a></li>
+
+                                <li class="sidebar-item"><a href="/listip" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu">Liste des IP</span></a></li>
+                                <li class="sidebar-item"><a href="/listhash" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu">Liste des Hash</span></a></li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-5 align-self-center">
+                        <h4 class="page-title">Hash</h4>
+                        <div class="d-flex align-items-center">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#">Accueil</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Resultat</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="col-7 align-self-center">
+                        <div class="d-flex no-block justify-content-end align-items-center">
+                            <div class="mr-2">
+                                <div class="lastmonth"></div>
+                            </div>
+                            <div class="">
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+
+
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+            <div class="card-body">
+            <h4 class="card-title">Basic Information</h4>
+            <h6 class="card-subtitle mb-2 text-muted">Threat Name : {{ general.threat_name }}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">MD5 : {{ general.file_info.md5 }}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">SHA1 : {{ general.file_info.sha1 }}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">SHA256 : {{ general.file_info.sha256 }}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">Extention File : {{ general.file_info.file_type_extension }}</h6>
+            </div>
+            </div>
+
+                        <div class="card">
+            <div class="card-body">
+            <h4 class="card-title">Validation</h4>
+                <h5 class="card-subtitle mb-2 text-muted">{{ general.scan_results.scan_all_result_a }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">MultiScan Score : {{ general.scan_results.total_detected_avs }} / {{ general.scan_results.total_avs }}</h6>
+            </div>
+            </div>
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-4 float-right">
+
+
+                                </div>
+
+                                <h4 class="card-title">Scan Resultat</h4>
+                                <h6 class="card-subtitle"></h6>
+
+                                 <table class="table table-striped table-bordered" id="zero_config">
+                                    <thead>
+                                        <tr>
+                                            <th>Engine</th>
+                                            <th>Resultat</th>
+                                            <th>Derniére mise à jour</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr id="" class="gradeX">
+                                            <td> ASUPERAntiSpyware</td>
+                                            <td>{{ scan.ASUPERAntiSpyware.threat_found }}</td>
+                                            <td>{{ scan.SUPERAntiSpyware.def_time }}</td>
+                                        </tr>
+                                        <tr id="" class="gradeX">
+                                            <td> NANOAV </td>
+                                            <td>{{ scan.NANOAV.threat_found }}</td>
+                                            <td>{{ scan.NANOAV.def_time }}</td>
+                                        </tr><tr id="" class="gradeX">
+                                            <td> McAfee </td>
+                                            <td>{{ scan.McAfee.threat_found }}</td>
+                                            <td>{{ scan.McAfee.def_time }}</td>
+                                        </tr><tr id="" class="gradeX">
+                                            <td> ESET </td>
+                                            <td>{{ scan.ESET.threat_found }}</td>
+                                            <td>{{ scan.ESET.def_time }}</td>
+                                        </tr><tr id="" class="gradeX">
+                                            <td> ClamAV </td>
+                                            <td>{{ scan.ClamAV.threat_found }}</td>
+                                            <td>{{ scan.NANOAV.def_time }}</td>
+                                        </tr><tr id="" class="gradeX">
+                                            <td> Comodo </td>
+                                            <td>{{ scan.Comodo.threat_found }}</td>
+                                            <td>{{ scan.Comodo.def_time }}</td>
+                                        </tr><tr id="" class="gradeX">
+                                            <td> Antiy </td>
+                                            <td>{{ scan.Antiy.threat_found }}</td>
+                                            <td>{{ scan.Antiy.def_time }}</td>
+                                        </tr><tr id="" class="gradeX">
+                                            <td> VirusBlokAda </td>
+                                            <td>{{ scan.VirusBlokAda.threat_found }}</td>
+                                            <td>{{ scan.VirusBlokAda.def_time }}</td>
+                                        </tr><tr id="" class="gradeX">
+                                            <td> Ahnlab </td>
+                                            <td>{{ scan.Ahnlab.threat_found }}</td>
+                                            <td>{{ scan.Ahnlab.def_time }}</td>
+                                        </tr><tr id="" class="gradeX">
+                                            <td> TrendMicro </td>
+                                            <td>{{ scan.TrendMicro.threat_found }}</td>
+                                            <td>{{ scan.TrendMicro.def_time }}</td>
+                                        </tr><tr id="" class="gradeX">
+                                            <td> ByteHero </td>
+                                            <td>{{ scan.ByteHero.threat_found }}</td>
+                                            <td>{{ scan.ByteHero.def_time }}</td>
+                                        </tr><tr id="" class="gradeX">
+                                            <td> Kaspersky </td>
+                                            <td>{{ scan.Kaspersky.threat_found }}</td>
+                                            <td>{{ scan.Kaspersky.def_time }}</td>
+                                        </tr><tr id="" class="gradeX">
+                                            <td> Fortinet </td>
+                                            <td>{{ scan.Fortinet.threat_found }}</td>
+                                            <td>{{ scan.Fortinet.def_time }}</td>
+                                        </tr><tr id="" class="gradeX">
+                                            <td> BitDefender </td>
+                                            <td>{{ scan.BitDefender.threat_found }}</td>
+                                            <td>{{ scan.BitDefender.def_time }}</td>
+                                        </tr>
+                                        <tr id="" class="gradeX">
+                                            <td> Avira</td>
+                                            <td>{{ scan.Avira.threat_found }}</td>
+                                            <td>{{ scan.Avira.def_time }}</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+
+
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <footer class="footer text-center">
+       All Rights Reserved by Xtreme admin. Designed and Developed by <a href="https://wrappixel.com">WrapPixel</a>.
+</footer>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- customizer Panel -->
+    <!-- ============================================================== -->
+
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+        <script>
+function delete(id) {
+  var r = confirm("Vous voulez confirmer la suppression!");
+  if (r == true) {
+    window.location = '/delete_user/'+id;
+} else {
+
+}
+}
+</script>
+    <script>
+        function edit(id) {
+window.location = '/edit_user/'+id;
+}
+    </script>
+    <script src="{% static 'assets/libs/jquery/dist/jquery.min.js' %}"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="{% static 'assets/libs/popper.js/dist/umd/popper.min.js' %}"></script>
+    <script src="{% static 'assets/libs/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <!-- apps -->
+    <script src="{% static 'dist/js/app.min.js' %}"></script>
+    <script src="{% static 'dist/js/app.init.dark.js' %}"></script>
+    <script src="{% static 'dist/js/app-style-switcher.js' %}"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="{% static 'assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js' %}"></script>
+    <script src="{% static 'assets/extra-libs/sparkline/sparkline.js' %}"></script>
+    <!--Wave Effects -->
+    <script src="{% static 'dist/js/waves.js' %}"></script>
+    <!--Menu sidebar -->
+    <script src="{% static 'dist/js/sidebarmenu.js' %}"></script>
+    <!--Custom JavaScript -->
+    <script src="{% static 'dist/js/custom.min.js' %}"></script>
+    <script src="{% static 'assets/extra-libs/DataTables/datatables.min.js' %}"></script>
+    <script src="{% static 'dist/js/pages/datatable/datatable-basic.init.js' %}"></script>
+    <script src="{% static 'dist/js/pages/datatable/datatable-basic.init2.js' %}"></script>
+    <script src="{% static 'dist/js/pages/datatable/datatable-basic.init3.js' %}"></script>
+
+
+
+</body>
+
+
+</html>
+{% elif user.is_authenticated is not None %}
+<meta http-equiv="Refresh" content="0; url=//127.0.0.1:8000/login_user" />
+{% endif %}

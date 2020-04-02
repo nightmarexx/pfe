@@ -33,6 +33,7 @@ urlpatterns = [
     path('listmalware',login_required(views.threat.listemalware)),
     path('listdomain',login_required(views.threat.listedomain)),
     path('listip',login_required(views.threat.listeip)),
+    path('listhash',login_required(views.threat.listehash)),
     path('checkfile',login_required(views.threat.checkfile)),
     path('checkdomain',login_required(views.threat.checkdomain)),
     path('checkip',login_required(views.threat.checkip)),

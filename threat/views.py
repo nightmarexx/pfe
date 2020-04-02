@@ -134,11 +134,14 @@ class threat(View):
             data_dict = json.load(json_data)
 
         return render(request, 'api/listfeed.html', {'ind': data_dict})
-    def listeattack(request):
-        honeydb = api.Client('3db6f7b66c3d69f881d51f99c7447a335c0183caded44ae799d6e56ce85d934b','c95af819d97737589a754bf9f6d76c0a68f9514bd052a58493d62944e75a6788')
-        print(honeydb.bad_hosts())
-        honeydb.netinfo_lookup()
-        return render(request, 'api/listattack.html')
+    def listehash(request):
+        url = "https://api.metadefender.com/v4/feed/infected/latest"
+        headers = {
+            'apikey': "4cfb6fa3cc775fafd692478b9b7cd11f"
+        }
+        response = requests.request("GET", url, headers=headers)
+        re=response.json()
+        return render(request, 'api/listhash.html', {'ind': re['hashes']})
 
     def listemalware(request):
         pud = pulsedive.Pulsedive('1b0d0dcb40d124d4d91a40cb00f281527a84139d23d685e32fd18b28bb3e7013')
@@ -210,8 +213,13 @@ class threat(View):
     def checkhash(request):
         if request.method == "POST":
             hash = request.POST.get('hash', False)
-        otx = OTXv2("cee9c5f59ddad6f61aead25b961fb1ca6060bee6157137f95a868d5bb0c842e7")
-        re = otx.get_indicator_details_full(IndicatorTypes.DOMAIN, hash)
+        url = "https://api.metadefender.com/v4/hash/"+hash
+        headers = {
+            'apikey': "4cfb6fa3cc775fafd692478b9b7cd11f"
+        }
+        response = requests.request("GET", url, headers=headers)
+        re=response.json()
+        return render(request, 'api/checkhash.html', {'general': re, 'scan': re['scan_results']['scan_details']})
 
 
 
