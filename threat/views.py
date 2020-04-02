@@ -205,9 +205,9 @@ class threat(View):
         passive_dns = response2.json()
         response3 = requests.get('https://otx.alienvault.com/api/v1/indicators/IPv4/' + ip + '/malware')
         malware = response3.json()
-        if len(http_scan) == 1 :
-            http_scan=None
-        return render(request, 'api/checkip.html', {'general': re['general'], 'url_list': re['url_list']['url_list'], 'passive_dns': passive_dns['passive_dns'], 'http_scan': http_scan['data'], 'malware': malware['data']})
+        if len(http_scan) == 1:
+            http_scan = None
+        return render(request, 'api/checkip.html', {'general': re['general'], 'url_list': re['url_list']['url_list'], 'passive_dns': passive_dns['passive_dns'], 'http_scan': http_scan, 'malware': malware['data']})
 
 
     def checkhash(request):
