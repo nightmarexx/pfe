@@ -10,8 +10,8 @@ from django.views import View
 from honeydb import api
 from OTXv2 import OTXv2
 from OTXv2 import IndicatorTypes
-
-
+import time
+from virus_total_apis import PublicApi as VirusTotalPublicApi
 import cloudmersive_virus_api_client
 from cloudmersive_virus_api_client.rest import ApiException
 
@@ -145,15 +145,15 @@ class threat(View):
 
     def listemalware(request):
         pud = pulsedive.Pulsedive('1b0d0dcb40d124d4d91a40cb00f281527a84139d23d685e32fd18b28bb3e7013')
-        ind = pud.search.threat(risk=['unknown', 'none', 'low', 'medium', 'high', 'critical', 'retired'],category=['malware'], properties=None, attribute=None, splitrisk=False)
+        ind = pud.search.threat(risk=['unknown', 'none', 'low', 'medium', 'high', 'critical', 'retired'], category=['malware'], properties=None, attribute=None, splitrisk=False)
         return render(request, 'api/listmalware.html', {'ind': ind['results']})
     def listedomain(request):
         pud = pulsedive.Pulsedive('1b0d0dcb40d124d4d91a40cb00f281527a84139d23d685e32fd18b28bb3e7013')
-        ind = pud.search.indicator(risk=['unknown', 'none', 'low', 'medium', 'high', 'critical', 'retired'],indicator_type=['url', 'domain'], lastseen=None, latest=None, limit=None, export=False, properties=None, attribute=None, feed=None, threat=None)
+        ind = pud.search.indicator(risk=['unknown', 'none', 'low', 'medium', 'high', 'critical', 'retired'], indicator_type=['url', 'domain'], lastseen=None, latest=None, limit=None, export=False, properties=None, attribute=None, feed=None, threat=None)
         return render(request, 'api/listdomain.html', {'ind': ind['results']})
     def listeip(request):
         pud = pulsedive.Pulsedive('1b0d0dcb40d124d4d91a40cb00f281527a84139d23d685e32fd18b28bb3e7013')
-        ind = pud.search.indicator(risk=['unknown', 'none', 'low', 'medium', 'high', 'critical', 'retired'],indicator_type=['ip', 'ipv6'], lastseen=None, latest=None, limit=None, export=False, properties=None, attribute=None, feed=None, threat=None)
+        ind = pud.search.indicator(risk=['unknown', 'none', 'low', 'medium', 'high', 'critical', 'retired'], indicator_type=['ip', 'ipv6'], lastseen=None, latest=None, limit='hundred', export=False, properties=None, attribute=None, feed=None, threat=None)
         return render(request, 'api/listip.html', {'ind': ind['results']})
 
 
@@ -164,18 +164,18 @@ class threat(View):
             fs = FileSystemStorage()
             filename = fs.save(myfile.name, myfile)
             uploaded_file_url = fs.url(filename)
-            configuration = cloudmersive_virus_api_client.Configuration()
-            configuration.api_key['Apikey'] = 'd2af0df3-5d75-41b0-bb4c-1d75851dbbd1'
+            input_file = '/home/hedi/PycharmProjects/pfe/media/'+filename
 
-            # create an instance of the API class
-            api_instance = cloudmersive_virus_api_client.ScanApi(cloudmersive_virus_api_client.ApiClient(configuration))
-            input_file = '/home/hedi/Téléchargements/pfe/pfe/media/'+filename
+            vt = VirusTotalPublicApi("c6c0f01017b99df69fc4062421dfe7ab8079adbdc6a3fcf5741aee9b060dec25")
+            vt2 = VirusTotalPublicApi("dc1cfb1c11233bff41fd313b933889721b563f615e73cd3bd2f050df0d902fb5")
+            reponse = vt.scan_file(input_file)
+            ree2 = vt2.get_file_report(reponse['results']['scan_id'])
+            time.sleep(60)
+            reponse = vt2.scan_file(input_file)
+            ree = vt2.get_file_report(reponse['results']['scan_id'])
+            return render(request, 'api/checkfile.html', {'ree': ree['results']})
+        return redirect('/display_user')
 
-            api_response = api_instance.scan_file(input_file)
-            return render(request, 'api/resultatfile.html', {
-                'rep': api_response
-            })
-        return render(request, 'api/scanfile.html')
     def checkdomain(request):
         if request.method == "POST":
             domain = request.POST.get('domain', False)
@@ -207,7 +207,8 @@ class threat(View):
         malware = response3.json()
         if len(http_scan) == 1:
             http_scan = None
-        return render(request, 'api/checkip.html', {'general': re['general'], 'url_list': re['url_list']['url_list'], 'passive_dns': passive_dns['passive_dns'], 'http_scan': http_scan, 'malware': malware['data']})
+        return render(request, 'api/checkip.html', {'general': re['general'], 'url_list': re['url_list']['url_list'], 'passive_dns': passive_dns['passive_dns'], 'http_scan': http_scan
+            , 'malware': malware['data']})
 
 
     def checkhash(request):
@@ -219,6 +220,8 @@ class threat(View):
         }
         response = requests.request("GET", url, headers=headers)
         re=response.json()
+
+
         return render(request, 'api/checkhash.html', {'general': re, 'scan': re['scan_results']['scan_details']})
 
 
