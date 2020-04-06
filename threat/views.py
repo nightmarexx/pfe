@@ -165,15 +165,32 @@ class threat(View):
             filename = fs.save(myfile.name, myfile)
             uploaded_file_url = fs.url(filename)
             input_file = '/home/hedi/PycharmProjects/pfe/media/'+filename
+            #vt = VirusTotalPublicApi("c6c0f01017b99df69fc4062421dfe7ab8079adbdc6a3fcf5741aee9b060dec25")
+            #vt2 = VirusTotalPublicApi("dc1cfb1c11233bff41fd313b933889721b563f615e73cd3bd2f050df0d902fb5")
+            #reponse = vt.scan_file(input_file)
+            #ree2 = vt2.get_file_report(reponse['results']['scan_id'])
+            #time.sleep(60)
+            #reponse = vt2.scan_file(input_file)
+            #ree = vt2.get_file_report(reponse['results']['scan_id'])
+            url1 = 'https://www.virustotal.com/vtapi/v2/file/scan'
+            params1 = {'apikey': 'c6c0f01017b99df69fc4062421dfe7ab8079adbdc6a3fcf5741aee9b060dec25'}
+            files1 = {'file': (input_file, open(input_file, 'rb'))}
+            response = requests.post(url1, files=files1, params=params1)
+            ree1 = response.json()
+            url2 = 'https://www.virustotal.com/vtapi/v2/file/report'
+            params2 = {'apikey': 'dc1cfb1c11233bff41fd313b933889721b563f615e73cd3bd2f050df0d902fb5','resource': ree1['sha1']}
+            response2 = requests.get(url2, params=params2)
+            ree2 = response2.json()
+            ree = response2.json()
+            while ree2['response_code'] == -2 or ree['response_code'] == -2 or ree1['response_code'] == -2 :
+                ree2['response_code'] = 1
+                response = requests.post(url1, files=files1, params=params1)
+                ree1 = response.json()
+                time.sleep(15)
+                response3 = requests.get(url2, params=params2)
+                ree = response3.json()
 
-            vt = VirusTotalPublicApi("c6c0f01017b99df69fc4062421dfe7ab8079adbdc6a3fcf5741aee9b060dec25")
-            vt2 = VirusTotalPublicApi("dc1cfb1c11233bff41fd313b933889721b563f615e73cd3bd2f050df0d902fb5")
-            reponse = vt.scan_file(input_file)
-            ree2 = vt2.get_file_report(reponse['results']['scan_id'])
-            time.sleep(60)
-            reponse = vt2.scan_file(input_file)
-            ree = vt2.get_file_report(reponse['results']['scan_id'])
-            return render(request, 'api/checkfile.html', {'ree': ree['results']})
+            return render(request, 'api/checkfile.html', {'ree': ree})
         return redirect('/display_user')
 
     def checkdomain(request):
