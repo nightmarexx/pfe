@@ -23,60 +23,14 @@ $(function() {
                 legend: {
                     orient: 'vertical',
                     x: 'left',
-                    data: ['IE', 'Opera', 'Safari', 'Firefox', 'Chrome']
+                    data: ['hedi','H','E','I','D','IE', 'Opera', 'Safari', 'Firefox', 'Chrome']
                 },
 
                 // Add custom colors
-                color: ['#ffbc34', '#4fc3f7', '#212529', '#f62d51', '#2962FF'],
+                color: ['#ffbc34', '#4fc3f7', '#212529', '#f62d51', '#2962FF','#ffbc35','#ffbc36','#ffbc37','#ffbc38','#ffbc39'],
 
                 // Display toolbox
-                toolbox: {
-                    show: true,
-                    orient: 'vertical',
-                    feature: {
-                        mark: {
-                            show: true,
-                            title: {
-                                mark: 'Markline switch',
-                                markUndo: 'Undo markline',
-                                markClear: 'Clear markline'
-                            }
-                        },
-                        dataView: {
-                            show: true,
-                            readOnly: false,
-                            title: 'View data',
-                            lang: ['View chart data', 'Close', 'Update']
-                        },
-                        magicType: {
-                            show: true,
-                            title: {
-                                pie: 'Switch to pies',
-                                funnel: 'Switch to funnel',
-                            },
-                            type: ['pie', 'funnel'],
-                            option: {
-                                funnel: {
-                                    x: '25%',
-                                    y: '20%',
-                                    width: '50%',
-                                    height: '70%',
-                                    funnelAlign: 'left',
-                                    max: 1548
-                                }
-                            }
-                        },
-                        restore: {
-                            show: true,
-                            title: 'Restore'
-                        },
-                        saveAsImage: {
-                            show: true,
-                            title: 'Same as image',
-                            lang: ['Save']
-                        }
-                    }
-                },
+
 
                 // Enable drag recalculate
                 calculable: true,
@@ -88,8 +42,13 @@ $(function() {
                     radius: '70%',
                     center: ['50%', '57.5%'],
                     data: [
-                        {value: 335, name: 'IE'},
-                        {value: 310, name: 'Opera'},
+                        {value: 10, name: 'hedi'},
+                        {value: 20, name: 'H'},
+                        {value: 30, name: 'E'},
+                        {value: 40, name: 'D'},
+                        {value: 50, name: 'I'},
+                        {value: 60, name: 'IE'},
+                        {value: 220, name: 'Opera'},
                         {value: 234, name: 'Safari'},
                         {value: 135, name: 'Firefox'},
                         {value: 1548, name: 'Chrome'}

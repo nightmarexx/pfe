@@ -23,7 +23,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login_user',views.utilisateur.login_user),
-    path('index',login_required(views.utilisateur.index)),
+    path('index',login_required(views.dashbord.index)),
     path('add_user',login_required(views.utilisateur.add_user)),
     path('delete_user/<int:id>', login_required(views.utilisateur.delete_user)),
     path('edit_user/<int:id>', login_required(views.utilisateur.edit_user)),

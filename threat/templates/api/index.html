@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-{% if user.is_authenticated %}
 <html dir="ltr" lang="en">
 
 <head>
@@ -10,9 +9,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    {% load static %}
     <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
     <title>Xtreme admin Template - The Ultimate Multipurpose admin template</title>
+    <!-- Custom CSS -->
+    {% load static %}
+    <link href="{% static 'assets/extra-libs/css-chart/css-chart.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css' %}" rel="stylesheet" />
     <!-- Custom CSS -->
     <link href="{% static 'dist/css/style.min.css' %}" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -734,7 +736,7 @@
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-5 align-self-center">
-                        <h4 class="page-title">Form Basic</h4>
+                        <h4 class="page-title">Dashboard</h4>
                         <div class="d-flex align-items-center">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
@@ -746,37 +748,212 @@
                     </div>
                     <div class="col-7 align-self-center">
                         <div class="d-flex no-block justify-content-end align-items-center">
-                            <div class="mr-2">
+                            <div class="m-r-10">
                                 <div class="lastmonth"></div>
                             </div>
                             <div class=""><small>LAST MONTH</small>
-                                <h4 class="text-info mb-0 font-medium">$58,256</h4></div>
+                                <h4 class="text-info m-b-0 font-medium">$58,256</h4></div>
                         </div>
                     </div>
                 </div>
             </div>
-
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
             <div class="container-fluid">
-
+                <!-- ============================================================== -->
+                <!-- User Data, Visits -->
+                <!-- ============================================================== -->
                 <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card card-body">
-                            <h4 class="card-title">Default Forms</h4>
-                            <h5 class="card-subtitle"> All bootstrap element classies </h5>
-                            <form action="/file" method="POST" enctype="multipart/form-data" class="form-horizontal mt-4">
-                                            {% csrf_token %}
-                                <div class="form-group">
-                                    <label>Default file upload</label>
-                                    <input type="file" name="myfile" class="form-control">
-                                     <div class="input-group-prepend">
-                                             <button class="input-group-text" type="submit">Upload</button>
-                                     </div>
-                                </div>
-                            </form>
+                  <div class="col-lg-12 col-xl-6">
+                        <div class="card">
+                            <div class="card-body analytics-info">
+                                <h4 class="card-title">Top Attack Services</h4>
+                                <div id="basic-pie" style="height:400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-xl-6">
+                        <div class="card">
+                            <div class="card-body analytics-info">
+                                <h4 class="card-title">Top Attack Hosts</h4>
+                                <div id="basic-doughnut" style="height:400px;"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <!-- ============================================================== -->
+                <!-- Locations -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <!-- column -->
 
+                </div>
+                <!-- ============================================================== -->
+                <!-- Activity, Referrals -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <!-- column -->
+                    <div class="col-sm-12 col-lg-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Top Attack Hosts</h4>
+                                <h5 class="card-subtitle"></h5>
+                                <div class="table-responsive">
+                                    <table class="table v-middle">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-top-0">Remote host</th>
+                                                <th class="text-center border-top-0">Nombre</th>
+                                                <th class="text-center border-top-0">Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for i in hosts %}
+                                            <tr>
+                                                <td class="font-bold">
+                                                    {{ i.remote_host }}
+                                                </td>
+                                                <td class="text-center">{{ i.count }}</td>
+                                                <td class="font-bold text-center">{{ i.last_seen }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- column -->
+                    <div class="col-sm-12 col-lg-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Services</h4>
+                                <h5 class="card-subtitle"></h5>
+                                <table class="table v-middle">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">Services</th>
+                                            <th class="text-center border-top-0">Nombres</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for i in services %}
+                                        <tr>
+                                            <td class="font-bold">
+                                                 {{ i.service }}
+                                            </td>
+                                            <td class="text-center">{{ i.count }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- Task, Feeds -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <!-- column -->
+                    <div class="col-sm-12 col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Task List</h4>
+                                <div class="todo-widget scrollable" style="height:450px;">
+                                    <ul class="list-task todo-list list-group m-b-0" data-role="tasklist">
+                                        <li class="list-group-item todo-item" data-role="task">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck">
+                                                <label class="custom-control-label todo-label" for="customCheck">
+                                                    <span class="todo-desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</span> <span class="badge badge-pill badge-danger float-right">Today</span>
+                                                </label>
+                                            </div>
+                                            <ul class="list-style-none assignedto">
+                                                <li class="assignee"><img class="assignee-img" src="../../assets/images/users/1.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Steave"></li>
+                                                <li class="assignee"><img class="assignee-img" src="../../assets/images/users/2.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Jessica"></li>
+                                                <li class="assignee"><img class="assignee-img" src="../../assets/images/users/3.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Priyanka"></li>
+                                                <li class="assignee"><img class="assignee-img" src="../../assets/images/users/4.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Selina"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="list-group-item todo-item" data-role="task">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                                <label class="custom-control-label todo-label" for="customCheck1">
+                                                    <span class="todo-desc">Lorem Ipsum is simply dummy text of the printing</span><span class="badge badge-pill badge-primary float-right">1 week </span>
+                                                </label>
+                                            </div>
+                                            <div class="item-date"> 26 jun 2017</div>
+                                        </li>
+                                        <li class="list-group-item todo-item" data-role="task">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                                <label class="custom-control-label todo-label" for="customCheck2">
+                                                    <span class="todo-desc">Give Purchase report to</span> <span class="badge badge-pill badge-info float-right">Yesterday</span>
+                                                </label>
+                                            </div>
+                                            <ul class="list-style-none assignedto">
+                                                <li class="assignee"><img class="assignee-img" src="../../assets/images/users/3.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Priyanka"></li>
+                                                <li class="assignee"><img class="assignee-img" src="../../assets/images/users/4.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Selina"></li>
+                                            </ul>
+                                        </li>
+                                        <li class="list-group-item todo-item" data-role="task">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck3">
+                                                <label class="custom-control-label todo-label" for="customCheck3">
+                                                    <span class="todo-desc">Lorem Ipsum is simply dummy text of the printing </span> <span class="badge badge-pill badge-warning float-right">2 weeks</span>
+                                                </label>
+                                            </div>
+                                            <div class="item-date"> 26 jun 2017</div>
+                                        </li>
+                                        <li class="list-group-item todo-item" data-role="task">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck4">
+                                                <label class="custom-control-label todo-label" for="customCheck4">
+                                                    <span class="todo-desc">Give Purchase report to</span> <span class="badge badge-pill badge-info float-right">Yesterday</span>
+                                                </label>
+                                            </div>
+                                            <ul class="list-style-none assignedto">
+                                                <li class="assignee"><img class="assignee-img" src="../../assets/images/users/3.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Priyanka"></li>
+                                                <li class="assignee"><img class="assignee-img" src="../../assets/images/users/4.jpg" alt="user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Selina"></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- column -->
+                    <div class="col-sm-12 col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Feeds</h4>
+                                <div class="feed-widget scrollable" style="height:450px;">
+                                    <ul class="list-style-none feed-body m-0 p-b-20">
+                                        <li class="feed-item">
+                                            <div class="feed-icon bg-info"><i class="far fa-bell"></i></div> You have 4 pending tasks. <span class="ml-auto font-12 text-muted">Just Now</span></li>
+                                        <li class="feed-item">
+                                            <div class="feed-icon bg-success"><i class="ti-server"></i></div> Server #1 overloaded.<span class="ml-auto font-12 text-muted">2 Hours ago</span></li>
+                                        <li class="feed-item">
+                                            <div class="feed-icon bg-warning"><i class="ti-shopping-cart"></i></div> New order received.<span class="ml-auto font-12 text-muted">31 May</span></li>
+                                        <li class="feed-item">
+                                            <div class="feed-icon bg-danger"><i class="ti-user"></i></div> New user registered.<span class="ml-auto font-12 text-muted">30 May</span></li>
+                                        <li class="feed-item">
+                                            <div class="feed-icon bg-inverse"><i class="far fa-bell"></i></div> New Version just arrived. <span class="ml-auto font-12 text-muted">27 May</span></li>
+                                        <li class="feed-item">
+                                            <div class="feed-icon bg-info"><i class="far fa-bell"></i></div> You have 4 pending tasks. <span class="ml-auto font-12 text-muted">Just Now</span></li>
+                                        <li class="feed-item">
+                                            <div class="feed-icon bg-danger"><i class="ti-user"></i></div> New user registered.<span class="ml-auto font-12 text-muted">30 May</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
@@ -791,9 +968,20 @@
             <!-- End footer -->
             <!-- ============================================================== -->
         </div>
-
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
     </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- customizer Panel -->
+    <!-- ============================================================== -->
 
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
     <script src="{% static 'assets/libs/jquery/dist/jquery.min.js' %}"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="{% static 'assets/libs/popper.js/dist/umd/popper.min.js' %}"></script>
@@ -811,9 +999,219 @@
     <script src="{% static 'dist/js/sidebarmenu.js' %}"></script>
     <!--Custom JavaScript -->
     <script src="{% static 'dist/js/custom.min.js' %}"></script>
+    <!--This page JavaScript -->
+    <script src="{% static 'assets/libs/flot/excanvas.min.js' %}"></script>
+    <script src="{% static 'assets/libs/flot/jquery.flot.js' %}"></script>
+    <script src="{% static 'assets/libs/jquery.flot.tooltip/js/jquery.flot.tooltip.min.js' %}"></script>
+    <script src="{% static 'assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js' %}"></script>
+    <script src="{% static 'assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js' %}"></script>
+    <script src="{% static 'dist/js/pages/dashboards/dashboard10.js' %}"></script>
+    <script src="{% static 'assets/libs/echarts/dist/echarts-en.min.js' %}"></script>
+    <script>
+    $(function() {
+    "use strict";
+    // ------------------------------
+    // Basic pie chart
+    // ------------------------------
+    // based on prepared DOM, initialize echarts instance
+        var basicpieChart = echarts.init(document.getElementById('basic-pie'));
+        var option = {
+            // Add title
+                title: {
+                    text: 'Top Attack Services',
+                    subtext: 'Open Source Information',
+                    x: 'center'
+                },
+
+                // Add tooltip
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b}: {c} ({d}%)"
+                },
+
+                // Add legend
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data: [
+                    {% for i in service %}
+                    '{{ i.service }}' ,
+                    {% endfor %}
+                    ]
+                },
+
+                // Add custom colors
+                color: ['#4fc3f7','#FFC400', '#212529', '#f62d51', '#2962FF', '#b2b9bf', '#006064', '#FF1744', '#36bea6', '#82ff34', '#64FFDA', '#607D8B'],
+
+                // Display toolbox
+                toolbox: {
+                    show: true,
+                    orient: 'vertical',
+                    feature: {
+                        mark: {
+                            show: true,
+                            title: {
+                                mark: 'Markline switch',
+                                markUndo: 'Undo markline',
+                                markClear: 'Clear markline'
+                            }
+                        },
+
+                        magicType: {
+                            show: true,
+                            title: {
+                                pie: 'Switch to pies',
+                                funnel: 'Switch to funnel',
+                            },
+                            type: ['pie', 'funnel'],
+                            option: {
+                                funnel: {
+                                    x: '25%',
+                                    y: '20%',
+                                    width: '50%',
+                                    height: '70%',
+                                    funnelAlign: 'left',
+                                    max: 1548
+                                }
+                            }
+                        },
+
+                        saveAsImage: {
+                            show: true,
+                            title: 'Same as image',
+                            lang: ['Save']
+                        }
+                    }
+                },
+
+                // Enable drag recalculate
+                calculable: true,
+
+                // Add series
+                series: [{
+                    name: 'Services',
+                    type: 'pie',
+                    radius: '70%',
+                    center: ['50%', '57.5%'],
+                    data: [
+                    {% for i in service %}
+                        {value: '{{ i.count }}', name: '{{ i.service }}'},
+                    {% endfor %}
+                    ]
+                }]
+        };
+
+        basicpieChart.setOption(option);
+    // ------------------------------
+    // Basic pie chart
+    // ------------------------------
+    // based on prepared DOM, initialize echarts instance
+        var basicdoughnutChart = echarts.init(document.getElementById('basic-doughnut'));
+        var option = {
+            // Add title
+                title: {
+                    text: 'Top Attack Hosts',
+                    subtext: 'Open Source Information',
+                    x: 'center'
+                },
+
+                // Add legend
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data: [{% for i in host %}
+                    '{{ i.remote_host }}' ,
+                    {% endfor %}]
+                },
+
+                // Add custom colors
+                color: ['#FFC400', '#4fc3f7', '#212529', '#f62d51', '#2962FF', '#b2b9bf', '#006064', '#FF1744', '#36bea6', '#82ff34', '#64FFDA', '#607D8B'],
+
+                // Display toolbox
+                toolbox: {
+                    show: true,
+                    orient: 'vertical',
+                    feature: {
+                        mark: {
+                            show: true,
+                            title: {
+                                mark: 'Markline switch',
+                                markUndo: 'Undo markline',
+                                markClear: 'Clear markline'
+                            }
+                        },
+
+                        magicType: {
+                            show: true,
+                            title: {
+                                pie: 'Switch to pies',
+                                funnel: 'Switch to funnel',
+                            },
+                            type: ['pie', 'funnel'],
+                            option: {
+                                funnel: {
+                                    x: '25%',
+                                    y: '20%',
+                                    width: '50%',
+                                    height: '70%',
+                                    funnelAlign: 'left',
+                                    max: 1548
+                                }
+                            }
+                        },
+
+                        saveAsImage: {
+                            show: true,
+                            title: 'Same as image',
+                            lang: ['Save']
+                        }
+                    }
+                },
+
+                // Enable drag recalculate
+                calculable: true,
+
+                // Add series
+                series: [
+                    {
+                        name: 'Host',
+                        type: 'pie',
+                        radius: ['50%', '70%'],
+                        center: ['50%', '57.5%'],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    show: true
+                                },
+                                labelLine: {
+                                    show: true
+                                }
+                            },
+                            emphasis: {
+                                label: {
+                                    show: true,
+                                    formatter: '{b}' + '\n\n' + '{c} ({d}%)',
+                                    position: 'center',
+                                    textStyle: {
+                                        fontSize: '17',
+                                        fontWeight: '500'
+                                    }
+                                }
+                            }
+                        },
+
+                        data: [
+                            {% for i in host %}
+                        {value: '{{ i.count }}', name: '{{ i.remote_host }}'},
+                    {% endfor %}
+                        ]
+                    }
+                ]
+        };
+
+        basicdoughnutChart.setOption(option);
+    });
+    </script>
 </body>
 
 </html>
-{% elif user.is_authenticated is not None %}
-<meta http-equiv="Refresh" content="0; url=//127.0.0.1:8000/login_user" />
-{% endif %}test_file

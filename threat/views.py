@@ -38,8 +38,7 @@ class utilisateur(View):
 
         return render(request, 'user/login_user.html')
 
-    def index(request):
-        return render(request, 'index.html')
+
 
     def display_user(request):
         liste = User.objects.all()
@@ -240,6 +239,18 @@ class threat(View):
 
 
         return render(request, 'api/checkhash.html', {'general': re, 'scan': re['scan_results']['scan_details']})
+
+class dashbord(View):
+    def index(request):
+        honeydb = api.Client('3db6f7b66c3d69f881d51f99c7447a335c0183caded44ae799d6e56ce85d934b',
+                             'c95af819d97737589a754bf9f6d76c0a68f9514bd052a58493d62944e75a6788')
+        services = honeydb.services()
+        ree = honeydb.bad_hosts()
+        service = services[0:10]
+        host = ree[0:10]
+        hosts = ree[0:20]
+        return render(request, 'api/index.html', {'services': services, 'service': service, 'host': host, 'hosts': hosts})
+
 
 
 
