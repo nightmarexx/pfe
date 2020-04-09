@@ -51,10 +51,10 @@ $(function() {
         bindto: '#visitor',
         data: {
             columns: [
-                ['Open', 45],
-                ['Clicked', 15],
-                ['Un-opened', 27],
-                ['Bounced', 18],
+                ['Domain', 45],
+                ['IP', 15],
+                ['Hash', 27],
+                ['File', 18],
             ],
 
             type: 'donut',

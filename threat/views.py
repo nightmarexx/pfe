@@ -7,10 +7,12 @@ import requests
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
 from django.views import View
+from .models import Requete
 from honeydb import api
 from OTXv2 import OTXv2
 from OTXv2 import IndicatorTypes
 import time
+from datetime import date
 from virus_total_apis import PublicApi as VirusTotalPublicApi
 import cloudmersive_virus_api_client
 from cloudmersive_virus_api_client.rest import ApiException
@@ -32,7 +34,7 @@ class utilisateur(View):
                 request.session["password"] = password;
                 login(request, user)
 
-                return redirect('/display_user')
+                return redirect('/index')
             else:
                 return render(request, 'user/login_user.html')
 
@@ -188,7 +190,8 @@ class threat(View):
                 time.sleep(15)
                 response3 = requests.get(url2, params=params2)
                 ree = response3.json()
-
+            req = Requete(type='file', date=date.today())
+            req.save()
             return render(request, 'api/checkfile.html', {'ree': ree})
         return redirect('/display_user')
 
@@ -208,6 +211,8 @@ class threat(View):
         passive_dns = response4.json()
         response5 = requests.get('https://otx.alienvault.com/api/v1/indicators/hostname/'+domain)
         infos = response5.json()
+        req = Requete(type='domain', date=date.today())
+        req.save()
         return render(request, 'api/checkhostname.html', {'general': general, 'url_list': url_list['url_list'], 'passive_dns': passive_dns['passive_dns'], 'http_scan': http_scan, 'infos': infos['validation'], 'count': infos['pulse_info']})
 
     def checkip(request):
@@ -223,21 +228,18 @@ class threat(View):
         malware = response3.json()
         if len(http_scan) == 1:
             http_scan = None
-        return render(request, 'api/checkip.html', {'general': re['general'], 'url_list': re['url_list']['url_list'], 'passive_dns': passive_dns['passive_dns'], 'http_scan': http_scan
-            , 'malware': malware['data']})
-
-
+        req = Requete(type='ip', date=date.today())
+        req.save()
+        return render(request, 'api/checkip.html', {'general': re['general'], 'url_list': re['url_list']['url_list'], 'passive_dns': passive_dns['passive_dns'], 'http_scan': http_scan, 'malware': malware['data']})
     def checkhash(request):
         if request.method == "POST":
             hash = request.POST.get('hash', False)
         url = "https://api.metadefender.com/v4/hash/"+hash
-        headers = {
-            'apikey': "4cfb6fa3cc775fafd692478b9b7cd11f"
-        }
+        headers = {'apikey': "4cfb6fa3cc775fafd692478b9b7cd11f"}
         response = requests.request("GET", url, headers=headers)
-        re=response.json()
-
-
+        re = response.json()
+        req = Requete(type='hash', date=date.today())
+        req.save()
         return render(request, 'api/checkhash.html', {'general': re, 'scan': re['scan_results']['scan_details']})
 
 class dashbord(View):
@@ -249,7 +251,17 @@ class dashbord(View):
         service = services[0:10]
         host = ree[0:10]
         hosts = ree[0:20]
-        return render(request, 'api/index.html', {'services': services, 'service': service, 'host': host, 'hosts': hosts})
+        req = Requete.objects.all().filter(date=date.today())
+        domain = Requete.objects.all().filter(date=date.today(), type='domain')
+        ip = Requete.objects.all().filter(date=date.today(), type='ip')
+        hash = Requete.objects.all().filter(date=date.today(), type='hash')
+        file = Requete.objects.all().filter(date=date.today(), type='file')
+        total = len(req)
+        moyd = len(domain)
+        moyi = len(ip)
+        moyh = len(hash)
+        moyf = len(file)
+        return render(request, 'api/index.html', {'services': services, 'service': service, 'host': host, 'total': total, 'domain': moyd, 'ip': moyi, 'hash': moyh, 'file': moyf})
 
 
 
