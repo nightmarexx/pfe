@@ -241,6 +241,19 @@ class threat(View):
         req = Requete(type='hash', date=date.today())
         req.save()
         return render(request, 'api/checkhash.html', {'general': re, 'scan': re['scan_results']['scan_details']})
+    def checkmail(request):
+        if request.method == "POST":
+            mail = request.POST.get('mail', False)
+        url = "https://api.apility.net/bademail/"+mail
+        headers = {
+            'accept': "application/json",
+            'x-auth-token': "f7c0683d-2acc-48b1-a1ff-7260d3c8eb25"
+        }
+        response = requests.request("GET", url, headers=headers)
+        re = response.json()
+        req = Requete(type='mail', date=date.today())
+        req.save()
+        return render(request, 'api/checkmail.html', {'general': re['response']})
 
 class dashbord(View):
     def index(request):
@@ -248,20 +261,22 @@ class dashbord(View):
                              'c95af819d97737589a754bf9f6d76c0a68f9514bd052a58493d62944e75a6788')
         services = honeydb.services()
         ree = honeydb.bad_hosts()
-        service = services[0:10]
-        host = ree[0:10]
+        service = services[0:8]
+        host = ree[0:8]
         hosts = ree[0:20]
-        req = Requete.objects.all().filter(date=date.today())
-        domain = Requete.objects.all().filter(date=date.today(), type='domain')
-        ip = Requete.objects.all().filter(date=date.today(), type='ip')
-        hash = Requete.objects.all().filter(date=date.today(), type='hash')
-        file = Requete.objects.all().filter(date=date.today(), type='file')
+        req = Requete.objects.all()
+        domain = Requete.objects.all().filter(type='domain')
+        ip = Requete.objects.all().filter(type='ip')
+        hash = Requete.objects.all().filter(type='hash')
+        file = Requete.objects.all().filter(type='file')
+        mail = Requete.objects.all().filter(type='mail')
         total = len(req)
         moyd = len(domain)
         moyi = len(ip)
         moyh = len(hash)
         moyf = len(file)
-        return render(request, 'api/index.html', {'services': services, 'service': service, 'host': host, 'total': total, 'domain': moyd, 'ip': moyi, 'hash': moyh, 'file': moyf})
+        moym = len(mail)
+        return render(request, 'api/index.html', {'hosts': hosts, 'services': services, 'service': service, 'host': host, 'total': total, 'domain': moyd, 'ip': moyi, 'hash': moyh, 'file': moyf, 'mail': moym})
 
 
 

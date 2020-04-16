@@ -94,7 +94,7 @@
                             </a>
                             <div class="dropdown-menu animated bounceInDown">
                                 <div class="mega-dropdown-menu row" style="height: 200px;">
-                                    <div class="col-lg-3  m-b-40 m-t-20">
+                                    <div class="col-lg-2  m-b-40 m-r-10 m-t-30">
                                         <h4 class="m-b-20">Check Domain</h4>
                                         <form action="/checkdomain" method="POST" class="app-search position-absolute">
                                             {% csrf_token %}
@@ -104,7 +104,7 @@
                                             <button type="submit" class="btn btn-info">Check Domain</button>
                                         </form>
                                     </div>
-                                    <div class="col-lg-3  m-b-40 m-t-20">
+                                    <div class="col-lg-2  m-b-40 m-r-10 m-t-30">
                                         <h4 class="m-b-20">Chech Ip Adresse</h4>
                                         	<form action="/checkip" method="POST" class="app-search position-absolute">
                                                 {% csrf_token %}
@@ -114,7 +114,7 @@
                                             <button type="submit" class="btn btn-info">Chech Ip Adresse</button>
                                             </form>
                                     </div>
-                                    <div class="col-lg-3  m-b-40 m-t-20">
+                                    <div class="col-lg-2  m-b-40 m-r-10 m-t-30">
                                         <h4 class="m-b-20">Check Hash</h4>
                                         	<form action="/checkhash" method="POST" class="app-search position-absolute">
                                                 {% csrf_token %}
@@ -124,7 +124,17 @@
                                             <button type="submit" class="btn btn-info">Check Hash</button>
                                             </form>
                                     </div>
-                                    <div class="col-lg-3  m-b-40 m-t-20">
+                                    <div class="col-lg-2  m-b-40 m-r-10 m-t-30">
+                                        <h4 class="m-b-20">Check Email</h4>
+                                        <form action="/checkmail" method="POST" class="app-search position-absolute">
+                                            {% csrf_token %}
+                                        		<div class="form-group">
+                                           <input type="email"  name="mail" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"></a>
+                                       			</div>
+                                            <button type="submit" class="btn btn-info">Check Email</button>
+                                        </form>
+                                    </div>
+                                    <div class="col-lg-3  m-b-40 m-r-10 m-t-30">
                                         <h4 class="m-b-20">Check File</h4>
                                         	<form action="/checkfile" method="POST" enctype="multipart/form-data" class="app-search position-absolute">
                                                 {% csrf_token %}
@@ -331,17 +341,18 @@
                             <!-- End User Profile-->
                         </li>
                         <!-- User Profile-->
+                        {% if user.is_superuser == 1 %}
                         <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">Personal</span></li>
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Utilisateurs</span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
-                                {% if user.is_superuser == 1 %}
+
                                 <li class="sidebar-item"><a href="/add_user" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Ajout d'un utilisateur </span></a></li>
                                 <li class="sidebar-item"><a href="/display_user" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Affichage des utilisateurs </span></a></li>
-                                {% else %}
-                                <li class="sidebar-item"><a href="/display_user" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Affichage des utilisateurs </span></a></li>
-                                {% endif %}
+
+
                             </ul>
                         </li>
+                        {% endif %}
                         <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">Feed Threat</span></li>
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Feed</span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
@@ -424,10 +435,12 @@
                                         <span class="display-6 d-block text-info font-medium">{{ total }}</span>
                                         <span class="text-muted">Total des verifications</span>
                                         <ul class="list-style-none">
-                                            <li class="m-t-20"><i class="fa fa-circle m-r-5 text-info font-12"></i> IP <span class="float-right">{{ ip }}</span></li>
-                                            <li class="m-t-20"><i class="fa fa-circle m-r-5 text-cyan font-12"></i> domain <span class="float-right">{{ domain }}</span></li>
-                                            <li class="m-t-20"><i class="fa fa-circle m-r-5 text-orange font-12"></i> Hash <span class="float-right">{{ hash }}</span></li>
-                                            <li class="m-t-20"><i class="fa fa-circle m-r-5 text-purple font-12"></i> File <span class="float-right">{{ file }}</span></li>
+
+                                            <li class="m-t-20"><i class="fa fa-circle m-r-5 font-12" style="color:#ffa600;"></i> Domain <span class="float-right">{{ domain }}</span></li>
+                                            <li class="m-t-20"><i class="fa fa-circle m-r-5 font-12"style="color:#ff7c43;"></i> IP <span class="float-right">{{ ip }}</span></li>
+                                            <li class="m-t-20"><i class="fa fa-circle m-r-5 font-12"style="color:#f95d6a;"></i> Hash <span class="float-right">{{ hash }}</span></li>
+                                            <li class="m-t-20"><i class="fa fa-circle m-r-5 font-12"style="color:#d45087;"></i> File <span class="float-right">{{ file }}</span></li>
+                                            <li class="m-t-20"><i class="fa fa-circle m-r-5 font-12"style="color:#a05195;"></i> Email <span class="float-right">{{ mail }}</span></li>
                                         </ul>
                                     </div>
                                     <!-- column -->
@@ -442,7 +455,7 @@
 
                 <!-- ============================================================== -->
                 <div class="row">
-                  <div class="col-lg-12 col-xl-6">
+                  <div class="col-lg-6 col-xl-6">
                         <div class="card">
                             <div class="card-body analytics-info">
                                 <h4 class="card-title">Top Attack Services</h4>
@@ -450,7 +463,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-12 col-xl-6">
+                    <div class="col-lg-6 col-xl-6">
                         <div class="card">
                             <div class="card-body analytics-info">
                                 <h4 class="card-title">Top Attack Hosts</h4>
@@ -599,6 +612,7 @@
                 ['IP', {{ ip }}/{{ total }} * 100],
                 ['Hash', {{ hash }}/{{ total }} * 100],
                 ['File', {{ file }}/{{ total }} * 100],
+                ['Mail', {{ mail }}/{{ total }} * 100],
             ],
 
             type: 'donut',
@@ -621,7 +635,7 @@
             //or hide: ['data1', 'data2']
         },
         color: {
-            pattern: ['#40c4ff', '#2961ff', '#ff821c', '#7e74fb']
+            pattern: ['#ffa600','#ff7c43','#f95d6a','#d45087','#a05195']
         }
     });
     // based on prepared DOM, initialize echarts instance
@@ -652,7 +666,7 @@
                 },
 
                 // Add custom colors
-                color: ['#4fc3f7','#FFC400', '#212529', '#f62d51', '#2962FF', '#b2b9bf', '#006064', '#FF1744', '#36bea6', '#82ff34', '#64FFDA', '#607D8B'],
+                color: ['#003f5c','#2f4b7c', '#665191', '#a05195', '#d45087', '#f95d6a', '#ff7c43', '#ffa600', '#36bea6', '#82ff34', '#64FFDA', '#607D8B'],
 
                 // Display toolbox
                 toolbox: {
@@ -735,8 +749,8 @@
                     {% endfor %}]
                 },
 
-                // Add custom colors
-                color: ['#FFC400', '#4fc3f7', '#212529', '#f62d51', '#2962FF', '#b2b9bf', '#006064', '#FF1744', '#36bea6', '#82ff34', '#64FFDA', '#607D8B'],
+                // Add custom colors '#ffa600','#ff7c43','#f95d6a','#d45087','#a05195','#665191','#2f4b7c','#003f5c'
+                color: ['#ffa600','#ff7c43','#f95d6a','#d45087','#a05195','#665191','#2f4b7c','#003f5c'],
 
                 // Display toolbox
                 toolbox: {

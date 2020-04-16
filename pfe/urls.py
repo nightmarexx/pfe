@@ -38,6 +38,7 @@ urlpatterns = [
     path('checkdomain',login_required(views.threat.checkdomain)),
     path('checkip',login_required(views.threat.checkip)),
     path('checkhash',login_required(views.threat.checkhash)),
+    path('checkmail',login_required(views.threat.checkmail)),
 
 ]
 urlpatterns += staticfiles_urlpatterns()

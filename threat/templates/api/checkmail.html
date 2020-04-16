@@ -380,12 +380,12 @@
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-5 align-self-center">
-                        <h4 class="page-title">{{ general.type_title }} : {{ general.indicator }}</h4>
+                        <h4 class="page-title">Mail</h4>
                         <div class="d-flex align-items-center">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="#">Accueil</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Affichage des utilisateurs</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Check Mail</li>
                                 </ol>
                             </nav>
                         </div>
@@ -417,148 +417,114 @@
                     <div class="col-12">
                         <div class="card">
             <div class="card-body">
-            <h4 class="card-title">Basic Information</h4>
-            <h6 class="card-subtitle mb-2 text-muted">Domain : {{ general.domain }}</h6>
-                {% if count.count == 0 %}
-            <p class="card-text">Not identified as malicious</p>
-                {% else %}
-             <p class="card-text">Identified as malicious</p>
-                {% endif %}
-            <a href="{{ general.alexa }}" class="card-link">Alexa</a>
-            <a href="{{ general.whois }}" class="card-link">Whois</a>
+            <h3 class="card-title">Basic Information</h3>
+            <h5 class="card-subtitle mb-2 text-muted">Email: {{ general.email_address }}</h5>
+            <h5 class="card-subtitle mb-2 text-muted">Global Score: {{ general.score }} </h5>
+            <h5 class="card-subtitle mb-2 text-muted">IP address of the main domain: {{ general.ip.address }}</h5>
+            <h5 class="card-subtitle mb-2 text-muted">Source IP: {{ general.source_ip.address }}</h5>
+
             </div>
             </div>
-                        {% if infos is not None %}
                         <div class="card">
             <div class="card-body">
-            <h4 class="card-title">Validation</h4>
-                {% for i in infos %}
-            <h6 class="card-subtitle mb-2 text-muted">{{ i.name }} :</h6>
-            <p class="card-text">{{ i.message }}</p>
+            <h3 class="card-title">SMTP Service - Score: {{ general.smtp.score }}</h3>
+                {% if general.smtp.exist_mx == True %}
+            <h5 class="card-subtitle mb-2 text-muted">MX records found.</h5>
+                {% else %}
+            <h5 class="card-subtitle mb-2 text-muted">MX records not found.</h5>
+                {% endif %}
+            {% if general.smtp.exist_address == True %}
+            <h5 class="card-subtitle mb-2 text-muted">The mail server says the email exists.</h5>
+                {% else %}
+            <h5 class="card-subtitle mb-2 text-muted">The mail server says the email not exists. </h5>
+                {% endif %}
+                {% if general.smtp.exist_catchall == True %}
+            <h5 class="card-subtitle mb-2 text-muted">EThe mail server does catch all emails.</h5>
+                {% else %}
+            <h5 class="card-subtitle mb-2 text-muted">The mail server does not catch all emails.</h5>
+                {% endif %}
+
+            </div>
+            </div>
+                        <div class="card">
+            <div class="card-body">
+            <h3 class="card-title">Address Format - Score: {{ general.address.score }}</h3>
+                {% if general.address.is_role == True %}
+            <h5 class="card-subtitle mb-2 text-muted">The email is a role address.</h5>
+                {% else %}
+            <h5 class="card-subtitle mb-2 text-muted">The email is not a role address.</h5>
+                {% endif %}
+            {% if general.address.is_well_formed == True %}
+            <h5 class="card-subtitle mb-2 text-muted">The email address is well formed.</h5>
+                {% else %}
+            <h5 class="card-subtitle mb-2 text-muted">The email address is not well formed.</h5>
+                {% endif %}
+
+
+            </div>
+            </div>
+                        <div class="card">
+            <div class="card-body">
+            <h3 class="card-title">Disposable Email Service - Score: {{ general.disposable.score }}</h3>
+                {% if general.disposable.is_disposable == True %}
+            <h5 class="card-subtitle mb-2 text-muted">A Disposable Email Address.</h5>
+                {% else %}
+            <h5 class="card-subtitle mb-2 text-muted">Not a Disposable Email Address.</h5>
+                {% endif %}
+            </div>
+            </div>
+                        <div class="card">
+            <div class="card-body">
+            <h3 class="card-title">Freemail Email Service - Score: {{ general.freemail.score }}</h3>
+                {% if general.freemail.is_freemail == True %}
+            <h5 class="card-subtitle mb-2 text-danger">Warning, it is a Freemail Email Address.</h5>
+                {% else %}
+            <h5 class="card-subtitle mb-2 text-muted">Not a Freemail Email Address.</h5>
+                {% endif %}
+            </div>
+            </div>
+                        <div class="card">
+            <div class="card-body">
+            <h3 class="card-title">Email in Blacklists - Score:  {{ general.email.score }}</h3>
+                {% if general.email.blacklist is None %}
+            <h5 class="card-subtitle mb-2 text-muted">Email not included in any blacklist.</h5>
+                {% else %}
+            <h5 class="card-subtitle mb-2 text-muted">Email included in blacklist.</h5>
+                {% endif %}
+            </div>
+            </div>
+                        <div class="card">
+            <div class="card-body">
+            <h3 class="card-title">MX records in domain blacklists</h3>
+                {% if general.domain.blacklist_mx is None %}
+            <h5 class="card-subtitle mb-2 text-muted">MX records not included in any domain blacklist.</h5>
+                {% else %}
+            <h5 class="card-subtitle mb-2 text-muted">MX records included in domain blacklist.</h5>
+                {% endif %}
+                <h3 class="card-title">NS records in domain blacklists</h3>
+                {% if general.domain.blacklist_ns is None %}
+            <h5 class="card-subtitle mb-2 text-muted">NS records not included in any domain blacklist.</h5>
+                {% else %}
+            <h5 class="card-subtitle mb-2 text-muted">NS records included in domain blacklist.</h5>
+                {% endif %}
+            </div>
+            </div>
+                        <div class="card">
+            <div class="card-body">
+            <h3 class="card-title">MX records</h3>
+                {% for i in general.domain.mx %}
+                <div class="col-lg-4 m-b-10 col-md-4">
+           <button class="btn btn-rounded btn-block btn-success">{{ i }}</button>
+                </div>
+                {% endfor %}
+            <h3 class="card-title">NS records</h3>
+                {% for i in general.domain.ns %}
+                <div class="col-lg-4 m-b-10 col-md-4">
+            <button  class="btn btn-rounded btn-block btn-warning">{{ i }}</button>
+                </div>
                 {% endfor %}
             </div>
             </div>
-                        {% endif %}
-                        <div class="card">
-                            <div class="card-body">
-
-                                <div class="col-4 float-right">
-
-
-                                </div>
-
-                                <h4 class="card-title">Associated URLs</h4>
-                                <h6 class="card-subtitle"></h6>
-
-                                 <table class="table table-striped table-bordered" id="zero_config">
-                                    <thead>
-                                        <tr>
-                                            <th>DATE CHECKED</th>
-                                            <th>DOMAIN</th>
-                                            <th>HOSTNAME</th>
-                                            <th>URL</th>
-                                            <th>SERVER RESPONSE</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    {% for i in url_list %}
-                                        <tr id="" class="gradeX">
-                                            <td>{{ i.date }}</td>
-                                            <td disabled="disabled">{{ i.domain }}</td>
-                                            <td><a href="{{ i.hostname }}">{{ i.hostname }}</a></td>
-                                            <td><a href="{{ i.url }}">{{ i.url }}</a></td>
-                                            <td>{{ i.httpcode }}</td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-
-                                <div class="col-4 float-right">
-
-
-                                </div>
-
-                                <h4 class="card-title">Passive DNS</h4>
-                                <h6 class="card-subtitle"></h6>
-
-                                 <table class="table table-striped table-bordered" id="one_config">
-                                    <thead>
-                                        <tr>
-                                            <th>Hostname</th>
-                                            <th>Query Type</th>
-                                            <th>Adress</th>
-                                            <th>First Seen</th>
-                                            <th>Last Seen</th>
-
-
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    {% for i in passive_dns %}
-                                        <tr id="" class="gradeX">
-                                            <td><a href="{{ i.hostname }}">{{ i.hostname }}</a></td>
-                                            <td disabled="disabled">{{ i.record_type }}</td>
-                                            <td>{{ i.address }}</td>
-                                            <td>{{ i.first }}</td>
-                                            <td>{{ i.last }}</td>
-
-
-
-
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        {% if http_scan is not None %}
-                        <div class="card">
-                            <div class="card-body">
-
-                                <div class="col-4 float-right">
-
-
-                                </div>
-
-                                <h4 class="card-title">HTTP Scans</h4>
-                                <h6 class="card-subtitle"></h6>
-
-                                 <table class="table table-striped table-bordered" id="two_config">
-                                    <thead>
-                                        <tr>
-                                            <th>Record</th>
-                                            <th>Value</th>
-
-
-
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    {% for i in http_scan.data %}
-                                        <tr id="1" class="gradeX">
-                                            <td>{{ i.name }}</td>
-                                            <td>{{ i.value }}</td>
-
-
-
-
-
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        {% endif %}
                     </div>
                 </div>
 
@@ -638,6 +604,7 @@ window.location = '/edit_user/'+id;
     <script src="{% static 'dist/js/pages/datatable/datatable-basic.init.js' %}"></script>
     <script src="{% static 'dist/js/pages/datatable/datatable-basic.init2.js' %}"></script>
     <script src="{% static 'dist/js/pages/datatable/datatable-basic.init3.js' %}"></script>
+    <script src="{% static 'dist/js/pages/datatable/datatable-basic.init4.js' %}"></script>
 
 
 

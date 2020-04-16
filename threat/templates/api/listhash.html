@@ -99,7 +99,7 @@
                             </a>
                             <div class="dropdown-menu animated bounceInDown">
                                 <div class="mega-dropdown-menu row" style="height: 200px;">
-                                    <div class="col-lg-3  m-b-40 m-t-20">
+                                    <div class="col-lg-2  m-b-40 m-r-10 m-t-30">
                                         <h4 class="m-b-20">Check Domain</h4>
                                         <form action="/checkdomain" method="POST" class="app-search position-absolute">
                                             {% csrf_token %}
@@ -109,7 +109,7 @@
                                             <button type="submit" class="btn btn-info">Check Domain</button>
                                         </form>
                                     </div>
-                                    <div class="col-lg-3  m-b-40 m-t-20">
+                                    <div class="col-lg-2  m-b-40 m-r-10 m-t-30">
                                         <h4 class="m-b-20">Chech Ip Adresse</h4>
                                         	<form action="/checkip" method="POST" class="app-search position-absolute">
                                                 {% csrf_token %}
@@ -119,7 +119,7 @@
                                             <button type="submit" class="btn btn-info">Chech Ip Adresse</button>
                                             </form>
                                     </div>
-                                    <div class="col-lg-3  m-b-40 m-t-20">
+                                    <div class="col-lg-2  m-b-40 m-r-10 m-t-30">
                                         <h4 class="m-b-20">Check Hash</h4>
                                         	<form action="/checkhash" method="POST" class="app-search position-absolute">
                                                 {% csrf_token %}
@@ -129,7 +129,17 @@
                                             <button type="submit" class="btn btn-info">Check Hash</button>
                                             </form>
                                     </div>
-                                    <div class="col-lg-3  m-b-40 m-t-20">
+                                    <div class="col-lg-2  m-b-40 m-r-10 m-t-30">
+                                        <h4 class="m-b-20">Check Email</h4>
+                                        <form action="/checkmail" method="POST" class="app-search position-absolute">
+                                            {% csrf_token %}
+                                        		<div class="form-group">
+                                           <input type="email"  name="mail" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"></a>
+                                       			</div>
+                                            <button type="submit" class="btn btn-info">Check Email</button>
+                                        </form>
+                                    </div>
+                                    <div class="col-lg-3  m-b-40 m-r-10 m-t-30">
                                         <h4 class="m-b-20">Check File</h4>
                                         	<form action="/checkfile" method="POST" enctype="multipart/form-data" class="app-search position-absolute">
                                                 {% csrf_token %}
@@ -336,17 +346,18 @@
                             <!-- End User Profile-->
                         </li>
                         <!-- User Profile-->
+                        {% if user.is_superuser == 1 %}
                         <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">Personal</span></li>
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Utilisateurs</span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
-                                {% if user.is_superuser == 1 %}
+
                                 <li class="sidebar-item"><a href="/add_user" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Ajout d'un utilisateur </span></a></li>
                                 <li class="sidebar-item"><a href="/display_user" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Affichage des utilisateurs </span></a></li>
-                                {% else %}
-                                <li class="sidebar-item"><a href="/display_user" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Affichage des utilisateurs </span></a></li>
-                                {% endif %}
+
+
                             </ul>
                         </li>
+                        {% endif %}
                         <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">Feed Threat</span></li>
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Feed</span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
