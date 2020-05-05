@@ -17,28 +17,33 @@ from django.contrib import admin
 from django.urls import path , re_path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from threat import views
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,permission_required
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login_user',views.utilisateur.login_user),
-    path('index',login_required(views.dashbord.index)),
-    path('add_user',login_required(views.utilisateur.add_user)),
-    path('delete_user/<int:id>', login_required(views.utilisateur.delete_user)),
-    path('edit_user/<int:id>', login_required(views.utilisateur.edit_user)),
-    path('update_user/<int:id>', login_required(views.utilisateur.update_user)),
-    path('logout_user',login_required(views.utilisateur.logout_user)),
-    path('display_user',login_required(views.utilisateur.display_user)),
-    path('listmalware',login_required(views.threat.listemalware)),
-    path('listdomain',login_required(views.threat.listedomain)),
-    path('listip',login_required(views.threat.listeip)),
-    path('listhash',login_required(views.threat.listehash)),
-    path('checkfile',login_required(views.threat.checkfile)),
-    path('checkdomain',login_required(views.threat.checkdomain)),
-    path('checkip',login_required(views.threat.checkip)),
-    path('checkhash',login_required(views.threat.checkhash)),
-    path('checkmail',login_required(views.threat.checkmail)),
+    path('login_user', views.utilisateur.login_user),
+    path('index', views.dashbord.index),
+    path('add_user', views.utilisateur.add_user),
+    path('delete_user/<int:id>', views.utilisateur.delete_user),
+    path('edit_user/<int:id>', views.utilisateur.edit_user),
+    path('update_user/<int:id>', views.utilisateur.update_user),
+    path('logout_user', views.utilisateur.logout_user),
+    path('display_user', views.utilisateur.display_user),
+    path('listmalware', views.threat.listemalware),
+    path('listdomain', views.threat.listedomain),
+    path('listip', views.threat.listeip),
+    path('listhash', views.threat.listehash),
+    path('checkfile', views.threat.checkfile),
+    path('checkdomain', views.threat.checkdomain),
+    path('checkip', views.threat.checkip),
+    path('checkhash', views.threat.checkhash),
+    path('checkmail', views.threat.checkmail),
+    path('display_api', views.api.listeapi),
+    path('add_api', views.api.add_api),
+    path('delete_api/<int:id>', views.api.delete_api),
+    path('edit_api/<int:id>', views.api.edit_api),
+    path('update_api/<int:id>', views.api.update_api),
 
 ]
 urlpatterns += staticfiles_urlpatterns()

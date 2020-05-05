@@ -9,3 +9,11 @@ class Document(models.Model):
 class Requete(models.Model):
     type = models.TextField()
     date = models.DateField()
+
+
+class Apis(models.Model):
+    name = models.TextField()
+    url = models.TextField()
+    key = models.TextField(null=True)
+    url_test = models.TextField()
+    status = models.BooleanField()

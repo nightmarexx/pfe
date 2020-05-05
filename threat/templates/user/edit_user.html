@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-{% if user.is_authenticated %}
     {% if user.is_superuser == 0 and user.id != user2.id %}
-    <meta http-equiv="Refresh" content="0; url=//127.0.0.1:8000/login_user" />
+    <meta http-equiv="Refresh" content="0; url=//127.0.0.1:8000/index" />
     {% else %}
 <html dir="ltr" lang="en">
 
@@ -609,6 +608,4 @@
 
 </html>
     {% endif %}
-{% elif user.is_authenticated is not None %}
-<meta http-equiv="Refresh" content="0; url=//127.0.0.1:8000/login_user" />
-{% endif %}
+

@@ -412,6 +412,77 @@
             <!-- Container fluid  -->
             <!-- ============================================================== -->
             <div class="container-fluid">
+                <div class="row">
+                    <!-- column -->
+                    <div class="col-lg-3">
+                        <div class="card bg-danger text-white  card-hover">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div class="m-r-10">
+                                        <span>Phishing victims domain</span>
+                                        <h4>{{ mal1 }}</h4>
+                                    </div>
+                                    <!--<div class="ml-auto">
+                                        <div style="max-width:130px; height:15px;" class="m-b-40">
+                                            <canvas id="balance"></canvas>
+                                        </div>
+                                    </div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card bg-success text-white  card-hover">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div class="m-r-10">
+                                        <span>Blacklisted SSL Certificates</span>
+                                        <h4>{{ mal2 }}</h4>
+                                    </div>
+                                    <!--<div class="ml-auto">
+                                        <div style="max-width:130px; height:15px;" class="m-b-40">
+                                            <canvas id="balance"></canvas>
+                                        </div>
+                                    </div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- column -->
+                    <div class="col-lg-3">
+                        <div class="card bg-info text-white  card-hover">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="m-r-10">
+                                        <span>Most Delivery Payload</span>
+                                        <h4>{{ mal3 }}</h4>
+                                    </div>
+                                    <!--<div class="ml-auto">
+                                        <div class="" id="ravenue"></div>
+                                    </div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- column -->
+                    <div class="col-lg-3">
+                        <div class="card text-white  card-hover">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="m-r-10">
+                                        <span>Botnet C&C Servers</span>
+                                        <h4>{{ mal4 }}</h4>
+                                    </div>
+                                    <!--<div class="ml-auto">
+                                        <div class="gaugejs-box">
+                                            <canvas id="foo" class="gaugejs" height="50" width="100">guage</canvas>
+                                        </div>
+                                    </div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- ============================================================== -->
                 <div class="row">
                     <!-- column -->
@@ -420,7 +491,7 @@
                             <div class="card-body">
                                 <div class="d-md-flex align-items-center">
                                     <div>
-                                        <h4 class="card-title">Statisque des verifications</h4>
+                                        <h4 class="card-title">Statistique des verifications</h4>
                                         <h5 class="card-subtitle">{{ now|date }}</h5>
                                     </div>
 
@@ -487,25 +558,35 @@
                     <div class="col-sm-12 col-lg-8">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Top Attack Hosts</h4>
+                                <h4 class="card-title">Last Malware URLs</h4>
                                 <h5 class="card-subtitle"></h5>
                                 <div class="table-responsive">
                                     <table class="table v-middle">
                                         <thead>
                                             <tr>
-                                                <th class="border-top-0">Remote host</th>
-                                                <th class="text-center border-top-0">Nombre</th>
-                                                <th class="text-center border-top-0">Date</th>
+                                                <th class="border-top-0">URL</th>
+                                                <th class="text-center border-top-0">Status</th>
+                                                <th class="text-center border-top-0">Tags</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        {% for i in hosts %}
+                                        {% for i in malware %}
                                             <tr>
                                                 <td class="font-bold">
-                                                    {{ i.remote_host }}
+                                                    {{ i.url }}
                                                 </td>
-                                                <td class="text-center">{{ i.count }}</td>
-                                                <td class="font-bold text-center">{{ i.last_seen }}</td>
+                                                {% if i.url_status == 'online' %}
+                                                <td class="text-center"><span class="badge badge-danger" style="font-size:100%;">{{ i.url_status }}</span></td>
+                                                {% elif i.url_status == 'offline' %}
+                                                <td class="text-center"><span class="badge badge-success" style="font-size:100%;">{{ i.url_status }}</span></td>
+                                                {% elif i.url_status == 'unknown' %}
+                                                <td class="text-center"><span class="badge badge-secondary" style="font-size:100%;">{{ i.url_status }}</span></td>
+                                                {% endif %}
+                                                <td class="font-bold text-center">
+                                                {% for j in i.tags %}
+                                                <span class="badge badge-info" style="font-size:100%;">{{ j }}</span>
+                                                {% endfor %}
+                                                </td>
                                             </tr>
                                         {% endfor %}
                                         </tbody>
