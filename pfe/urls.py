@@ -39,11 +39,11 @@ urlpatterns = [
     path('checkip', views.threat.checkip),
     path('checkhash', views.threat.checkhash),
     path('checkmail', views.threat.checkmail),
-    path('display_api', views.api.listeapi),
-    path('add_api', views.api.add_api),
-    path('delete_api/<int:id>', views.api.delete_api),
-    path('edit_api/<int:id>', views.api.edit_api),
-    path('update_api/<int:id>', views.api.update_api),
+    path('display_api', views.api_service.listeapi),
+    path('add_api', views.api_service.add_api),
+    path('delete_api/<int:id>', views.api_service.delete_api),
+    path('edit_api/<int:id>', views.api_service.edit_api),
+    path('update_api/<int:id>', views.api_service.update_api),
 
 ]
 urlpatterns += staticfiles_urlpatterns()

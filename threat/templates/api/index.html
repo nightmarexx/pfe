@@ -576,11 +576,11 @@
                                                     {{ i.url }}
                                                 </td>
                                                 {% if i.url_status == 'online' %}
-                                                <td class="text-center"><span class="badge badge-danger" style="font-size:100%;">{{ i.url_status }}</span></td>
+                                                <td class="text-center"><i class="fa fa-circle text-success" data-toggle="tooltip" data-placement="top" title="Online"></i></span></td>
                                                 {% elif i.url_status == 'offline' %}
-                                                <td class="text-center"><span class="badge badge-success" style="font-size:100%;">{{ i.url_status }}</span></td>
+                                                <td class="text-center"><i class="fa fa-circle text-danger" data-toggle="tooltip" data-placement="top" title="Offline"></i></td>
                                                 {% elif i.url_status == 'unknown' %}
-                                                <td class="text-center"><span class="badge badge-secondary" style="font-size:100%;">{{ i.url_status }}</span></td>
+                                                <td class="text-center"><i class="fa fa-circle text-info" data-toggle="tooltip" data-placement="top" title="Unknown"></i></td>
                                                 {% endif %}
                                                 <td class="font-bold text-center">
                                                 {% for j in i.tags %}
@@ -594,7 +594,42 @@
                                 </div>
                             </div>
                         </div>
+                        {% if user.is_superuser == 1 %}
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Last Search</h4>
+                                <h5 class="card-subtitle"></h5>
+                                <div class="table-responsive">
+                                    <table class="table v-middle">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-top-0">Username</th>
+                                                <th class="text-center border-top-0">Name</th>
+                                                <th class="text-center border-top-0">Type</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for i in history %}
+                                            <tr>
+                                                <td class="font-bold">
+                                                    {{ i.user.username }}
+                                                </td>
+                                                <td class="font-bold" style="max-width: 200px;overflow: hidden;text-overflow: ellipsis;word-break: keep-all;white-space: nowrap;display: table-cell;">
+                                                {{ i.name }}
+                                                </td>
+                                                <td class="font-bold">
+                                                {{ i.type }}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
                     </div>
+
                     <!-- column -->
                     <div class="col-sm-12 col-lg-4">
                         <div class="card">
@@ -622,6 +657,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <!-- ============================================================== -->
                 <!-- Task, Feeds -->

@@ -7,6 +7,8 @@ class Document(models.Model):
 
 
 class Requete(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.TextField()
     type = models.TextField()
     date = models.DateField()
 

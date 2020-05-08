@@ -24,8 +24,8 @@ from cloudmersive_virus_api_client.rest import ApiException
 
 
 class utilisateur(View):
-
     def login_user(request):
+
         if request.method == "POST":
             username = request.POST.get('username', False)
             password = request.POST.get('password', False)
@@ -134,6 +134,7 @@ class utilisateur(View):
             return redirect('/display_user')
 
     def logout_user(request):
+
         logout(request)
         return redirect('/login_user')
 
@@ -176,18 +177,12 @@ class threat(View):
     def checkfile(request):
         # Handle file upload
         if request.method == 'POST' and request.FILES['myfile']:
+            user = User.objects.get(username=request.session["username"])
             myfile = request.FILES['myfile']
             fs = FileSystemStorage()
             filename = fs.save(myfile.name, myfile)
             uploaded_file_url = fs.url(filename)
             input_file = '/home/hedi/PycharmProjects/pfe/media/' + filename
-            # vt = VirusTotalPublicApi("c6c0f01017b99df69fc4062421dfe7ab8079adbdc6a3fcf5741aee9b060dec25")
-            # vt2 = VirusTotalPublicApi("dc1cfb1c11233bff41fd313b933889721b563f615e73cd3bd2f050df0d902fb5")
-            # reponse = vt.scan_file(input_file)
-            # ree2 = vt2.get_file_report(reponse['results']['scan_id'])
-            # time.sleep(60)
-            # reponse = vt2.scan_file(input_file)
-            # ree = vt2.get_file_report(reponse['results']['scan_id'])
             url1 = 'https://www.virustotal.com/vtapi/v2/file/scan'
             params1 = {'apikey': 'c6c0f01017b99df69fc4062421dfe7ab8079adbdc6a3fcf5741aee9b060dec25'}
             files1 = {'file': (input_file, open(input_file, 'rb'))}
@@ -206,7 +201,7 @@ class threat(View):
                 time.sleep(15)
                 response3 = requests.get(url2, params=params2)
                 ree = response3.json()
-            req = Requete(type='file', date=date.today())
+            req = Requete(type='file', date=date.today(), name=filename, user=user)
             req.save()
             return render(request, 'api/checkfile.html', {'ree': ree})
         return redirect('/display_user')
@@ -215,6 +210,7 @@ class threat(View):
     def checkdomain(request):
         if request.method == "POST":
             domain = request.POST.get('domain', False)
+            user = User.objects.get(username=request.session["username"])
         otx = OTXv2("cee9c5f59ddad6f61aead25b961fb1ca6060bee6157137f95a868d5bb0c842e7")
         response = requests.get('https://otx.alienvault.com/api/v1/indicators/hostname/' + domain + '/http_scans')
         http_scan = response.json()
@@ -228,7 +224,7 @@ class threat(View):
         passive_dns = response4.json()
         response5 = requests.get('https://otx.alienvault.com/api/v1/indicators/hostname/' + domain)
         infos = response5.json()
-        req = Requete(type='domain', date=date.today())
+        req = Requete(type='domain', date=date.today(), name=domain , user=user)
         req.save()
         return render(request, 'api/checkhostname.html',
                       {'general': general, 'url_list': url_list['url_list'], 'passive_dns': passive_dns['passive_dns'],
@@ -238,6 +234,7 @@ class threat(View):
     def checkip(request):
         if request.method == "POST":
             ip = request.POST.get('ip', False)
+            user = User.objects.get(username=request.session["username"])
         otx = OTXv2("cee9c5f59ddad6f61aead25b961fb1ca6060bee6157137f95a868d5bb0c842e7")
         re = otx.get_indicator_details_full(IndicatorTypes.IPv4, ip)
         response = requests.get('https://otx.alienvault.com/api/v1/indicators/IPv4/' + ip + '/http_scans')
@@ -248,7 +245,7 @@ class threat(View):
         malware = response3.json()
         if len(http_scan) == 1:
             http_scan = None
-        req = Requete(type='ip', date=date.today())
+        req = Requete(type='ip', date=date.today(), name=ip, user=user)
         req.save()
         return render(request, 'api/checkip.html', {'general': re['general'], 'url_list': re['url_list']['url_list'],
                                                     'passive_dns': passive_dns['passive_dns'], 'http_scan': http_scan,
@@ -258,11 +255,12 @@ class threat(View):
     def checkhash(request):
         if request.method == "POST":
             hash = request.POST.get('hash', False)
+            user = User.objects.get(username=request.session["username"])
         url = "https://api.metadefender.com/v4/hash/" + hash
         headers = {'apikey': "4cfb6fa3cc775fafd692478b9b7cd11f"}
         response = requests.request("GET", url, headers=headers)
         re = response.json()
-        req = Requete(type='hash', date=date.today())
+        req = Requete(type='hash', date=date.today(), name=hash, user=user)
         req.save()
         return render(request, 'api/checkhash.html', {'general': re, 'scan': re['scan_results']['scan_details']})
 
@@ -270,6 +268,7 @@ class threat(View):
     def checkmail(request):
         if request.method == "POST":
             mail = request.POST.get('mail', False)
+            user = User.objects.get(username=request.session["username"])
         url = "https://api.apility.net/bademail/" + mail
         headers = {
             'accept': "application/json",
@@ -277,7 +276,7 @@ class threat(View):
         }
         response = requests.request("GET", url, headers=headers)
         re = response.json()
-        req = Requete(type='mail', date=date.today())
+        req = Requete(type='mail', date=date.today(), name=mail, user=user)
         req.save()
         return render(request, 'api/checkmail.html', {'general': re['response']})
 
@@ -331,29 +330,31 @@ class dashbord(View):
         moyh = len(hash)
         moyf = len(file)
         moym = len(mail)
+        history = Requete.objects.all()
         return render(request, 'api/index.html',
                       {'mal1': mal1, 'mal2': mal2, 'mal3': mal3, 'mal4': mal4, 'malware': malware, 'services': services,
                        'service': service, 'host': host, 'total': total, 'domain': moyd, 'ip': moyi, 'hash': moyh,
-                       'file': moyf, 'mail': moym})
+                       'file': moyf, 'mail': moym, 'history': history})
 
 
-class api(View):
+class api_service(View):
     @staticmethod
     def tests():
         list = Apis.objects.all()
         for i in list:
-            response = requests.request("GET", i.url_test)
-            if response is None:
-                i.status = 0
-                i.save()
-            else:
-                i.status = 1
-                i.save()
+            if i.url_test[0:4] == 'http':
+                response = requests.request("GET", i.url_test)
+                if response is None:
+                    i.status = 0
+                    i.save()
+                else:
+                    i.status = 1
+                    i.save()
 
     @login_required(login_url="/login_user")
     @permission_required('is_superuser', login_url="/index")
     def listeapi(request):
-        api.tests()
+        api_service.tests()
         list = Apis.objects.all()
         return render(request, 'api/liste_api.html', {'list': list})
 
@@ -365,11 +366,9 @@ class api(View):
             url = request.POST.get('url', False)
             key = request.POST.get('key', False)
             url_test = request.POST.get('url_test', False)
-            Apis.nom = nom
-            Apis.url = url
-            Apis.url_test = url_test
-            Apis.key = key
-            Apis.save()
+            api1 = Apis(name=nom, url=url, key=key, url_test=url_test, status=True)
+            api1.save()
+            return redirect('/display_api')
         return render(request, 'api/add_api.html')
 
     @login_required(login_url="/login_user")
