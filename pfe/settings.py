@@ -51,9 +51,16 @@ MIDDLEWARE = [
 ]
 TIME = 30*60
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
-SESSION_EXPIRE_AT_BROWSER_CLOSE= True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = TIME
 SESSION_IDLE_TIMEOUT = TIME
+
+EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'hedi.hamza@esprit.tn'
+EMAIL_HOST_PASSWORD = 'vrivshacvlwbqldb'
 ROOT_URLCONF = 'pfe.urls'
 
 TEMPLATES = [

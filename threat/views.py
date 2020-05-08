@@ -1,4 +1,6 @@
 import json
+import string
+import random
 import pulsedive
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import permission_required, login_required
@@ -6,6 +8,7 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 import requests
 from django.core.files.storage import FileSystemStorage
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.views import View
 from .models import Requete, Apis
@@ -24,8 +27,22 @@ from cloudmersive_virus_api_client.rest import ApiException
 
 
 class utilisateur(View):
-    def login_user(request):
+    @staticmethod
+    def get_random_alphaNumeric_string(stringLength=8):
+        lettersAndDigits = string.ascii_letters + string.digits
+        return ''.join((random.choice(lettersAndDigits) for i in range(stringLength)))
+    def reset_password(request):
+        if request.method == "POST":
+            username = request.POST.get('reset', False)
+            user = User.objects.get(username=username)
+            password = utilisateur.get_random_alphaNumeric_string(8)
+            user.password = make_password(password, None, hasher='default')
+            message = "Utilisateur "+user.username+" votre mot de passe iniale est "+password
+            send_mail("Reset Password", message, "hedi.hamza@esprit.tn", [user.email])
+            user.save()
+            return render(request, 'user/login_user.html')
 
+    def login_user(request):
         if request.method == "POST":
             username = request.POST.get('username', False)
             password = request.POST.get('password', False)

@@ -14,15 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path , re_path
+from django.urls import path, include
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from threat import views
 from django.contrib.auth.decorators import login_required,permission_required
 from django.conf import settings
 from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login_user', views.utilisateur.login_user),
+    path('reset_password', views.utilisateur.reset_password),
     path('index', views.dashbord.index),
     path('add_user', views.utilisateur.add_user),
     path('delete_user/<int:id>', views.utilisateur.delete_user),
@@ -46,6 +48,7 @@ urlpatterns = [
     path('update_api/<int:id>', views.api_service.update_api),
 
 ]
+
 urlpatterns += staticfiles_urlpatterns()
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
