@@ -1,10 +1,7 @@
 <!DOCTYPE html>
-{% if user.is_authenticated %}
 <html dir="ltr" lang="en">
 
-
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
@@ -14,20 +11,15 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
     <title>Xtreme admin Template - The Ultimate Multipurpose admin template</title>
-    <!-- This Page CSS -->
-       {% load static %}
-    <link href="{% static 'assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css' %}" rel="stylesheet">
     <!-- Custom CSS -->
+    {% load static %}
     <link href="{% static 'dist/css/style.min.css' %}" rel="stylesheet">
-    <link href="{% static 'assets/extra-libs/DataTables/datatables.css' %}" rel="stylesheet" type="text/css" />
-    <!-- Custom CSS -->
-    <link href="{% static 'dist/css/style.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/libs/sweetalert2/dist/sweetalert2.min.css' %}" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-
 <![endif]-->
 </head>
 
@@ -70,7 +62,7 @@
                         <span class="logo-text">
                              <!-- dark Logo text -->
                              <img src="{% static 'assets/images/logo-text.png' %}" alt="homepage" class="dark-logo" />
-                             <!-- Light Logo text -->    
+                             <!-- Light Logo text -->
                              <img src="{% static 'assets/images/logo-light-text.png' %}" class="light-logo" alt="homepage" />
                         </span>
                     </a>
@@ -153,7 +145,12 @@
                                 </div>
                             </div>
                         </li>
-
+                        <!-- ============================================================== -->
+                        <!-- End mega menu -->
+                        <!-- ============================================================== -->
+                        <!-- ============================================================== -->
+                        <!-- create new -->
+                        <!-- ============================================================== -->
 
                     </ul>
                     <!-- ============================================================== -->
@@ -179,7 +176,7 @@
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-bell font-24"></i>
-                                
+
                             </a>
                             <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown">
                                 <span class="with-arrow"><span class="bg-primary"></span></span>
@@ -232,7 +229,7 @@
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-comment-processing"></i>
-                                
+
                             </a>
                             <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" aria-labelledby="2">
                                 <span class="with-arrow"><span class="bg-danger"></span></span>
@@ -382,7 +379,12 @@
             </div>
             <!-- End Sidebar scroll-->
         </aside>
-
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
         <div class="page-wrapper">
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
@@ -390,12 +392,12 @@
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-5 align-self-center">
-                        <h4 class="page-title">Mail</h4>
+                        <h4 class="page-title">Form Basic</h4>
                         <div class="d-flex align-items-center">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Accueil</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Check Mail</li>
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Library</li>
                                 </ol>
                             </nav>
                         </div>
@@ -405,8 +407,8 @@
                             <div class="mr-2">
                                 <div class="lastmonth"></div>
                             </div>
-                            <div class="">
-                                </div>
+                            <div class=""><small>LAST MONTH</small>
+                                <h4 class="text-info mb-0 font-medium">$58,256</h4></div>
                         </div>
                     </div>
                 </div>
@@ -416,128 +418,99 @@
             <!-- ============================================================== -->
             <!-- ============================================================== -->
             <!-- Container fluid  -->
-
-
             <!-- ============================================================== -->
             <div class="container-fluid">
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
+                <!-- row -->
+
+                <!-- row -->
+                <!-- .row -->
+
+                <!-- /.row -->
+                <!-- Row -->
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-lg-12">
                         <div class="card">
-            <div class="card-body">
-            <h3 class="card-title">Basic Information</h3>
-            <h5 class="card-subtitle mb-2 text-muted">Email: {{ general.email_address }}</h5>
-            <h5 class="card-subtitle mb-2 text-muted">Global Score: {{ general.score }} </h5>
-            <h5 class="card-subtitle mb-2 text-muted">IP address of the main domain: {{ general.ip.address }}</h5>
-            <h5 class="card-subtitle mb-2 text-muted">Source IP: {{ general.source_ip.address }}</h5>
+                            <div class="card-header bg-info">
+                                <h4 class="mb-0 text-white">Other Sample form</h4>
+                            </div>
+                            <form action="/update_api/{{ api2.id }}" method="POST">
+                                {% csrf_token %}
+                                <div class="card-body">
+                                    <h4 class="card-title">Person Info</h4>
+                                </div>
+                                <hr>
+                                <div class="form-body">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12 ">
+                                                <div class="form-group">
+                                                    <label>Nom</label>
+                                                    <input type="text"  name="nom" class="form-control" value="{{ api2.name }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>URL</label>
+                                                    <input type="text" name="url" class="form-control" value="{{ api2.url }}">
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>URL test</label>
+                                                    <input type="text"  name="url_test" class="form-control" value="{{ api2.url_test }}">
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                        </div>
+                                        <!--/row-->
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Clé API</label>
+                                                    <input type="text" name="key" class="form-control" value="{{ api2.key }}">
+                                                </div>
+                                            </div>
+                                            <!--/span-->
 
-            </div>
-            </div>
-                        <div class="card">
-            <div class="card-body">
-            <h3 class="card-title">SMTP Service - Score: {{ general.smtp.score }}</h3>
-                {% if general.smtp.exist_mx == True %}
-            <h5 class="card-subtitle mb-2 text-muted">MX records found.</h5>
-                {% else %}
-            <h5 class="card-subtitle mb-2 text-muted">MX records not found.</h5>
-                {% endif %}
-            {% if general.smtp.exist_address == True %}
-            <h5 class="card-subtitle mb-2 text-muted">The mail server says the email exists.</h5>
-                {% else %}
-            <h5 class="card-subtitle mb-2 text-muted">The mail server says the email not exists. </h5>
-                {% endif %}
-                {% if general.smtp.exist_catchall == True %}
-            <h5 class="card-subtitle mb-2 text-muted">EThe mail server does catch all emails.</h5>
-                {% else %}
-            <h5 class="card-subtitle mb-2 text-muted">The mail server does not catch all emails.</h5>
-                {% endif %}
-
-            </div>
-            </div>
-                        <div class="card">
-            <div class="card-body">
-            <h3 class="card-title">Address Format - Score: {{ general.address.score }}</h3>
-                {% if general.address.is_role == True %}
-            <h5 class="card-subtitle mb-2 text-muted">The email is a role address.</h5>
-                {% else %}
-            <h5 class="card-subtitle mb-2 text-muted">The email is not a role address.</h5>
-                {% endif %}
-            {% if general.address.is_well_formed == True %}
-            <h5 class="card-subtitle mb-2 text-muted">The email address is well formed.</h5>
-                {% else %}
-            <h5 class="card-subtitle mb-2 text-muted">The email address is not well formed.</h5>
-                {% endif %}
-
-
-            </div>
-            </div>
-                        <div class="card">
-            <div class="card-body">
-            <h3 class="card-title">Disposable Email Service - Score: {{ general.disposable.score }}</h3>
-                {% if general.disposable.is_disposable == True %}
-            <h5 class="card-subtitle mb-2 text-muted">A Disposable Email Address.</h5>
-                {% else %}
-            <h5 class="card-subtitle mb-2 text-muted">Not a Disposable Email Address.</h5>
-                {% endif %}
-            </div>
-            </div>
-                        <div class="card">
-            <div class="card-body">
-            <h3 class="card-title">Freemail Email Service - Score: {{ general.freemail.score }}</h3>
-                {% if general.freemail.is_freemail == True %}
-            <h5 class="card-subtitle mb-2 text-danger">Warning, it is a Freemail Email Address.</h5>
-                {% else %}
-            <h5 class="card-subtitle mb-2 text-muted">Not a Freemail Email Address.</h5>
-                {% endif %}
-            </div>
-            </div>
-                        <div class="card">
-            <div class="card-body">
-            <h3 class="card-title">Email in Blacklists - Score:  {{ general.email.score }}</h3>
-                {% if general.email.blacklist is None %}
-            <h5 class="card-subtitle mb-2 text-muted">Email not included in any blacklist.</h5>
-                {% else %}
-            <h5 class="card-subtitle mb-2 text-muted">Email included in blacklist.</h5>
-                {% endif %}
-            </div>
-            </div>
-                        <div class="card">
-            <div class="card-body">
-            <h3 class="card-title">MX records in domain blacklists</h3>
-                {% if general.domain.blacklist_mx is None %}
-            <h5 class="card-subtitle mb-2 text-muted">MX records not included in any domain blacklist.</h5>
-                {% else %}
-            <h5 class="card-subtitle mb-2 text-muted">MX records included in domain blacklist.</h5>
-                {% endif %}
-                <h3 class="card-title">NS records in domain blacklists</h3>
-                {% if general.domain.blacklist_ns is None %}
-            <h5 class="card-subtitle mb-2 text-muted">NS records not included in any domain blacklist.</h5>
-                {% else %}
-            <h5 class="card-subtitle mb-2 text-muted">NS records included in domain blacklist.</h5>
-                {% endif %}
-            </div>
-            </div>
-                        <div class="card">
-            <div class="card-body">
-            <h3 class="card-title">MX records</h3>
-                {% for i in general.domain.mx %}
-                <div class="col-lg-4 m-b-10 col-md-4">
-           <button class="btn btn-rounded btn-block btn-success">{{ i }}</button>
-                </div>
-                {% endfor %}
-            <h3 class="card-title">NS records</h3>
-                {% for i in general.domain.ns %}
-                <div class="col-lg-4 m-b-10 col-md-4">
-            <button  class="btn btn-rounded btn-block btn-warning">{{ i }}</button>
-                </div>
-                {% endfor %}
-            </div>
-            </div>
+                                            <!--/span-->
+                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        <div class="card-body">
+                                            <button type="submit"  alt="alert" class="btn btn-success" id="sa-success"> <i class="fa fa-check"></i>Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
+                <!-- Row -->
+                <!-- .row -->
 
+                <!-- /.row -->
+                <!-- .row -->
+
+                <!-- /.row -->
+                <!-- .row -->
+
+                <!-- .row -->
+
+                <!-- /.row -->
+                <!-- ROw -->
+
+                <!-- End Row -->
+
+                <!-- row -->
+                <!-- Row -->
+
+                <!-- Row -->
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
@@ -549,8 +522,6 @@
                 <!-- End Right sidebar -->
                 <!-- ============================================================== -->
             </div>
-
-
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
             <!-- ============================================================== -->
@@ -574,25 +545,100 @@
     <!-- ============================================================== -->
     <!-- customizer Panel -->
     <!-- ============================================================== -->
+    <script>
+       function($) {
+    "use strict";
 
+    var SweetAlert = function() {};
+
+    //examples
+    SweetAlert.prototype.init = function() {
+
+    //Basic
+    $('#sa-basic').click(function(){
+        swal("Here's a message!");
+    });
+
+    //A title with a text under
+    $('#sa-title').click(function(){
+        swal("Here's a message!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed.")
+    });
+
+    //Success Message
+    $('#sa-success').click(function(){
+        swal("Good job!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed.", "success")
+    });
+
+    //Warning Message
+    $('#sa-warning').click(function(){
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this imaginary file!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        }, function(){
+            swal("Deleted!", "Your imaginary file has been deleted.", "success");
+        });
+    });
+
+    //Parameter
+    $('#sa-params').click(function(){
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this imaginary file!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel plx!",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function(isConfirm){
+            if (isConfirm) {
+                swal("Deleted!", "Your imaginary file has been deleted.", "success");
+            } else {
+                swal("Cancelled", "Your imaginary file is safe :)", "error");
+            }
+        });
+    });
+
+    //Custom Image
+    $('#sa-image').click(function(){
+        swal({
+            title: "Govinda!",
+            text: "Recently joined twitter",
+            imageUrl: "../../assets/images/users/1.jpg"
+        });
+    });
+
+    //Auto Close Timer
+    $('#sa-close').click(function(){
+         swal({
+            title: "Auto close alert!",
+            text: "I will close in 2 seconds.",
+            timer: 2000,
+            showConfirmButton: false
+        });
+    });
+
+
+    },
+    //init
+    $.SweetAlert = new SweetAlert, $.SweetAlert.Constructor = SweetAlert
+}(window.jQuery),
+
+//initializing
+function($) {
+    "use strict";
+    $.SweetAlert.init()
+}(window.jQuery);
+    </script>
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-        <script>
-function delete(id) {
-  var r = confirm("Vous voulez confirmer la suppression!");
-  if (r == true) {
-    window.location = '/delete_user/'+id;
-} else {
-
-}
-}
-</script>
-    <script>
-        function edit(id) {
-window.location = '/edit_user/'+id;
-}
-    </script>
     <script src="{% static 'assets/libs/jquery/dist/jquery.min.js' %}"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="{% static 'assets/libs/popper.js/dist/umd/popper.min.js' %}"></script>
@@ -610,18 +656,8 @@ window.location = '/edit_user/'+id;
     <script src="{% static 'dist/js/sidebarmenu.js' %}"></script>
     <!--Custom JavaScript -->
     <script src="{% static 'dist/js/custom.min.js' %}"></script>
-    <script src="{% static 'assets/extra-libs/DataTables/datatables.min.js' %}"></script>
-    <script src="{% static 'dist/js/pages/datatable/datatable-basic.init.js' %}"></script>
-    <script src="{% static 'dist/js/pages/datatable/datatable-basic.init2.js' %}"></script>
-    <script src="{% static 'dist/js/pages/datatable/datatable-basic.init3.js' %}"></script>
-    <script src="{% static 'dist/js/pages/datatable/datatable-basic.init4.js' %}"></script>
 
-
-
+    <script src="{% static 'assets/libs/sweetalert2/sweet-alert.init.js' %}"></script>
 </body>
 
-
 </html>
-{% elif user.is_authenticated is not None %}
-<meta http-equiv="Refresh" content="0; url=//127.0.0.1:8000/login_user" />
-{% endif %}

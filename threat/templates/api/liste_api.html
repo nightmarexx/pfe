@@ -69,7 +69,7 @@
                         <span class="logo-text">
                              <!-- dark Logo text -->
                              <img src="{% static 'assets/images/logo-text.png' %}" alt="homepage" class="dark-logo" />
-                             <!-- Light Logo text -->    
+                             <!-- Light Logo text -->
                              <img src="{% static 'assets/images/logo-light-text.png' %}" class="light-logo" alt="homepage" />
                         </span>
                     </a>
@@ -152,7 +152,12 @@
                                 </div>
                             </div>
                         </li>
-
+                        <!-- ============================================================== -->
+                        <!-- End mega menu -->
+                        <!-- ============================================================== -->
+                        <!-- ============================================================== -->
+                        <!-- create new -->
+                        <!-- ============================================================== -->
 
                     </ul>
                     <!-- ============================================================== -->
@@ -178,7 +183,7 @@
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-bell font-24"></i>
-                                
+
                             </a>
                             <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown">
                                 <span class="with-arrow"><span class="bg-primary"></span></span>
@@ -231,7 +236,7 @@
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-comment-processing"></i>
-                                
+
                             </a>
                             <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" aria-labelledby="2">
                                 <span class="with-arrow"><span class="bg-danger"></span></span>
@@ -352,6 +357,16 @@
 
                             </ul>
                         </li>
+                        <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">API</span></li>
+                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">APIs</span></a>
+                            <ul aria-expanded="false" class="collapse  first-level">
+
+                                <li class="sidebar-item"><a href="/add_api" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Ajout d'un API </span></a></li>
+                                <li class="sidebar-item"><a href="/display_api" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Affichage des APIs </span></a></li>
+
+
+                            </ul>
+                        </li>
                         {% endif %}
                         <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">Feed Threat</span></li>
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Feed</span></a>
@@ -379,12 +394,12 @@
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-5 align-self-center">
-                        <h4 class="page-title">Utilisateurs</h4>
+                        <h4 class="page-title">Apis</h4>
                         <div class="d-flex align-items-center">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="#">Accueil</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Affichage des utilisateurs</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Affichage des APIs</li>
                                 </ol>
                             </nav>
                         </div>
@@ -451,8 +466,8 @@
                                             {% endif %}
 
                                             <td style="max-width: 200px;overflow: hidden;text-overflow: ellipsis;word-break: keep-all;white-space: nowrap;display: table-cell;">{{ i.key }}</td>
-                                            <td class="center"><bouton class="btn waves-effect waves-light btn-outline-warning" style="width: 126px;" onclick="edit({{ i.id }})" type="submit">Edit</bouton></td>
-                                            <td class="center"> <bouton class="btn waves-effect waves-light btn-outline-danger" style="width: 126px;" onclick="delete({{ i.id }})" type="submit">Delete</bouton></td>
+                                            <td class="center"><bouton class="btn waves-effect waves-light btn-outline-warning" style="width: 126px;" onclick="edit({{ i.id }})" >Edit</bouton></td>
+                                            <td class="center"> <bouton class="btn waves-effect waves-light btn-outline-danger" style="width: 126px;" onclick="supprimer({{ i.id }})" w>Delete</bouton></td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
@@ -500,7 +515,7 @@
     <!-- All Jquery -->
     <!-- ============================================================== -->
 <script>
-        function detele(id) {
+        function supprimer(id) {
 window.location = '/delete_api/'+id;
 }
     </script>

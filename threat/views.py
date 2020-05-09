@@ -391,14 +391,14 @@ class api_service(View):
     @login_required(login_url="/login_user")
     @permission_required('is_superuser', login_url="/index")
     def delete_api(request,id):
-        Apis.objects.get(id=id)
-        Apis.delete()
+        api = Apis.objects.get(id=id)
+        api.delete()
         return redirect('/display_api')
 
     @login_required(login_url="/login_user")
     def edit_api(request, id):
         api2 = Apis.objects.get(id=id)
-        return render(request, 'api/edit_api.html', {'api': api2})
+        return render(request, 'api/edit_api.html', {'api2': api2})
 
     @login_required(login_url="/login_user")
     @permission_required('is_superuser', login_url="/index")
@@ -409,7 +409,7 @@ class api_service(View):
             url = request.POST.get('url', False)
             key = request.POST.get('key', False)
             url_test = request.POST.get('url_test', False)
-            api2.nom = nom
+            api2.name = nom
             api2.url = url
             api2.url_test = url_test
             api2.key = key

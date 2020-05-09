@@ -315,7 +315,7 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <!-- User Profile-->
-                         <li>
+                        <li>
                             <!-- User Profile-->
                             <div class="user-profile d-flex no-block dropdown mt-3">
 
@@ -334,19 +334,29 @@
                             </div>
                             <!-- End User Profile-->
                         </li>
-
                         <!-- User Profile-->
+                        {% if user.is_superuser == 1 %}
                         <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">Personal</span></li>
-                       <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Utilisateurs</span></a>
+                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Utilisateurs</span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
-                                {% if user.is_superuser == 1 %}
+
                                 <li class="sidebar-item"><a href="/add_user" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Ajout d'un utilisateur </span></a></li>
                                 <li class="sidebar-item"><a href="/display_user" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Affichage des utilisateurs </span></a></li>
-                                {% else %}
-                                <li class="sidebar-item"><a href="/display_user" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Affichage des utilisateurs </span></a></li>
-                                {% endif %}
+
+
                             </ul>
                         </li>
+                        <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">API</span></li>
+                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">APIs</span></a>
+                            <ul aria-expanded="false" class="collapse  first-level">
+
+                                <li class="sidebar-item"><a href="/add_api" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Ajout d'un API </span></a></li>
+                                <li class="sidebar-item"><a href="/display_api" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Affichage des APIs </span></a></li>
+
+
+                            </ul>
+                        </li>
+                        {% endif %}
                         <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">Feed Threat</span></li>
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Feed</span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
