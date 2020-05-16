@@ -8,10 +8,11 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 import requests
 from django.core.files.storage import FileSystemStorage
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect
+from django.template.loader import get_template
 from django.views import View
-from .models import Requete, Apis
+from .models import Requete, Apis, Notification
 from honeydb import api
 from OTXv2 import OTXv2
 from OTXv2 import IndicatorTypes
@@ -28,6 +29,9 @@ from cloudmersive_virus_api_client.rest import ApiException
 
 class utilisateur(View):
     @staticmethod
+    def notification_mail():
+        utilisateurs = User.objects.all()
+    @staticmethod
     def get_random_alphaNumeric_string(stringLength=8):
         lettersAndDigits = string.ascii_letters + string.digits
         return ''.join((random.choice(lettersAndDigits) for i in range(stringLength)))
@@ -37,8 +41,18 @@ class utilisateur(View):
             user = User.objects.get(username=username)
             password = utilisateur.get_random_alphaNumeric_string(8)
             user.password = make_password(password, None, hasher='default')
-            message = "Utilisateur "+user.username+" votre mot de passe iniale est "+password
-            send_mail("Reset Password", message, "hedi.hamza@esprit.tn", [user.email])
+            ctx = {
+                'user': username, 'password': password
+            }
+            message = get_template('user/email-templete-password-reset.html').render(ctx)
+            msg = EmailMessage(
+                'Réinitialiser le mot de passe',
+                message,
+                'hedi.hamza@esprit.tn',
+                [user.email],
+            )
+            msg.content_subtype = "html"  # Main content is now text/html
+            msg.send()
             user.save()
             return render(request, 'user/login_user.html')
 
@@ -72,7 +86,7 @@ class utilisateur(View):
             prenom = request.POST.get('lastName', False)
             email = request.POST.get('emailAddress', False)
             pseudo = request.POST.get('pseudo', False)
-            password = request.POST.get('password', False)
+            password = request.POST.get('pwd', False)
             type = request.POST.get('type', False)
             User.first_name = nom
             User.last_name = prenom
@@ -165,14 +179,14 @@ class threat(View):
         }
         response = requests.request("GET", url, headers=headers)
         re = response.json()
-        return render(request, 'api/listhash.html', {'ind': re['hashes']})
+        return render(request, 'services/listhash.html', {'ind': re['hashes']})
 
     @login_required(login_url="/login_user")
     def listemalware(request):
         pud = pulsedive.Pulsedive('1b0d0dcb40d124d4d91a40cb00f281527a84139d23d685e32fd18b28bb3e7013')
         ind = pud.search.threat(risk=['unknown', 'none', 'low', 'medium', 'high', 'critical', 'retired'],
                                 category=['malware'], properties=None, attribute=None, splitrisk=False)
-        return render(request, 'api/listmalware.html', {'ind': ind['results']})
+        return render(request, 'services/listmalware.html', {'ind': ind['results']})
 
     @login_required(login_url="/login_user")
     def listedomain(request):
@@ -180,7 +194,7 @@ class threat(View):
         ind = pud.search.indicator(risk=['unknown', 'none', 'low', 'medium', 'high', 'critical', 'retired'],
                                    indicator_type=['url', 'domain'], lastseen=None, latest=None, limit=None,
                                    export=False, properties=None, attribute=None, feed=None, threat=None)
-        return render(request, 'api/listdomain.html', {'ind': ind['results']})
+        return render(request, 'services/listdomain.html', {'ind': ind['results']})
 
     @login_required(login_url="/login_user")
     def listeip(request):
@@ -188,7 +202,7 @@ class threat(View):
         ind = pud.search.indicator(risk=['unknown', 'none', 'low', 'medium', 'high', 'critical', 'retired'],
                                    indicator_type=['ip', 'ipv6'], lastseen=None, latest=None, limit='hundred',
                                    export=False, properties=None, attribute=None, feed=None, threat=None)
-        return render(request, 'api/listip.html', {'ind': ind['results']})
+        return render(request, 'services/listip.html', {'ind': ind['results']})
 
     @login_required(login_url="/login_user")
     def checkfile(request):
@@ -220,7 +234,7 @@ class threat(View):
                 ree = response3.json()
             req = Requete(type='file', date=date.today(), name=filename, user=user)
             req.save()
-            return render(request, 'api/checkfile.html', {'ree': ree})
+            return render(request, 'services/checkfile.html', {'ree': ree})
         return redirect('/display_user')
 
     @login_required(login_url="/login_user")
@@ -243,7 +257,7 @@ class threat(View):
         infos = response5.json()
         req = Requete(type='domain', date=date.today(), name=domain , user=user)
         req.save()
-        return render(request, 'api/checkhostname.html',
+        return render(request, 'services/checkhostname.html',
                       {'general': general, 'url_list': url_list['url_list'], 'passive_dns': passive_dns['passive_dns'],
                        'http_scan': http_scan, 'infos': infos['validation'], 'count': infos['pulse_info']})
 
@@ -264,7 +278,7 @@ class threat(View):
             http_scan = None
         req = Requete(type='ip', date=date.today(), name=ip, user=user)
         req.save()
-        return render(request, 'api/checkip.html', {'general': re['general'], 'url_list': re['url_list']['url_list'],
+        return render(request, 'services/checkip.html', {'general': re['general'], 'url_list': re['url_list']['url_list'],
                                                     'passive_dns': passive_dns['passive_dns'], 'http_scan': http_scan,
                                                     'malware': malware['data']})
 
@@ -279,7 +293,7 @@ class threat(View):
         re = response.json()
         req = Requete(type='hash', date=date.today(), name=hash, user=user)
         req.save()
-        return render(request, 'api/checkhash.html', {'general': re, 'scan': re['scan_results']['scan_details']})
+        return render(request, 'services/checkhash.html', {'general': re, 'scan': re['scan_results']['scan_details']})
 
     @login_required(login_url="/login_user")
     def checkmail(request):
@@ -295,7 +309,7 @@ class threat(View):
         re = response.json()
         req = Requete(type='mail', date=date.today(), name=mail, user=user)
         req.save()
-        return render(request, 'api/checkmail.html', {'general': re['response']})
+        return render(request, 'services/checkmail.html', {'general': re['response']})
 
 
 class dashbord(View):
@@ -391,8 +405,8 @@ class api_service(View):
     @login_required(login_url="/login_user")
     @permission_required('is_superuser', login_url="/index")
     def delete_api(request,id):
-        api = Apis.objects.get(id=id)
-        api.delete()
+        api2 = Apis.objects.get(id=id)
+        api2.delete()
         return redirect('/display_api')
 
     @login_required(login_url="/login_user")
@@ -415,6 +429,55 @@ class api_service(View):
             api2.key = key
             api2.save()
         return redirect('/display_api')
+
+class notifications(View):
+    @login_required(login_url="/login_user")
+    @permission_required('is_superuser', login_url="/index")
+    def add_notif(request):
+        if request.method == "POST":
+            message = request.POST.get('message', False)
+            titre = request.POST.get('titre', False)
+            notif = Notification(titre=titre, message=message, status=False)
+            notif.save()
+            return redirect('/display_notif')
+        return render(request, 'notifications/add_notif.html')
+
+    @login_required(login_url="/login_user")
+    @permission_required('is_superuser', login_url="/index")
+    def display_notif(request):
+        list = Notification.objects.all()
+        return render(request, 'notifications/liste_notif.html', {'list': list})
+
+    @login_required(login_url="/login_user")
+    @permission_required('is_superuser', login_url="/index")
+    def envoye_notif(request,id):
+        notif = Notification.objects.get(id=id)
+        list = User.objects.all().filter(is_staff=False)
+        for i in list:
+            ctx = {
+                'titre': notif.titre, 'message': notif.message, 'user': i.username
+            }
+            message = get_template('notifications/notifications.html').render(ctx)
+            msg = EmailMessage(
+                'EY Threat Intelligence',
+                message,
+                'hedi.hamza@esprit.tn',
+                [i.email],
+            )
+            msg.content_subtype = "html"  # Main content is now text/html
+            msg.send()
+        notif.status = True
+        notif.save()
+        return redirect('/display_notif')
+
+    @login_required(login_url="/login_user")
+    @permission_required('is_superuser', login_url="/index")
+    def delete_notif(request,id):
+        notif = Notification.objects.get(id=id)
+        notif.delete()
+        return redirect('/display_notif')
+
+
 
 
 

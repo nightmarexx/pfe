@@ -20,6 +20,7 @@
     <link href="{% static 'dist/css/style.min.css' %}" rel="stylesheet">
     <link href="{% static 'assets/extra-libs/DataTables/datatables.css' %}" rel="stylesheet" type="text/css" />
     <!-- Custom CSS -->
+    <link href="{% static 'assets/libs/sweetalert2/dist/sweetalert2.min.css' %}" rel="stylesheet">
     <link href="{% static 'dist/css/style.min.css' %}" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -467,7 +468,7 @@
 
                                             <td style="max-width: 200px;overflow: hidden;text-overflow: ellipsis;word-break: keep-all;white-space: nowrap;display: table-cell;">{{ i.key }}</td>
                                             <td class="center"><bouton class="btn waves-effect waves-light btn-outline-warning" style="width: 126px;" onclick="edit({{ i.id }})" >Edit</bouton></td>
-                                            <td class="center"> <bouton class="btn waves-effect waves-light btn-outline-danger" style="width: 126px;" onclick="supprimer({{ i.id }})" w>Delete</bouton></td>
+                                            <td class="center"><bouton class="btn waves-effect waves-light btn-outline-danger" style="width: 126px;" onclick="dellete({{ i.id }})" >Delete</bouton></td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
@@ -514,15 +515,28 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-<script>
-        function supprimer(id) {
-window.location = '/delete_api/'+id;
-}
-    </script>
+
     <script>
-        function edit(id) {
-window.location = '/edit_api/'+id;
-}
+        function dellete(id) {
+        Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.value) {
+    Swal.fire(
+      'Deleted!',
+      'Your file has been deleted.',
+      'success'
+    )
+    window.location = '/delete_api/'+id ;
+  }
+})
+        }
     </script>
     <script src="{% static 'assets/libs/jquery/dist/jquery.min.js' %}"></script>
     <!-- Bootstrap tether Core JavaScript -->
@@ -543,6 +557,14 @@ window.location = '/edit_api/'+id;
     <script src="{% static 'dist/js/custom.min.js' %}"></script>
     <script src="{% static 'assets/extra-libs/DataTables/datatables.min.js' %}"></script>
     <script src="{% static 'dist/js/pages/datatable/datatable-basic.init.js' %}"></script>
+    <script src="{% static 'assets/libs/sweetalert2/dist/sweetalert2.all.min.js' %}"></script>
+    <script>
+        function edit(id2)
+        {
+        window.location = '/edit_api/'+id2 ;
+         }
+    </script>
+
 
 
 

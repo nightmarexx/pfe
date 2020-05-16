@@ -19,3 +19,9 @@ class Apis(models.Model):
     key = models.TextField(null=True)
     url_test = models.TextField()
     status = models.BooleanField()
+
+
+class Notification(models.Model):
+    titre = models.TextField()
+    message = models.TextField()
+    status = models.BooleanField()

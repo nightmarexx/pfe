@@ -436,7 +436,7 @@
                             <div class="card-header bg-info">
                                 <h4 class="mb-0 text-white">Other Sample form</h4>
                             </div>
-                            <form action="/add_api" method="POST">
+                            <form action="/add_notif" method="POST">
                                 {% csrf_token %}
                                 <div class="card-body">
                                     <h4 class="card-title">Person Info</h4>
@@ -447,38 +447,19 @@
                                         <div class="row">
                                             <div class="col-md-12 ">
                                                 <div class="form-group">
-                                                    <label>Nom</label>
-                                                    <input type="text" id="nom" name="nom" class="form-control">
+                                                    <label>Titre</label>
+                                                    <input type="text" id="titre" name="titre" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
+                                       <div class="row">
+                                            <div class="col-md-12 ">
                                                 <div class="form-group">
-                                                    <label>URL</label>
-                                                    <input type="text" name="url" class="form-control">
-                                                </div>
-                                            </div>
-                                            <!--/span-->
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>URL test</label>
-                                                    <input type="text"  name="url_test" class="form-control">
-                                                </div>
-                                            </div>
-                                            <!--/span-->
-                                        </div>
-                                        <!--/row-->
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Clé API</label>
-                                                    <input type="text" id="key" name="key" class="form-control">
-                                                </div>
-                                            </div>
-                                            <!--/span-->
+                                                    <label>Titre</label>
+                                                    <textarea id="message" name="message" class="form-control" rows="5"></textarea>
 
-                                            <!--/span-->
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-actions">

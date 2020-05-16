@@ -44,8 +44,14 @@ urlpatterns = [
     path('display_api', views.api_service.listeapi),
     path('add_api', views.api_service.add_api),
     path('delete_api/<int:id>', views.api_service.delete_api),
+    path('delete_api/<int:id>', views.api_service.delete_api),
     path('edit_api/<int:id>', views.api_service.edit_api),
     path('update_api/<int:id>', views.api_service.update_api),
+    path('add_notif', views.notifications.add_notif),
+    path('display_notif', views.notifications.display_notif),
+    path('delete_notif/<int:id>', views.notifications.delete_notif),
+    path('envoye_notif/<int:id>', views.notifications.envoye_notif),
+
 
 ]
 
