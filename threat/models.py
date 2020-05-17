@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.html import mark_safe
+from markdown import markdown
+
 
 
 class Document(models.Model):
@@ -25,3 +28,6 @@ class Notification(models.Model):
     titre = models.TextField()
     message = models.TextField()
     status = models.BooleanField()
+
+    def get_message_as_markdown(self):
+        return mark_safe(markdown(self.message, safe_mode='escape'))

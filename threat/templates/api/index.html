@@ -42,7 +42,7 @@
         <!-- ============================================================== -->
         <!-- Topbar header - style you can find in pages.scss -->
         <!-- ============================================================== -->
-        <header class="topbar">
+        {% block header %} <header class="topbar">
             <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                 <div class="navbar-header">
                     <!-- This is for the sidebar toggle which is visible on mobile only -->
@@ -308,13 +308,8 @@
                 </div>
             </nav>
         </header>
-        <!-- ============================================================== -->
-        <!-- End Topbar header -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        <aside class="left-sidebar">
+
+       {% block aside %} <aside class="left-sidebar">
             <!-- Sidebar scroll-->
             <div class="scroll-sidebar">
                 <!-- Sidebar navigation-->
@@ -362,6 +357,16 @@
 
                             </ul>
                         </li>
+                        <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">Notification</span></li>
+                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Notifications</span></a>
+                            <ul aria-expanded="false" class="collapse  first-level">
+
+                                <li class="sidebar-item"><a href="/add_notif" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Ajout d'une notification</span></a></li>
+                                <li class="sidebar-item"><a href="/display_notif" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Affichage des notifications </span></a></li>
+
+
+                            </ul>
+                        </li>
                         {% endif %}
                         <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">Feed Threat</span></li>
                         <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Feed</span></a>
@@ -380,7 +385,7 @@
                 <!-- End Sidebar navigation -->
             </div>
             <!-- End Sidebar scroll-->
-        </aside>
+        </aside> {% endblock %}
         <!-- ============================================================== -->
         <!-- End Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
@@ -494,6 +499,7 @@
                     </div>
                 </div>
                 <!-- ============================================================== -->
+                {% if total != 0 %}
                 <div class="row">
                     <!-- column -->
                     <div class="col-sm-12 col-lg-12">
@@ -506,12 +512,14 @@
                                     </div>
 
                                 </div>
+
                                 <div class="row m-t-40 m-b-0">
                                     <!-- column -->
                                     <div class="col-sm-12 col-lg-6">
                                         <div id="requete" style="height:260px; width:100%;" class="m-t-20"></div>
                                     </div>
                                     <!-- column -->
+
                                     <div class="col-sm-12 col-lg-6">
                                         <span class="display-6 d-block text-info font-medium">{{ total }}</span>
                                         <span class="text-muted">Total des verifications</span>
@@ -532,7 +540,8 @@
                     <!-- column -->
 
                 </div>
-                <!-- User Data, Visits -->
+                <!-- User Data, Visi0ts -->
+                {% endif %}
 
                 <!-- ============================================================== -->
                 <div class="row">
@@ -563,6 +572,7 @@
                 <!-- ============================================================== -->
                 <!-- Activity, Referrals -->
                 <!-- ============================================================== -->
+
                 <div class="row">
                     <!-- column -->
                     <div class="col-sm-12 col-lg-8">
@@ -604,6 +614,7 @@
                                 </div>
                             </div>
                         </div>
+                        {% if history is not none %}
                         {% if user.is_superuser == 1 %}
                         <div class="card">
                             <div class="card-body">
@@ -638,6 +649,7 @@
                             </div>
                         </div>
                         {% endif %}
+                        {% endif %}
                     </div>
 
                     <!-- column -->
@@ -669,6 +681,7 @@
                     </div>
 
                 </div>
+                {
                 <!-- ============================================================== -->
                 <!-- Task, Feeds -->
                 <!-- ============================================================== -->

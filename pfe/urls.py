@@ -14,10 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from threat import views
-from django.contrib.auth.decorators import login_required,permission_required
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -51,6 +50,9 @@ urlpatterns = [
     path('display_notif', views.notifications.display_notif),
     path('delete_notif/<int:id>', views.notifications.delete_notif),
     path('envoye_notif/<int:id>', views.notifications.envoye_notif),
+    path('edit_notif/<int:id>', views.notifications.edit_notif),
+    path('update_notif/<int:id>', views.notifications.update_notif),
+
 
 
 ]

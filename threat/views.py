@@ -435,7 +435,7 @@ class notifications(View):
     @permission_required('is_superuser', login_url="/index")
     def add_notif(request):
         if request.method == "POST":
-            message = request.POST.get('message', False)
+            message = request.POST.get('demo1', False)
             titre = request.POST.get('titre', False)
             notif = Notification(titre=titre, message=message, status=False)
             notif.save()
@@ -476,6 +476,24 @@ class notifications(View):
         notif = Notification.objects.get(id=id)
         notif.delete()
         return redirect('/display_notif')
+
+    @login_required(login_url="/login_user")
+    def edit_notif(request, id):
+        notif = Notification.objects.get(id=id)
+        return render(request, 'notifications/edit_notif.html', {'notif': notif})
+
+    @login_required(login_url="/login_user")
+    @permission_required('is_superuser', login_url="/index")
+    def update_notif(request, id):
+        if request.method == "POST":
+            notif = Notification.objects.get(id=id)
+            message = request.POST.get('demo1', False)
+            titre = request.POST.get('titre', False)
+            notif.titre = titre
+            notif.message = message
+            notif.save()
+        return redirect('/display_notif')
+
 
 
 
