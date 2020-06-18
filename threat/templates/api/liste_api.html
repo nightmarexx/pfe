@@ -12,7 +12,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
-    <title>Xtreme admin Template - The Ultimate Multipurpose admin template</title>
+    <title>EY Threat Intel</title>
     <!-- This Page CSS -->
        {% load static %}
     <link href="{% static 'assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css' %}" rel="stylesheet">
@@ -56,23 +56,23 @@
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
-                    <a class="navbar-brand" href="/index">
+                   <a class="navbar-brand" href="/index">
                         <!-- Logo icon -->
                         <b class="logo-icon">
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
-                            <img src="{% static 'assets/images/logo-icon.png' %}" alt="homepage" class="dark-logo" />
+                            <img src="{% static 'assets/images/logo-light-icon.png' %}" alt="homepage" class="dark-logo" />
                             <!-- Light Logo icon -->
                             <img src="{% static 'assets/images/logo-light-icon.png' %}" alt="homepage" class="light-logo" />
                         </b>
                         <!--End Logo icon -->
                         <!-- Logo text -->
-                        <span class="logo-text">
-                             <!-- dark Logo text -->
+                       <!-- <span class="logo-text">
+
                              <img src="{% static 'assets/images/logo-text.png' %}" alt="homepage" class="dark-logo" />
-                             <!-- Light Logo text -->
+
                              <img src="{% static 'assets/images/logo-light-text.png' %}" class="light-logo" alt="homepage" />
-                        </span>
+                        </span> -->
                     </a>
                     <!-- ============================================================== -->
                     <!-- End Logo -->
@@ -168,120 +168,18 @@
                         <!-- ============================================================== -->
                         <!-- create new -->
                         <!-- ============================================================== -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="flag-icon flag-icon-us"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right  animated bounceInDown" aria-labelledby="navbarDropdown2">
-                                <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-us"></i> English</a>
-                                <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-fr"></i> French</a>
-                                <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-es"></i> Spanish</a>
-                                <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-de"></i> German</a>
-                            </div>
-                        </li>
+
                         <!-- ============================================================== -->
                         <!-- Comment -->
                         <!-- ============================================================== -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-bell font-24"></i>
 
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown">
-                                <span class="with-arrow"><span class="bg-primary"></span></span>
-                                <ul class="list-style-none">
-                                    <li>
-                                        <div class="drop-title bg-primary text-white">
-                                            <h4 class="m-b-0 m-t-5">4 New</h4>
-                                            <span class="font-light">Notifications</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="message-center notifications">
-                                            <!-- Message -->
-                                            <a href="javascript:void(0)" class="message-item">
-                                                <span class="btn btn-danger btn-circle"><i class="fa fa-link"></i></span>
-                                                <div class="mail-contnet">
-                                                    <h5 class="message-title">Luanch Admin</h5> <span class="mail-desc">Just see the my new admin!</span> <span class="time">9:30 AM</span> </div>
-                                            </a>
-                                            <!-- Message -->
-                                            <a href="javascript:void(0)" class="message-item">
-                                                <span class="btn btn-success btn-circle"><i class="ti-calendar"></i></span>
-                                                <div class="mail-contnet">
-                                                    <h5 class="message-title">Event today</h5> <span class="mail-desc">Just a reminder that you have event</span> <span class="time">9:10 AM</span> </div>
-                                            </a>
-                                            <!-- Message -->
-                                            <a href="javascript:void(0)" class="message-item">
-                                                <span class="btn btn-info btn-circle"><i class="ti-settings"></i></span>
-                                                <div class="mail-contnet">
-                                                    <h5 class="message-title">Settings</h5> <span class="mail-desc">You can customize this template as you want</span> <span class="time">9:08 AM</span> </div>
-                                            </a>
-                                            <!-- Message -->
-                                            <a href="javascript:void(0)" class="message-item">
-                                                <span class="btn btn-primary btn-circle"><i class="ti-user"></i></span>
-                                                <div class="mail-contnet">
-                                                    <h5 class="message-title">Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>
-                                            </a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link text-center m-b-5 text-dark" href="javascript:void(0);"> <strong>Check all notifications</strong> <i class="fa fa-angle-right"></i> </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
                         <!-- ============================================================== -->
                         <!-- End Comment -->
                         <!-- ============================================================== -->
                         <!-- ============================================================== -->
                         <!-- Messages -->
                         <!-- ============================================================== -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="font-24 mdi mdi-comment-processing"></i>
 
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown" aria-labelledby="2">
-                                <span class="with-arrow"><span class="bg-danger"></span></span>
-                                <ul class="list-style-none">
-                                    <li>
-                                        <div class="drop-title text-white bg-danger">
-                                            <h4 class="m-b-0 m-t-5">5 New</h4>
-                                            <span class="font-light">Messages</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="message-center message-body">
-                                            <!-- Message -->
-                                            <a href="javascript:void(0)" class="message-item">
-                                                <span class="user-img"> <img src="../../assets/images/users/1.jpg" alt="user" class="rounded-circle"> <span class="profile-status online pull-right"></span> </span>
-                                                <div class="mail-contnet">
-                                                    <h5 class="message-title">Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:30 AM</span> </div>
-                                            </a>
-                                            <!-- Message -->
-                                            <a href="javascript:void(0)" class="message-item">
-                                                <span class="user-img"> <img src="../../assets/images/users/2.jpg" alt="user" class="rounded-circle"> <span class="profile-status busy pull-right"></span> </span>
-                                                <div class="mail-contnet">
-                                                    <h5 class="message-title">Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span> <span class="time">9:10 AM</span> </div>
-                                            </a>
-                                            <!-- Message -->
-                                            <a href="javascript:void(0)" class="message-item">
-                                                <span class="user-img"> <img src="../../assets/images/users/3.jpg" alt="user" class="rounded-circle"> <span class="profile-status away pull-right"></span> </span>
-                                                <div class="mail-contnet">
-                                                    <h5 class="message-title">Arijit Sinh</h5> <span class="mail-desc">I am a singer!</span> <span class="time">9:08 AM</span> </div>
-                                            </a>
-                                            <!-- Message -->
-                                            <a href="javascript:void(0)" class="message-item">
-                                                <span class="user-img"> <img src="../../assets/images/users/4.jpg" alt="user" class="rounded-circle"> <span class="profile-status offline pull-right"></span> </span>
-                                                <div class="mail-contnet">
-                                                    <h5 class="message-title">Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>
-                                            </a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link text-center link text-dark" href="javascript:void(0);"> <b>See all e-Mails</b> <i class="fa fa-angle-right"></i> </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
                         <!-- ============================================================== -->
                         <!-- End Messages -->
                         <!-- ============================================================== -->
@@ -359,7 +257,7 @@
                             </ul>
                         </li>
                         <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">API</span></li>
-                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">APIs</span></a>
+                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">APIs</span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
 
                                 <li class="sidebar-item"><a href="/add_api" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Ajout d'un API </span></a></li>
@@ -369,7 +267,7 @@
                             </ul>
                         </li>
                         <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">Notification</span></li>
-                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Notifications</span></a>
+                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-bell font-24"></i><span class="hide-menu">Notifications</span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
 
                                 <li class="sidebar-item"><a href="/add_notif" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Ajout d'une notification</span></a></li>
@@ -380,7 +278,7 @@
                         </li>
                         {% endif %}
                         <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">Feed Threat</span></li>
-                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Feed</span></a>
+                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-security"></i><span class="hide-menu">Feed</span></a>
                             <ul aria-expanded="false" class="collapse  first-level">
 
                                 <li class="sidebar-item"><a href="/listmalware" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu">Liste des malwares</span></a></li>
@@ -405,7 +303,7 @@
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-5 align-self-center">
-                        <h4 class="page-title">Apis</h4>
+                        <h4 class="page-title">APIs</h4>
                         <div class="d-flex align-items-center">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
@@ -529,18 +427,18 @@
     <script>
         function dellete(id) {
         Swal.fire({
-  title: 'Are you sure?',
+  title: 'Vous êtes sur ?',
   text: "You won't be able to revert this!",
   icon: 'warning',
   showCancelButton: true,
   confirmButtonColor: '#3085d6',
   cancelButtonColor: '#d33',
-  confirmButtonText: 'Yes, delete it!'
+  confirmButtonText: 'Oui , Supprimé!'
 }).then((result) => {
   if (result.value) {
     Swal.fire(
-      'Deleted!',
-      'Your file has been deleted.',
+      'Supprimé!',
+      'L'API a été supprimé.',
       'success'
     )
     window.location = '/delete_api/'+id ;

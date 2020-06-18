@@ -362,10 +362,11 @@ class dashbord(View):
         moyf = len(file)
         moym = len(mail)
         history = Requete.objects.all()
+
         return render(request, 'api/index.html',
                       {'mal1': mal1, 'mal2': mal2, 'mal3': mal3, 'mal4': mal4, 'malware': malware, 'services': services,
                        'service': service, 'host': host, 'total': total, 'domain': moyd, 'ip': moyi, 'hash': moyh,
-                       'file': moyf, 'mail': moym, 'history': history})
+                       'file': moyf, 'mail': moym, 'history': history[len(history)-5:len(history)]})
 
 
 class api_service(View):
