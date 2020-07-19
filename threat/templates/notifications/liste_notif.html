@@ -375,7 +375,7 @@
                                             {% endif %}
                                             {% if i.status == 0 %}
                                             <td class="center"><bouton class="btn waves-effect waves-light btn-outline-info" style="width: 126px;" onclick="edit({{ i.id }})" >Modifier</bouton></td>
-                                            <td class="center"><bouton class="btn waves-effect waves-light btn-outline-danger" style="width: 126px;" onclick="dellette({{ i.id }})" >Supprimer</bouton></td>
+                                            <td class="center"><bouton class="btn waves-effect waves-light btn-outline-danger" style="width: 126px;" onclick="removeee({{ i.id }})" >Supprimer</bouton></td>
                                             <td class="center"><bouton class="btn waves-effect waves-light btn-outline-success" style="width: 126px;" onclick="send({{ i.id }})" >Envoyer</bouton></td>
                                             {% else %}
                                             <td></td>
@@ -471,8 +471,8 @@
 })
         }
     </script>
-<script type="text/javascript">
-        function dellette(i) {
+<script>
+        function removeee(i) {
         Swal.fire({
   title: 'Vous êtes sur ?',
   text: "You won't be able to revert this!",

@@ -22,7 +22,7 @@ from bs4 import BeautifulSoup
 from virus_total_apis import PublicApi as VirusTotalPublicApi
 import cloudmersive_virus_api_client
 from cloudmersive_virus_api_client.rest import ApiException
-
+import shutil
 
 # Create your views here.
 
@@ -81,6 +81,7 @@ class utilisateur(View):
     @login_required(login_url="/login_user")
     @permission_required('is_superuser', login_url="/index")
     def add_user(request):
+        utilisateurs = User.objects.all()
         if request.method == "POST":
             nom = request.POST.get('firstName', False)
             prenom = request.POST.get('lastName', False)
@@ -91,22 +92,24 @@ class utilisateur(View):
             User.first_name = nom
             User.last_name = prenom
             User.is_active = False
-
-            if type == "SuperUser":
-                User.objects.create_superuser(pseudo, email, password)
-                user = User.objects.get(username=pseudo)
-                user.first_name = nom
-                user.last_name = prenom
-                user.save()
-                return redirect('/display_user')
+            if ' ' in nom or ' ' in email or ' ' in pseudo or ' ' in password:
+                return render(request, 'user/add_user.html', {'users': utilisateurs})
             else:
-                User.objects.create_user(pseudo, email, password)
-                user = User.objects.get(username=pseudo)
-                user.first_name = nom
-                user.last_name = prenom
-                user.save()
-                return redirect('/display_user')
-        return render(request, 'user/add_user.html')
+                if type == "SuperUser":
+                    User.objects.create_superuser(pseudo, email, password)
+                    user = User.objects.get(username=pseudo)
+                    user.first_name = nom
+                    user.last_name = prenom
+                    user.save()
+                    return redirect('/display_user')
+                else:
+                    User.objects.create_user(pseudo, email, password)
+                    user = User.objects.get(username=pseudo)
+                    user.first_name = nom
+                    user.last_name = prenom
+                    user.save()
+                    return redirect('/display_user')
+        return render(request, 'user/add_user.html', {'users': utilisateurs})
 
     @login_required(login_url="/login_user")
     @permission_required('is_superuser', login_url="/index")
@@ -118,7 +121,8 @@ class utilisateur(View):
     @login_required(login_url="/login_user")
     def edit_user(request, id):
         user2 = User.objects.get(id=id)
-        return render(request, 'user/edit_user.html', {'user2': user2})
+        utilisateurs = User.objects.all()
+        return render(request, 'user/edit_user.html', {'user2': user2, 'users': utilisateurs})
 
     @login_required(login_url="/login_user")
     @permission_required('is_superuser', login_url="/index")
@@ -129,7 +133,6 @@ class utilisateur(View):
             nom = request.POST.get('firstname', False)
             prenom = request.POST.get('lastname', False)
             email = request.POST.get('email', False)
-            pseudo = request.POST.get('username', False)
             password = request.POST.get('password', False)
             type = request.POST.get('type', False)
             status = request.POST.get('status', False)
@@ -137,7 +140,6 @@ class utilisateur(View):
             user.first_name = nom
             user.last_name = prenom
             user.email = email
-            user.username = pseudo
             if status == 'Active':
                 user.is_active = True
             elif status == 'Bloqué':
@@ -342,7 +344,11 @@ class dashbord(View):
         url = "https://urlhaus-api.abuse.ch/v1/urls/recent/"
         response = requests.request("GET", url)
         re = response.json()
-        malware = re['urls'][0:12]
+
+        if re['query_status'] == 'no_results':
+            malware = None
+        else:
+            malware = re['urls'][0:12]
         honeydb = api.Client('3db6f7b66c3d69f881d51f99c7447a335c0183caded44ae799d6e56ce85d934b',
                              'c95af819d97737589a754bf9f6d76c0a68f9514bd052a58493d62944e75a6788')
         services = honeydb.services()
@@ -382,6 +388,10 @@ class api_service(View):
                 else:
                     i.status = 1
                     i.save()
+            else:
+                i.status = 0
+                i.save()
+
 
     @login_required(login_url="/login_user")
     @permission_required('is_superuser', login_url="/index")

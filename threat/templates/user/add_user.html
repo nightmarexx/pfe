@@ -1,618 +1,1 @@
-<!DOCTYPE html>
-<html dir="ltr" lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- Favicon icon -->
-    {% load static %}
-    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
-    <title>EY Threat Intel</title>
-    <!-- This page CSS -->
-    <link href="{% static 'assets/libs/jquery-steps/jquery.steps.css' %}" rel="stylesheet">
-    <link href="{% static 'assets/libs/jquery-steps/steps.css' %}" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="{% static 'dist/css/style.min.css' %}" rel="stylesheet">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-
-<![endif]-->
-</head>
-
-<body>
-    <!-- ============================================================== -->
-    <!-- Preloader - style you can find in spinners.css -->
-    <!-- ============================================================== -->
-    <div class="preloader">
-        <div class="lds-ripple">
-            <div class="lds-pos"></div>
-            <div class="lds-pos"></div>
-        </div>
-    </div>
-    <!-- ============================================================== -->
-    <!-- Main wrapper - style you can find in pages.scss -->
-    <!-- ============================================================== -->
-    <div id="main-wrapper">
-        <!-- ============================================================== -->
-        <!-- Topbar header - style you can find in pages.scss -->
-        <!-- ============================================================== -->
-        <header class="topbar">
-            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-                <div class="navbar-header">
-                    <!-- This is for the sidebar toggle which is visible on mobile only -->
-                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
-                    <!-- ============================================================== -->
-                    <!-- Logo -->
-                    <!-- ============================================================== -->
-                   <a class="navbar-brand" href="/index">
-                        <!-- Logo icon -->
-                        <b class="logo-icon">
-                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                            <!-- Dark Logo icon -->
-                            <img src="{% static 'assets/images/logo-light-icon.png' %}" alt="homepage" class="dark-logo" />
-                            <!-- Light Logo icon -->
-                            <img src="{% static 'assets/images/logo-light-icon.png' %}" alt="homepage" class="light-logo" />
-                        </b>
-                        <!--End Logo icon -->
-                        <!-- Logo text -->
-                       <!-- <span class="logo-text">
-
-                             <img src="{% static 'assets/images/logo-text.png' %}" alt="homepage" class="dark-logo" />
-
-                             <img src="{% static 'assets/images/logo-light-text.png' %}" class="light-logo" alt="homepage" />
-                        </span> -->
-                    </a>
-                    <!-- ============================================================== -->
-                    <!-- End Logo -->
-                    <!-- ============================================================== -->
-                    <!-- ============================================================== -->
-                    <!-- Toggle which is visible on mobile only -->
-                    <!-- ============================================================== -->
-                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i class="ti-more"></i></a>
-                </div>
-                <!-- ============================================================== -->
-                <!-- End Logo -->
-                <!-- ============================================================== -->
-                <div class="navbar-collapse collapse" id="navbarSupportedContent">
-                    <!-- ============================================================== -->
-                    <!-- toggle and nav items -->
-                    <!-- ============================================================== -->
-                    <ul class="navbar-nav float-left mr-auto">
-                        <li class="nav-item d-none d-md-block"><a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)" data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a></li>
-                        <!-- ============================================================== -->
-                        <!-- mega menu -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item dropdown mega-dropdown"><a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="d-none d-md-block">Checker <i class="fa fa-angle-down"></i></span>
-                             <span class="d-block d-md-none"><i class="mdi mdi-dialpad font-24"></i></span>
-                            </a>
-                            <div class="dropdown-menu animated bounceInDown">
-                                <div class="mega-dropdown-menu row" style="height: 200px;">
-                                    <div class="col-lg-2  m-b-40 m-r-10 m-t-30">
-                                        <h4 class="m-b-20">Check Domain</h4>
-                                        <form action="/checkdomain" method="POST" class="app-search position-absolute">
-                                            {% csrf_token %}
-                                        		<div class="form-group">
-                                           <input type="text"  name="domain" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"></a>
-                                       			</div>
-                                            <button type="submit" class="btn btn-info">Check Domain</button>
-                                        </form>
-                                    </div>
-                                    <div class="col-lg-2  m-b-40 m-r-10 m-t-30">
-                                        <h4 class="m-b-20">Chech Ip Adresse</h4>
-                                        	<form action="/checkip" method="POST" class="app-search position-absolute">
-                                                {% csrf_token %}
-                                        		<div class="form-group">
-                                           <input type="text" name="ip" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"></a>
-                                       			</div>
-                                            <button type="submit" class="btn btn-info">Chech Ip Adresse</button>
-                                            </form>
-                                    </div>
-                                    <div class="col-lg-2  m-b-40 m-r-10 m-t-30">
-                                        <h4 class="m-b-20">Check Hash</h4>
-                                        	<form action="/checkhash" method="POST" class="app-search position-absolute">
-                                                {% csrf_token %}
-                                        		<div class="form-group">
-                                           <input type="text" name="hash" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"></a>
-                                       			</div>
-                                            <button type="submit" class="btn btn-info">Check Hash</button>
-                                            </form>
-                                    </div>
-                                    <div class="col-lg-2  m-b-40 m-r-10 m-t-30">
-                                        <h4 class="m-b-20">Check Email</h4>
-                                        <form action="/checkmail" method="POST" class="app-search position-absolute">
-                                            {% csrf_token %}
-                                        		<div class="form-group">
-                                           <input type="email"  name="mail" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"></a>
-                                       			</div>
-                                            <button type="submit" class="btn btn-info">Check Email</button>
-                                        </form>
-                                    </div>
-                                    <div class="col-lg-3  m-b-40 m-r-10 m-t-30">
-                                        <h4 class="m-b-20">Check File</h4>
-                                        	<form action="/checkfile" method="POST" enctype="multipart/form-data" class="app-search position-absolute">
-                                                {% csrf_token %}
-                                        		<div class="form-group">
-                                                    <input type="file" name="myfile" class="form-control">
-                                       			</div>
-                                            <button type="submit" class="btn btn-info">Check File</button>
-                                            </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-
-                    </ul>
-                    <!-- ============================================================== -->
-                    <!-- Right side toggle and nav items -->
-                    <!-- ============================================================== -->
-                    <ul class="navbar-nav float-right">
-                        <!-- ============================================================== -->
-                        <!-- create new -->
-                        <!-- ============================================================== -->
-
-                        <!-- ============================================================== -->
-                        <!-- Comment -->
-                        <!-- ============================================================== -->
-
-                        <!-- ============================================================== -->
-                        <!-- End Comment -->
-                        <!-- ============================================================== -->
-                        <!-- ============================================================== -->
-                        <!-- Messages -->
-                        <!-- ============================================================== -->
-
-                        <!-- ============================================================== -->
-                        <!-- End Messages -->
-                        <!-- ============================================================== -->
-                        <!-- ============================================================== -->
-                        <!-- User profile and search -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static 'assets/images/users/1.jpg' %}" alt="user" class="rounded-circle" width="31"></a>
-                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
-                                <span class="with-arrow"><span class="bg-primary"></span></span>
-                                <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">
-
-                                    <div class="m-l-10">
-                                        <h4 class="m-b-0">{{ user.username }}</h4>
-                                        <p class=" m-b-0">{{ user.email }}</p>
-                                    </div>
-                                </div>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="/edit_user/{{ user.id }}"><i class="ti-settings m-r-5 m-l-5"></i>Modifier Compte</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="/logout_user"><i class="fa fa-power-off m-r-5 m-l-5"></i> Se Déconncté</a>
-                                <div class="dropdown-divider"></div>
-                            </div>
-                        </li>
-                        <!-- ============================================================== -->
-                        <!-- User profile and search -->
-                        <!-- ============================================================== -->
-                    </ul>
-                </div>
-            </nav>
-        </header>
-        <!-- ============================================================== -->
-        <!-- End Topbar header -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        <aside class="left-sidebar">
-            <!-- Sidebar scroll-->
-            <div class="scroll-sidebar">
-                <!-- Sidebar navigation-->
-                <nav class="sidebar-nav">
-                    <ul id="sidebarnav">
-                        <!-- User Profile-->
-                        <li>
-                            <!-- User Profile-->
-                            <div class="user-profile d-flex no-block dropdown mt-3">
-
-                                <div class="user-content hide-menu ml-2">
-                                    <a href="javascript:void(0)" class="" id="Userdd" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <h5 class="mb-0 user-name font-medium">{{ user.username }}<i class="fa fa-angle-down"></i></h5>
-                                        <span class="op-5 user-email">{{ user.email }}</span>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="Userdd">
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="/edit_user/{{ user.id }}"><i class="ti-settings mr-1 ml-1"></i>Modifier Compte</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="/logout_user"><i class="fa fa-power-off mr-1 ml-1"></i>Se Déconnecté</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End User Profile-->
-                        </li>
-                        <!-- User Profile-->
-                        {% if user.is_superuser == 1 %}
-                        <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">Personal</span></li>
-                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Utilisateurs</span></a>
-                            <ul aria-expanded="false" class="collapse  first-level">
-
-                                <li class="sidebar-item"><a href="/add_user" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Ajout d'un utilisateur </span></a></li>
-                                <li class="sidebar-item"><a href="/display_user" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Affichage des utilisateurs </span></a></li>
-
-
-                            </ul>
-                        </li>
-                        <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">API</span></li>
-                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">APIs</span></a>
-                            <ul aria-expanded="false" class="collapse  first-level">
-
-                                <li class="sidebar-item"><a href="/add_api" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Ajout d'un API </span></a></li>
-                                <li class="sidebar-item"><a href="/display_api" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Affichage des APIs </span></a></li>
-
-
-                            </ul>
-                        </li>
-                        <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">Notification</span></li>
-                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-bell font-24"></i><span class="hide-menu">Notifications</span></a>
-                            <ul aria-expanded="false" class="collapse  first-level">
-
-                                <li class="sidebar-item"><a href="/add_notif" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Ajout d'une notification</span></a></li>
-                                <li class="sidebar-item"><a href="/display_notif" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Affichage des notifications </span></a></li>
-
-
-                            </ul>
-                        </li>
-                        {% endif %}
-                        <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">Feed Threat</span></li>
-                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-security"></i><span class="hide-menu">Feed</span></a>
-                            <ul aria-expanded="false" class="collapse  first-level">
-
-                                <li class="sidebar-item"><a href="/listmalware" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu">Liste des malwares</span></a></li>
-                                <li class="sidebar-item"><a href="/listdomain" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu">Liste des domaines</span></a></li>
-
-                                <li class="sidebar-item"><a href="/listip" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu">Liste des IP</span></a></li>
-                                <li class="sidebar-item"><a href="/listhash" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu">Liste des Hash</span></a></li>
-
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-                <!-- End Sidebar navigation -->
-            </div>
-            <!-- End Sidebar scroll-->
-        </aside>
-        <!-- ============================================================== -->
-        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Page wrapper  -->
-        <!-- ============================================================== -->
-        <div class="page-wrapper">
-            <!-- ============================================================== -->
-            <!-- Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <div class="page-breadcrumb">
-                <div class="row">
-                    <div class="col-5 align-self-center">
-                        <h4 class="page-title">Utilisateur</h4>
-                        <div class="d-flex align-items-center">
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Ajout utilisateur</li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <!-- ============================================================== -->
-            <!-- End Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Container fluid  -->
-            <!-- ============================================================== -->
-            <div class="container-fluid">
-                <!-- ============================================================== -->
-                <!-- Start Page Content -->
-                <!-- ============================================================== -->
-                <div class="row">
-                    <!-- ============================================================== -->
-                    <!-- Example -->
-                    <!-- ============================================================== -->
-
-                    <!-- ============================================================== -->
-                    <!-- Example -->
-                    <!-- ============================================================== -->
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body wizard-content">
-                                <h4 class="card-title">Ajout d'utilisateur</h4>
-                                <h6 class="card-subtitle"></h6>
-                                <form method="POST"  class="validation-wizard wizard-circle m-t-40"  action="/add_user">
-                                    {% csrf_token %}
-                                    <h6>Informations Personnels</h6>
-                                    <section>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="wfirstName2"> Prénom : <span class="danger">*</span> </label>
-                                                    <input type="text" class="form-control required" id="wfirstName2" name="firstName"> </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="wlastName2"> Nom : <span class="danger">*</span> </label>
-                                                    <input type="text" class="form-control required" id="wlastName2" name="lastName"> </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="wemailAddress2"> Adresse Email : <span class="danger">*</span> </label>
-                                                    <input type="email" class="form-control required" id="wemailAddress2" name="emailAddress"> </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="wphoneNumber2">Pseudo : <span class="danger">*</span></label>
-                                                    <input type="text" class="form-control required" id="wphoneNumber2" name="pseudo"> </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="pwd">Mot de passe : <span class="danger">*</span></label>
-                                                    <input type="password" id="pwd" name="pwd" class="form-control required" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
-
-
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </section>
-                                    <!-- Step 2 -->
-
-                                    <!-- Step 3 -->
-
-                                    <!-- Step 4 -->
-                                    <h6>Status de Compte</h6>
-                                    <section>
-                                        <div class="row">
-                                            <div class="col-md-6">
-
-                                                <div class="form-group">
-                                                    <label for="participants1">Type de Compte:</label>
-                                                    <select class="custom-select form-control required" id="participants1" name="type">
-                                                        <option value="">Select Result</option>
-                                                        <option value="Staff">Staff</option>
-                                                        <option value="SuperUser">SuperUser</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label></label>
-                                                    <div class="custom-control custom-checkbox">
-                                                       <button type="submit" class="btn waves-effect waves-light btn-info">Sauvegarder</button>
-                                                    </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        <!--</div>-->
-                                    </section>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <footer class="footer text-center">
-       All Rights Reserved by Xtreme admin. Designed and Developed by <a href="https://wrappixel.com">WrapPixel</a>.
-</footer>
-            <!-- ============================================================== -->
-            <!-- End footer -->
-            <!-- ============================================================== -->
-        </div>
-        <!-- ============================================================== -->
-        <!-- End Page wrapper  -->
-        <!-- ============================================================== -->
-    </div>
-    <!-- ============================================================== -->
-    <!-- End Wrapper -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- customizer Panel -->
-    <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- All Jquery -->
-    <!-- ============================================================== -->
-    <script src="{% static 'assets/libs/jquery/dist/jquery.min.js' %}"></script>
-    <!-- Bootstrap tether Core JavaScript -->
-    <script src="{% static 'assets/libs/popper.js/dist/umd/popper.min.js' %}"></script>
-    <script src="{% static 'assets/libs/bootstrap/dist/js/bootstrap.min.js' %}"></script>
-    <!-- apps -->
-    <script src="{% static 'dist/js/app.min.js' %}"></script>
-    <script src="{% static 'dist/js/app.init.dark.js'%}"></script>
-    <script src="{% static 'dist/js/app-style-switcher.js' %}"></script>
-    <!-- slimscrollbar scrollbar JavaScript -->
-    <script src="{% static 'assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js' %}"></script>
-    <script src="{% static 'assets/extra-libs/sparkline/sparkline.js' %}"></script>
-    <!--Wave Effects -->
-    <script src="{% static 'dist/js/waves.js'%}" ></script>
-    <!--Menu sidebar -->
-    <script src="{% static 'dist/js/sidebarmenu.js'%}"></script>
-    <!--Custom JavaScript -->
-    <script src="{% static 'dist/js/custom.min.js'%}"></script>
-    <script src="{% static 'assets/libs/jquery-steps/build/jquery.steps.min.js' %}"></script>
-    <script src="{% static 'assets/libs/jquery-validation/dist/jquery.validate.min.js' %}"></script>
-    <script>
-    //Basic Example
-    $("#example-basic").steps({
-        headerTag: "h3",
-        bodyTag: "section",
-        transitionEffect: "slideLeft",
-        autoFocus: true
-    });
-
-    // Basic Example with form
-    var form = $("#example-form");
-    form.validate({
-        errorPlacement: function errorPlacement(error, element) { element.before(error); },
-        rules: {
-            confirm: {
-                equalTo: "#password"
-            }
-        }
-    });
-    form.children("div").steps({
-        headerTag: "h3",
-        bodyTag: "section",
-        transitionEffect: "slideLeft",
-        onStepChanging: function(event, currentIndex, newIndex) {
-            form.validate().settings.ignore = ":disabled,:hidden";
-            return form.valid();
-        },
-        onFinishing: function(event, currentIndex) {
-            form.validate().settings.ignore = ":disabled";
-            return form.valid();
-        },
-        onFinished: function(event, currentIndex) {
-            alert("Submitted!");
-        }
-    });
-
-    // Advance Example
-
-    var form = $("#example-advanced-form").show();
-
-    form.steps({
-        headerTag: "h3",
-        bodyTag: "fieldset",
-        transitionEffect: "slideLeft",
-        onStepChanging: function(event, currentIndex, newIndex) {
-            // Allways allow previous action even if the current form is not valid!
-            if (currentIndex > newIndex) {
-                return true;
-            }
-            // Forbid next action on "Warning" step if the user is to young
-            if (newIndex === 3 && Number($("#age-2").val()) < 18) {
-                return false;
-            }
-            // Needed in some cases if the user went back (clean up)
-            if (currentIndex < newIndex) {
-                // To remove error styles
-                form.find(".body:eq(" + newIndex + ") label.error").remove();
-                form.find(".body:eq(" + newIndex + ") .error").removeClass("error");
-            }
-            form.validate().settings.ignore = ":disabled,:hidden";
-            return form.valid();
-        },
-        onStepChanged: function(event, currentIndex, priorIndex) {
-            // Used to skip the "Warning" step if the user is old enough.
-            if (currentIndex === 2 && Number($("#age-2").val()) >= 18) {
-                form.steps("next");
-            }
-            // Used to skip the "Warning" step if the user is old enough and wants to the previous step.
-            if (currentIndex === 2 && priorIndex === 3) {
-                form.steps("previous");
-            }
-        },
-        onFinishing: function(event, currentIndex) {
-            form.validate().settings.ignore = ":disabled";
-            return form.valid();
-        },
-        onFinished: function(event, currentIndex) {
-            alert("Submitted!");
-        }
-    }).validate({
-        errorPlacement: function errorPlacement(error, element) { element.before(error); },
-        rules: {
-            confirm: {
-                equalTo: "#password-2"
-            }
-        }
-    });
-
-    // Dynamic Manipulation
-    $("#example-manipulation").steps({
-        headerTag: "h3",
-        bodyTag: "section",
-        enableAllSteps: true,
-        enablePagination: false
-    });
-
-    //Vertical Steps
-
-    $("#example-vertical").steps({
-        headerTag: "h3",
-        bodyTag: "section",
-        transitionEffect: "slideLeft",
-        stepsOrientation: "vertical"
-    });
-
-    //Custom design form example
-    $(".tab-wizard").steps({
-        headerTag: "h6",
-        bodyTag: "section",
-        transitionEffect: "fade",
-        titleTemplate: '<span class="step">#index#</span> #title#',
-        labels: {
-            finish: "Submit"
-        },
-        onFinished: function(event, currentIndex) {
-            swal("Form Submitted!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed.");
-
-        }
-    });
-
-
-    var form = $(".validation-wizard").show();
-
-    $(".validation-wizard").steps({
-        headerTag: "h6",
-        bodyTag: "section",
-        transitionEffect: "fade",
-        titleTemplate: '<span class="step">#index#</span> #title#',
-        labels: {
-            finish: "Submit"
-        },
-        onStepChanging: function(event, currentIndex, newIndex) {
-            return currentIndex > newIndex || !(3 === newIndex && Number($("#age-2").val()) < 18) && (currentIndex < newIndex && (form.find(".body:eq(" + newIndex + ") label.error").remove(), form.find(".body:eq(" + newIndex + ") .error").removeClass("error")), form.validate().settings.ignore = ":disabled,:hidden", form.valid())
-        },
-        onFinishing: function(event, currentIndex) {
-            return form.validate().settings.ignore = ":disabled", form.valid()
-        },
-        onFinished: function(event, currentIndex) {
-            swal("Form Submitted!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed.");
-        }
-    }), $(".validation-wizard").validate({
-        ignore: "input[type=hidden]",
-        errorClass: "text-danger",
-        successClass: "text-success",
-        highlight: function(element, errorClass) {
-            $(element).removeClass(errorClass)
-        },
-        unhighlight: function(element, errorClass) {
-            $(element).removeClass(errorClass)
-        },
-        errorPlacement: function(error, element) {
-            error.insertAfter(element)
-        },
-        rules: {
-            email: {
-                email: !0
-            }
-        }
-    })
-    </script>
-
-</body>
-
-</html>
+<!DOCTYPE html><html dir="ltr" lang="en"><head>    <meta charset="utf-8">    <meta http-equiv="X-UA-Compatible" content="IE=edge">    <!-- Tell the browser to be responsive to screen width -->    <meta name="viewport" content="width=device-width, initial-scale=1">    <meta name="description" content="">    <meta name="author" content="">    <!-- Favicon icon -->    {% load static %}    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">    <title>EY Threat Intel</title>    <!-- This page CSS -->    <link href="{% static 'assets/libs/jquery-steps/jquery.steps.css' %}" rel="stylesheet">    <link href="{% static 'assets/libs/jquery-steps/steps.css' %}" rel="stylesheet">    <!-- Custom CSS -->    <link href="{% static 'dist/css/style.min.css' %}" rel="stylesheet">    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->    <!--[if lt IE 9]>    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script><![endif]--></head><body>    <!-- ============================================================== -->    <!-- Preloader - style you can find in spinners.css -->    <!-- ============================================================== -->    <div class="preloader">        <div class="lds-ripple">            <div class="lds-pos"></div>            <div class="lds-pos"></div>        </div>    </div>    <!-- ============================================================== -->    <!-- Main wrapper - style you can find in pages.scss -->    <!-- ============================================================== -->    <div id="main-wrapper">        <!-- ============================================================== -->        <!-- Topbar header - style you can find in pages.scss -->        <!-- ============================================================== -->        <header class="topbar">            <nav class="navbar top-navbar navbar-expand-md navbar-dark">                <div class="navbar-header">                    <!-- This is for the sidebar toggle which is visible on mobile only -->                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>                    <!-- ============================================================== -->                    <!-- Logo -->                    <!-- ============================================================== -->                   <a class="navbar-brand" href="/index">                        <!-- Logo icon -->                        <b class="logo-icon">                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->                            <!-- Dark Logo icon -->                            <img src="{% static 'assets/images/logo-light-icon.png' %}" alt="homepage" class="dark-logo" />                            <!-- Light Logo icon -->                            <img src="{% static 'assets/images/logo-light-icon.png' %}" alt="homepage" class="light-logo" />                        </b>                        <!--End Logo icon -->                        <!-- Logo text -->                       <!-- <span class="logo-text">                             <img src="{% static 'assets/images/logo-text.png' %}" alt="homepage" class="dark-logo" />                             <img src="{% static 'assets/images/logo-light-text.png' %}" class="light-logo" alt="homepage" />                        </span> -->                    </a>                    <!-- ============================================================== -->                    <!-- End Logo -->                    <!-- ============================================================== -->                    <!-- ============================================================== -->                    <!-- Toggle which is visible on mobile only -->                    <!-- ============================================================== -->                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i class="ti-more"></i></a>                </div>                <!-- ============================================================== -->                <!-- End Logo -->                <!-- ============================================================== -->                <div class="navbar-collapse collapse" id="navbarSupportedContent">                    <!-- ============================================================== -->                    <!-- toggle and nav items -->                    <!-- ============================================================== -->                    <ul class="navbar-nav float-left mr-auto">                        <li class="nav-item d-none d-md-block"><a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)" data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a></li>                        <!-- ============================================================== -->                        <!-- mega menu -->                        <!-- ============================================================== -->                        <li class="nav-item dropdown mega-dropdown"><a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                            <span class="d-none d-md-block">Checker <i class="fa fa-angle-down"></i></span>                             <span class="d-block d-md-none"><i class="mdi mdi-dialpad font-24"></i></span>                            </a>                            <div class="dropdown-menu animated bounceInDown">                                <div class="mega-dropdown-menu row" style="height: 200px;">                                    <div class="col-lg-2  m-b-40 m-r-10 m-t-30">                                        <h4 class="m-b-20">Check Domain</h4>                                        <form action="/checkdomain" method="POST" class="app-search position-absolute">                                            {% csrf_token %}                                        		<div class="form-group">                                           <input type="text"  name="domain" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"></a>                                       			</div>                                            <button type="submit" class="btn btn-info">Check Domain</button>                                        </form>                                    </div>                                    <div class="col-lg-2  m-b-40 m-r-10 m-t-30">                                        <h4 class="m-b-20">Chech Ip Adresse</h4>                                        	<form action="/checkip" method="POST" class="app-search position-absolute">                                                {% csrf_token %}                                        		<div class="form-group">                                           <input type="text" name="ip" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"></a>                                       			</div>                                            <button type="submit" class="btn btn-info">Chech Ip Adresse</button>                                            </form>                                    </div>                                    <div class="col-lg-2  m-b-40 m-r-10 m-t-30">                                        <h4 class="m-b-20">Check Hash</h4>                                        	<form action="/checkhash" method="POST" class="app-search position-absolute">                                                {% csrf_token %}                                        		<div class="form-group">                                           <input type="text" name="hash" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"></a>                                       			</div>                                            <button type="submit" class="btn btn-info">Check Hash</button>                                            </form>                                    </div>                                    <div class="col-lg-2  m-b-40 m-r-10 m-t-30">                                        <h4 class="m-b-20">Check Email</h4>                                        <form action="/checkmail" method="POST" class="app-search position-absolute">                                            {% csrf_token %}                                        		<div class="form-group">                                           <input type="email"  name="mail" class="form-control" placeholder="Search &amp; enter"> <a class="srh-btn"></a>                                       			</div>                                            <button type="submit" class="btn btn-info">Check Email</button>                                        </form>                                    </div>                                    <div class="col-lg-3  m-b-40 m-r-10 m-t-30">                                        <h4 class="m-b-20">Check File</h4>                                        	<form action="/checkfile" method="POST" enctype="multipart/form-data" class="app-search position-absolute">                                                {% csrf_token %}                                        		<div class="form-group">                                                    <input type="file" name="myfile" class="form-control">                                       			</div>                                            <button type="submit" class="btn btn-info">Check File</button>                                            </form>                                    </div>                                </div>                            </div>                        </li>                    </ul>                    <!-- ============================================================== -->                    <!-- Right side toggle and nav items -->                    <!-- ============================================================== -->                    <ul class="navbar-nav float-right">                        <!-- ============================================================== -->                        <!-- create new -->                        <!-- ============================================================== -->                        <!-- ============================================================== -->                        <!-- Comment -->                        <!-- ============================================================== -->                        <!-- ============================================================== -->                        <!-- End Comment -->                        <!-- ============================================================== -->                        <!-- ============================================================== -->                        <!-- Messages -->                        <!-- ============================================================== -->                        <!-- ============================================================== -->                        <!-- End Messages -->                        <!-- ============================================================== -->                        <!-- ============================================================== -->                        <!-- User profile and search -->                        <!-- ============================================================== -->                        <li class="nav-item dropdown">                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static 'assets/images/users/1.jpg' %}" alt="user" class="rounded-circle" width="31"></a>                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">                                <span class="with-arrow"><span class="bg-primary"></span></span>                                <div class="d-flex no-block align-items-center p-15 bg-primary text-white m-b-10">                                    <div class="m-l-10">                                        <h4 class="m-b-0">{{ user.username }}</h4>                                        <p class=" m-b-0">{{ user.email }}</p>                                    </div>                                </div>                                <div class="dropdown-divider"></div>                                <a class="dropdown-item" href="/edit_user/{{ user.id }}"><i class="ti-settings m-r-5 m-l-5"></i>Modifier Compte</a>                                <div class="dropdown-divider"></div>                                <a class="dropdown-item" href="/logout_user"><i class="fa fa-power-off m-r-5 m-l-5"></i> Se Déconncté</a>                                <div class="dropdown-divider"></div>                            </div>                        </li>                        <!-- ============================================================== -->                        <!-- User profile and search -->                        <!-- ============================================================== -->                    </ul>                </div>            </nav>        </header>        <!-- ============================================================== -->        <!-- End Topbar header -->        <!-- ============================================================== -->        <!-- ============================================================== -->        <!-- Left Sidebar - style you can find in sidebar.scss  -->        <!-- ============================================================== -->        <aside class="left-sidebar">            <!-- Sidebar scroll-->            <div class="scroll-sidebar">                <!-- Sidebar navigation-->                <nav class="sidebar-nav">                    <ul id="sidebarnav">                        <!-- User Profile-->                        <li>                            <!-- User Profile-->                            <div class="user-profile d-flex no-block dropdown mt-3">                                <div class="user-content hide-menu ml-2">                                    <a href="javascript:void(0)" class="" id="Userdd" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                                        <h5 class="mb-0 user-name font-medium">{{ user.username }}<i class="fa fa-angle-down"></i></h5>                                        <span class="op-5 user-email">{{ user.email }}</span>                                    </a>                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="Userdd">                                        <div class="dropdown-divider"></div>                                        <a class="dropdown-item" href="/edit_user/{{ user.id }}"><i class="ti-settings mr-1 ml-1"></i>Modifier Compte</a>                                        <div class="dropdown-divider"></div>                                        <a class="dropdown-item" href="/logout_user"><i class="fa fa-power-off mr-1 ml-1"></i>Se Déconnecté</a>                                    </div>                                </div>                            </div>                            <!-- End User Profile-->                        </li>                        <!-- User Profile-->                        {% if user.is_superuser == 1 %}                        <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">Personal</span></li>                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Utilisateurs</span></a>                            <ul aria-expanded="false" class="collapse  first-level">                                <li class="sidebar-item"><a href="/add_user" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Ajout d'un utilisateur </span></a></li>                                <li class="sidebar-item"><a href="/display_user" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Affichage des utilisateurs </span></a></li>                            </ul>                        </li>                        <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">API</span></li>                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">APIs</span></a>                            <ul aria-expanded="false" class="collapse  first-level">                                <li class="sidebar-item"><a href="/add_api" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Ajout d'un API </span></a></li>                                <li class="sidebar-item"><a href="/display_api" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Affichage des APIs </span></a></li>                            </ul>                        </li>                        <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">Notification</span></li>                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-bell font-24"></i><span class="hide-menu">Notifications</span></a>                            <ul aria-expanded="false" class="collapse  first-level">                                <li class="sidebar-item"><a href="/add_notif" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Ajout d'une notification</span></a></li>                                <li class="sidebar-item"><a href="/display_notif" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu"> Affichage des notifications </span></a></li>                            </ul>                        </li>                        {% endif %}                        <li class="nav-small-cap"><i class="mdi mdi-dots-horizontal"></i> <span class="hide-menu">Feed Threat</span></li>                        <li class="sidebar-item"> <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="mdi mdi-security"></i><span class="hide-menu">Feed</span></a>                            <ul aria-expanded="false" class="collapse  first-level">                                <li class="sidebar-item"><a href="/listmalware" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu">Liste des malwares</span></a></li>                                <li class="sidebar-item"><a href="/listdomain" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu">Liste des domaines</span></a></li>                                <li class="sidebar-item"><a href="/listip" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu">Liste des IP</span></a></li>                                <li class="sidebar-item"><a href="/listhash" class="sidebar-link"><i class="mdi mdi-adjust"></i><span class="hide-menu">Liste des Hash</span></a></li>                            </ul>                        </li>                    </ul>                </nav>                <!-- End Sidebar navigation -->            </div>            <!-- End Sidebar scroll-->        </aside>        <!-- ============================================================== -->        <!-- End Left Sidebar - style you can find in sidebar.scss  -->        <!-- ============================================================== -->        <!-- ============================================================== -->        <!-- Page wrapper  -->        <!-- ============================================================== -->        <div class="page-wrapper">            <!-- ============================================================== -->            <!-- Bread crumb and right sidebar toggle -->            <!-- ============================================================== -->            <div class="page-breadcrumb">                <div class="row">                    <div class="col-5 align-self-center">                        <h4 class="page-title">Utilisateur</h4>                        <div class="d-flex align-items-center">                            <nav aria-label="breadcrumb">                                <ol class="breadcrumb">                                    <li class="breadcrumb-item"><a href="#">Home</a></li>                                    <li class="breadcrumb-item active" aria-current="page">Ajout utilisateur</li>                                </ol>                            </nav>                        </div>                    </div>                </div>            </div>            <!-- ============================================================== -->            <!-- End Bread crumb and right sidebar toggle -->            <!-- ============================================================== -->            <!-- ============================================================== -->            <!-- Container fluid  -->            <!-- ============================================================== -->            <div class="container-fluid">                <!-- ============================================================== -->                <!-- Start Page Content -->                <!-- ============================================================== -->                <div class="row">                    <!-- ============================================================== -->                    <!-- Example -->                    <!-- ============================================================== -->                    <!-- ============================================================== -->                    <!-- Example -->                    <!-- ============================================================== -->                    <div class="col-12">                        <div class="card">                            <div class="card-body wizard-content">                                <h4 class="card-title">Ajout d'utilisateur</h4>                                <h6 class="card-subtitle"></h6>                                <form method="POST" action="/add_user" class="validation-wizard wizard-circle m-t-40" name="formSaisie" onsubmit="return valider()" >                                    {% csrf_token %}                                    <h6>Informations Personnels</h6>                                    <section>                                        <div class="row">                                            <div class="col-md-6">                                                <div class="form-group">                                                    <label for="wfirstName2"> Prénom : <span class="danger">*</span> </label>                                                    <input type="text" class="form-control required" id="wfirstName2" name="firstName"> </div>                                            </div>                                            <div class="col-md-6">                                                <div class="form-group">                                                    <label for="wlastName2"> Nom : <span class="danger">*</span> </label>                                                    <input type="text" class="form-control required" id="wlastName2" name="lastName"> </div>                                            </div>                                        </div>                                        <div class="row">                                            <div class="col-md-6">                                                <div class="form-group">                                                    <label for="wemailAddress2"> Adresse Email : <span class="danger">*</span> </label>                                                    <input type="email" class="form-control required" id="wemailAddress2" name="emailAddress"> </div>                                            </div>                                            <div class="col-md-6">                                                <div class="form-group">                                                    <label for="wphoneNumber2">Pseudo : <span class="danger">*</span></label>                                                    <input type="text" class="form-control required" id="wphoneNumber2" name="pseudo"> </div>                                            </div>                                        </div>                                        <div class="row">                                            <div class="col-md-6">                                                <div class="form-group">                                                    <label for="pwd">Mot de passe : <span class="danger">*</span></label>                                                    <input type="password" id="pwd" name="pwd" class="form-control required" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>                                                </div>                                            </div>                                        </div>                                    </section>                                    <!-- Step 2 -->                                    <!-- Step 3 -->                                    <!-- Step 4 -->                                    <h6>Status de Compte</h6>                                    <section>                                        <div class="row">                                            <div class="col-md-6">                                                <div class="form-group">                                                    <label for="participants1">Type de Compte:</label>                                                    <select class="custom-select form-control required" id="participants1" name="type">                                                        <option value="">Select Result</option>                                                        <option value="Staff">Staff</option>                                                        <option value="SuperUser">SuperUser</option>                                                    </select>                                                </div>                                            </div>                                            <div class="col-md-6">                                                <div class="form-group">                                                    <label></label>                                                    <div class="custom-control custom-checkbox">                                                       <button type="submit" class="btn waves-effect waves-light btn-info" onclick="verif()">Sauvegarder</button>                                                    </div>                                                    </div>                                                </div>                                            </div>                                        <!--</div>-->                                    </section>                                </form>                            </div>                        </div>                    </div>                </div>            </div>            <footer class="footer text-center">       All Rights Reserved by Xtreme admin. Designed and Developed by <a href="https://wrappixel.com">WrapPixel</a>.</footer>            <!-- ============================================================== -->            <!-- End footer -->            <!-- ============================================================== -->        </div>        <!-- ============================================================== -->        <!-- End Page wrapper  -->        <!-- ============================================================== -->    </div>    <!-- ============================================================== -->    <!-- End Wrapper -->    <!-- ============================================================== -->    <!-- ============================================================== -->    <!-- customizer Panel -->    <!-- ============================================================== -->    <!-- ============================================================== -->    <!-- All Jquery -->    <!-- ============================================================== -->    <script src="{% static 'assets/libs/jquery/dist/jquery.min.js' %}"></script>    <!-- Bootstrap tether Core JavaScript -->    <script src="{% static 'assets/libs/popper.js/dist/umd/popper.min.js' %}"></script>    <script src="{% static 'assets/libs/bootstrap/dist/js/bootstrap.min.js' %}"></script>    <!-- apps -->    <script src="{% static 'dist/js/app.min.js' %}"></script>    <script src="{% static 'dist/js/app.init.dark.js'%}"></script>    <script src="{% static 'dist/js/app-style-switcher.js' %}"></script>    <!-- slimscrollbar scrollbar JavaScript -->    <script src="{% static 'assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js' %}"></script>    <script src="{% static 'assets/extra-libs/sparkline/sparkline.js' %}"></script>    <!--Wave Effects -->    <script src="{% static 'dist/js/waves.js'%}" ></script>    <!--Menu sidebar -->    <script src="{% static 'dist/js/sidebarmenu.js'%}"></script>    <!--Custom JavaScript -->    <script src="{% static 'dist/js/custom.min.js'%}"></script>    <script src="{% static 'assets/libs/jquery-steps/build/jquery.steps.min.js' %}"></script>    <script src="{% static 'assets/libs/jquery-validation/dist/jquery.validate.min.js' %}"></script>    <script>    //Basic Example    $("#example-basic").steps({        headerTag: "h3",        bodyTag: "section",        transitionEffect: "slideLeft",        autoFocus: true    });    // Basic Example with form    var form = $("#example-form");    form.validate({        errorPlacement: function errorPlacement(error, element) { element.before(error); },        rules: {            confirm: {                equalTo: "#password"            }        }    });    form.children("div").steps({        headerTag: "h3",        bodyTag: "section",        transitionEffect: "slideLeft",        onStepChanging: function(event, currentIndex, newIndex) {            form.validate().settings.ignore = ":disabled,:hidden";            return form.valid();        },        onFinishing: function(event, currentIndex) {            form.validate().settings.ignore = ":disabled";            return form.valid();        },        onFinished: function(event, currentIndex) {            alert("Submitted!");        }    });    // Advance Example    var form = $("#example-advanced-form").show();    form.steps({        headerTag: "h3",        bodyTag: "fieldset",        transitionEffect: "slideLeft",        onStepChanging: function(event, currentIndex, newIndex) {            // Allways allow previous action even if the current form is not valid!            if (currentIndex > newIndex) {                return true;            }            // Forbid next action on "Warning" step if the user is to young            if (newIndex === 3 && Number($("#age-2").val()) < 18) {                return false;            }            // Needed in some cases if the user went back (clean up)            if (currentIndex < newIndex) {                // To remove error styles                form.find(".body:eq(" + newIndex + ") label.error").remove();                form.find(".body:eq(" + newIndex + ") .error").removeClass("error");            }            form.validate().settings.ignore = ":disabled,:hidden";            return form.valid();        },        onStepChanged: function(event, currentIndex, priorIndex) {            // Used to skip the "Warning" step if the user is old enough.            if (currentIndex === 2 && Number($("#age-2").val()) >= 18) {                form.steps("next");            }            // Used to skip the "Warning" step if the user is old enough and wants to the previous step.            if (currentIndex === 2 && priorIndex === 3) {                form.steps("previous");            }        },        onFinishing: function(event, currentIndex) {            form.validate().settings.ignore = ":disabled";            return form.valid();        },        onFinished: function(event, currentIndex) {            alert("Submitted!");        }    }).validate({        errorPlacement: function errorPlacement(error, element) { element.before(error); },        rules: {            confirm: {                equalTo: "#password-2"            }        }    });    // Dynamic Manipulation    $("#example-manipulation").steps({        headerTag: "h3",        bodyTag: "section",        enableAllSteps: true,        enablePagination: false    });    //Vertical Steps    $("#example-vertical").steps({        headerTag: "h3",        bodyTag: "section",        transitionEffect: "slideLeft",        stepsOrientation: "vertical"    });    //Custom design form example    $(".tab-wizard").steps({        headerTag: "h6",        bodyTag: "section",        transitionEffect: "fade",        titleTemplate: '<span class="step">#index#</span> #title#',        labels: {            finish: "Submit"        },        onFinished: function(event, currentIndex) {            swal("Form Submitted!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed.");        }    });    var form = $(".validation-wizard").show();    $(".validation-wizard").steps({        headerTag: "h6",        bodyTag: "section",        transitionEffect: "fade",        titleTemplate: '<span class="step">#index#</span> #title#',        labels: {            finish: "Submit"        },        onStepChanging: function(event, currentIndex, newIndex) {            return currentIndex > newIndex || !(3 === newIndex && Number($("#age-2").val()) < 18) && (currentIndex < newIndex && (form.find(".body:eq(" + newIndex + ") label.error").remove(), form.find(".body:eq(" + newIndex + ") .error").removeClass("error")), form.validate().settings.ignore = ":disabled,:hidden", form.valid())        },        onFinishing: function(event, currentIndex) {            return form.validate().settings.ignore = ":disabled", form.valid()        },        onFinished: function(event, currentIndex) {            swal("Form Submitted!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed.");        }    }), $(".validation-wizard").validate({        ignore: "input[type=hidden]",        errorClass: "text-danger",        successClass: "text-success",        highlight: function(element, errorClass) {            $(element).removeClass(errorClass)        },        unhighlight: function(element, errorClass) {            $(element).removeClass(errorClass)        },        errorPlacement: function(error, element) {            error.insertAfter(element)        },        rules: {            email: {                email: !0            }        }    })    </script>    <script>     function valider()     {     var verif = 0;     {% for i in users %}        if ('{{ i.username }}' == document.formSaisie.pseudo.value)           verif = 1;     {% endfor %}        if (verif == 1)        {        alert('Ce pseudo exsite déja');        document.formSaisie.reset();        }        else        document.formSaisie.submit();     }    </script></body></html>
