@@ -36,24 +36,32 @@ class utilisateur(View):
         lettersAndDigits = string.ascii_letters + string.digits
         return ''.join((random.choice(lettersAndDigits) for i in range(stringLength)))
     def reset_password(request):
+        utilisateurs = User.objects.all()
         if request.method == "POST":
             username = request.POST.get('reset', False)
-            user = User.objects.get(username=username)
-            password = utilisateur.get_random_alphaNumeric_string(8)
-            user.password = make_password(password, None, hasher='default')
-            ctx = {
+            verif = 0
+            for i in utilisateurs:
+                if i == username:
+                    verif = 1
+            if verif == 1:
+                user = User.objects.get(username=username)
+                password = utilisateur.get_random_alphaNumeric_string(8)
+                user.password = make_password(password, None, hasher='default')
+                ctx = {
                 'user': username, 'password': password
-            }
-            message = get_template('user/email-templete-password-reset.html').render(ctx)
-            msg = EmailMessage(
+                }
+                message = get_template('user/email-templete-password-reset.html').render(ctx)
+                msg = EmailMessage(
                 'Réinitialiser le mot de passe',
                 message,
                 'hedi.hamza@esprit.tn',
                 [user.email],
-            )
-            msg.content_subtype = "html"  # Main content is now text/html
-            msg.send()
-            user.save()
+                )
+                msg.content_subtype = "html"  # Main content is now text/html
+                msg.send()
+                user.save()
+            else:
+                return redirect('/login_user')
             return render(request, 'user/login_user.html')
 
     def login_user(request):

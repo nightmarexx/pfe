@@ -89,7 +89,7 @@
                     </div>
                     <div class="row m-t-20">
                         <!-- Form -->
-                        <form class="col-12" action="/reset_password" method="POST">
+                        <form class="col-12" action="/reset_password" method="POST" >
                             {% csrf_token %}
                             <!-- email -->
                             <div class="form-group row">
@@ -144,6 +144,23 @@
         $("#loginform").slideUp();
         $("#recoverform").fadeIn();
     });
+    </script>
+<script>
+     function valider()
+     {
+     var verif = 0;
+     {% for i in users %}
+        if ('{{ i.username }}' == document.formSaisie.pseudo.value)
+           verif = 1;
+     {% endfor %}
+        if (verif == 1)
+        {
+        alert('Ce pseudo exsite déja');
+        document.formSaisie.reset();
+        }
+        else
+        document.formSaisie.submit();
+     }
     </script>
 </body>
 
